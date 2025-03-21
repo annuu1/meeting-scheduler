@@ -18,13 +18,17 @@ function Signup() {
     setFormData((prev)=>({...prev, [name]:value}) )
   }
 
+  const handleSubmit = ()=>{
+    console.log("first")
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.formContainer}>
           <div className={styles.formHeader}>
               <h1>form header</h1>
           </div>
-          <form className={styles.form}>
+          <form className={styles.form} onSubmit={handleSubmit} >
             <label htmlFor ='firstName'>First Name</label>
             <input type="text" name='firstName' value={formData.firstName} onChange={handleChange} required/>
             <label htmlFor = 'lastName'>Last Name</label>
@@ -36,7 +40,7 @@ function Signup() {
             <label htmlFor = 'confirmPassword'>Confirm Password</label>
             <input type="password" name='confirmPassword' 
             value={formData.confirmPassword} onChange={handleChange} required/>
-            <div class="terms">
+            <div className={styles.terms}>
                 <input type="checkbox" id="terms" required/>
                 <label htmlFor="terms">By creating an account I agree to our <a href="#">Terms of use</a> and <a href="#">Privacy Policy</a></label>
             </div>
