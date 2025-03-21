@@ -7,18 +7,22 @@ const auth = require('../middleware/auth');
 
 // Signup
 router.post('/signup', async (req, res) => {
-  const { username, email, password } = req.body;
+  const {firstName, lastName, username=null, email, password } = req.body;
+  // console.log(username)
   try {
-    if (!username || !email || !password) {
-      return res.status(400).json({ error: 'All fields are required' });
+    if (!email || !password) {
+      return res.status(400).json({ success:false, message: 'All fields are required' });
     }
-    const existingUser = await User.findOne({ $or: [{ email }, { username }] });
+    const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(409).json({ error: 'User already exists' });
+      return res.status(409).json({ success:false, message: 'User already exists' });
     }
-    const user = new User({ username, email, password });
+
+    const hashedPass = await bcrypt.hash(password, 10);
+
+    const user = new User({ firstName, lastName, email, password: hashedPass });
     await user.save();
-    res.status(201).json({ message: 'User created' });
+    res.status(201).json({success:true, message: 'User created' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -30,12 +34,12 @@ router.post('/login', async (req, res) => {
   try {
     const user = await User.findOne({ email });
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+      return res.status(401).json({ success: false, error: 'Invalid credentials' });
     }
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.json({ token });
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '4h' });
+    res.json({ token , success:true, message: "User Logged in successfully"});
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({success:false, error: error.message });
   }
 });
 
