@@ -1,4 +1,7 @@
 import React, {useState} from 'react'
+import axios from 'axios' 
+import {useNavigate} from 'react-router-dom'
+
 import styles from '../../styles/Auth.module.css'
 
 import authImg from '../../assets/auth_bg.png'
@@ -13,14 +16,29 @@ function Signup() {
     confirmPassword:"",
   })
 
+  const [error, setError] = useState('')
+  const navigate = useNavigate();
+
   const handleChange = (e)=>{
     const {name, value} = e.target;
     setFormData((prev)=>({...prev, [name]:value}) )
   }
 
-  const handleSubmit = ()=>{
-    console.log("first")
-  }
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+  
+    try {
+      const response = await axios.post('http://localhost:5000/api/auth/signup', formData); 
+      if (response.data.success) {
+        navigate('/login');
+      } else {
+        setError(response.data.message);
+      }
+    } catch (err) {
+      console.log(err.response.data.message);
+      setError(err.response ? err.response.data.message : 'An error occurred');
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -45,6 +63,9 @@ function Signup() {
                 <label htmlFor="terms">By creating an account I agree to our <a href="#">Terms of use</a> and <a href="#">Privacy Policy</a></label>
             </div>
             <button type="submit">Create an account</button>
+            {
+              error && <p style={{color:'red'}}>{error}</p>
+            }
           </form>
       </div>
       <div className={styles.imageContainer}>
