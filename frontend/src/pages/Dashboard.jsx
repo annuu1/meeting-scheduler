@@ -3,33 +3,10 @@ import Navbar from '../components/layout/Sidebar'
 import styles from '../styles/Dashboard.module.css'
 import { Link } from 'react-router-dom'
 
-import EventCard from '../components/Events/EventCard'
+import EventList from '../components/Events/EventList'
 
 function Dashboard() {
-
-  const [evnets, setEvents] = useState([
-    {
-      id: 1,
-      title: "Event 1",
-      date: "2023-01-01",
-      time: "10:00",
-      duration: 60
-    },
-    {
-      id: 2,
-      title: "Event 2",
-      date: "2023-01-01",
-      time: "10:00",
-      duration: 60
-    },
-    {
-      id: 3,
-      title: "Event 3",
-      date: "2023-01-01",
-      time: "10:00",
-      duration: 60
-    }
-  ])
+    const [activeTab, setActiveTab] = useState('events');
 
   return (
     <div className={styles.container}>
@@ -38,13 +15,8 @@ function Dashboard() {
             <h1>Event Types</h1>
             <p>Create events to share for people to book on your calendar. New</p>
             <Link to="/events/new" >Add New Event</Link>
-            <div className={styles.eventContainer}>
-              {evnets.map((event) => (
-                <EventCard key={event.id} title={event.title} date={event.date} time={event.time} duration={event.duration} />
-              ))}
-            </div>
+            {activeTab === 'events' && <EventList />}
         </main>
-        
     </div>
   )
 }
