@@ -1,6 +1,6 @@
 import React from 'react'
-import Navbar from './Sidebar'
-import styles from '../../styles/Dashboard.module.css'
+import Navbar from '../components/layout/Sidebar'
+import styles from '../styles/Dashboard.module.css'
 
 function Dashboard() {
   return (
