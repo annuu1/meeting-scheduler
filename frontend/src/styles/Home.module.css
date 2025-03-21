@@ -1,0 +1,157 @@
+.header{
+    background-color: #F0F0F0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-top: 1.5rem;
+}
+.main{
+    margin: 0 10%;
+}
+.signupBtn{
+    background-color: #1877F2;
+    color: #F0F0F0;
+    padding: 10px 20px;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 2.5rem;
+}
+.signupBtn.large{
+    margin: 2rem;
+    font-size: 1.2rem;
+    padding: 1.2rem 3rem;
+}
+.hero{
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+}
+.heroImage{
+    height: 50%;
+    width: 50%;
+    box-shadow: 0px 0px 20px rgba(0,0,0,0.5);
+}
+
+.feature{
+    display: flex;
+}
+.list-caption{
+    font-size: larger;
+}
+.list{
+    font-size: larger;
+}
+.list-item{
+    line-height: 5.5rem;
+    font-size: 1.2rem;
+}
+
+.cardsContainer{
+    width: 50%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+.croppedCard1{
+    z-index: 1;
+    position: absolute;
+    overflow: hidden;
+    width: 50%;
+    height: 100%;
+    box-shadow: 20px rgb(0, 17, 255) solid;
+    margin: 10px;
+    transform: rotate(-10deg);
+}
+.croppedCard2{
+    position: absolute;
+    overflow: hidden;
+    width: 50%;
+    height: 100%;
+    box-shadow: 20px rgb(0, 17, 255) solid;
+    margin: 10px;
+    transform: rotate(10deg);
+}
+.card{
+    position : absolute;
+    width: 100%;
+    height: 1005;
+    perspective: 1000px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    object-fit: cover; 
+
+}
+.card1{
+    z-index: 1;
+    transform: scale(2);
+    transform: translate(10px);
+}
+/* .card2{
+    z-index: 0;
+    transform: rotate(40deg);
+} */
+
+.review{
+    height: 800px;
+    display: flex;
+    flex-direction: column;    
+}
+.reviewHead{
+    display: flex;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding:10px;
+    margin: 2rem 0;
+}
+.storyBtn{
+    border: 2px #1877F2 solid;
+    text-decoration: none;
+    padding: 0.8rem 1.2rem;
+    border-radius: 2rem;
+    color: #1877F2;
+    font-size: 1.2rem;
+}
+.testimonials{
+    display: grid;
+    grid-template-columns : repeat(2, 1fr);
+    grid-template-rows : repeat(2, 1fr);
+    gap: 1.5rem;
+}
+.testimonialCard{
+    background-color: #DEDEDE;
+    border-radius: 20px;
+    padding: 1.5rem;
+}
+.userInfo{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+.userPic{
+    width: 80px;
+    height: 80px;
+    background-color: #1877F2;
+    border-radius: 50%;
+}
+
+.integrationsList{
+    display: grid;
+    grid-template-columns : repeat(3, 1fr);
+    grid-template-rows : repeat(3, 1fr);
+}
+
+
+.integration{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.appIcon{
+    width: 40px;
+    height: 40px;
+    background-color: #b9bcc0;
+    border-radius: 5px;
+}
