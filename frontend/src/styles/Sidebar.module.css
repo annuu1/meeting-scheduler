@@ -24,7 +24,9 @@
 .list > li > img{
     margin-right: 1rem;
 }
-.list > li > a{
-    text-decoration: none;
+.list > li > button{
     color: #676767;
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
 }

@@ -39,7 +39,7 @@ input{
     font-size: 16px;
     color: #666666;
 }
-button{
+.Btn{
     padding: 20px;
     margin-bottom: 15px;
     border-radius: 5rem;
