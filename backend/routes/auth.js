@@ -43,21 +43,35 @@ router.post('/login', async (req, res) => {
   }
 });
 
+// Get Profile
+router.get('/profile', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ error: 'User not found' });
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Update Profile (with logout on email/password change)
 router.put('/profile', auth, async (req, res) => {
-  const { username, email, password } = req.body;
+  const { firstName, lastName, username , email, password } = req.body;
   try {
     const user = await User.findById(req.user.id);
     if (!user) return res.status(404).json({ error: 'User not found' });
 
     let shouldLogout = false;
     if (username) user.username = username;
+    if (firstName) user.firstName = firstName;
+    if (lastName) user.lastName = lastName;
     if (email) {
       user.email = email;
       shouldLogout = true;
     }
+    const hashedPass = await bcrypt.hash(password, 10);
     if (password) {
-      user.password = password;
+      user.password = hashedPass;
       shouldLogout = true;
     }
     user.updatedAt = Date.now();
