@@ -4,6 +4,7 @@ import styles from '../../styles/AvailabilityScheduler.module.css'
 import Tabs from './Tabs';
 import Dropdowns from './Dropdowns';
 import AvailabilityForm from './AvailabilityForm';
+import CalendarView from './CalendarView';
 
 function AvailabilityScheduler() {
     const [activeTab, setActiveTab] = useState('Availability');
