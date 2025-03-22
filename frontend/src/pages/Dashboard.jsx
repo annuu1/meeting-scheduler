@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom'
 import EventList from '../components/Events/EventList'
 import Booking from '../components/booking/Booking'
 import ProfileForm from '../components/settings/ProfileForm'
+// import Availability from '../components/availability/Availability'
+import AvailabilityScheduler from '../components/availabilityScheduler/AvailabilityScheduler'
 
 function Dashboard() {
     const [activeTab, setActiveTab] = useState('events');
@@ -16,7 +18,7 @@ function Dashboard() {
         <main className={styles.main}>
             {activeTab === 'events' && <EventList />}
             {activeTab === 'booking' && <Booking />}
-            {activeTab === 'availability' && <Booking />}
+            {activeTab === 'availability' && <AvailabilityScheduler />}
             {activeTab === 'settings' && <ProfileForm />}
         </main>
     </div>
