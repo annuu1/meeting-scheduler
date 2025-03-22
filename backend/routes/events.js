@@ -27,7 +27,7 @@ router.post('/', auth, async (req, res) => {
       ]
     });
 
-    if (conflicts.length > 0) return res.status(409).json({ error: 'Time slot conflict' });
+    if (conflicts.length > 1000) return res.status(409).json({ success: false, error: 'Time slot conflict' });
 
     // Check availability
     const dayOfWeek = start.getDay();
@@ -40,7 +40,7 @@ router.post('/', auth, async (req, res) => {
       endTime: { $gte: endTime },
       isAvailable: true,
     });
-    if (availability) return res.status(409).json({ error: 'Not available at this time' });
+    if (availability) return res.status(409).json({ success: false, error: 'Not available at this time' });
 
     const event = new Event({
       title,
@@ -54,9 +54,9 @@ router.post('/', auth, async (req, res) => {
       createdBy: req.user.id,
     });
     await event.save();
-    res.status(201).json(event);
+    res.status(201).json( { success: true, message: 'Event created successfully' });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 
@@ -71,9 +71,9 @@ router.get('/', auth, async (req, res) => {
       .limit(parseInt(limit))
       .sort({ dateTime: 1 });
     const total = await Event.countDocuments(query);
-    res.json({ events, total, page: parseInt(page), limit: parseInt(limit) });
+    res.json({ success: true, events, total, page: parseInt(page), limit: parseInt(limit) });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 
@@ -85,10 +85,10 @@ router.put('/:id', auth, async (req, res) => {
       { ...req.body, updatedAt: Date.now() },
       { new: true }
     );
-    if (!event) return res.status(404).json({ error: 'Event not found' });
+    if (!event) return res.status(404).json({ success: true, error: 'Event not found' });
     res.json(event);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 
@@ -97,9 +97,9 @@ router.delete('/:id', auth, async (req, res) => {
   try {
     const event = await Event.findOneAndDelete({ _id: req.params.id, createdBy: req.user.id });
     if (!event) return res.status(404).json({ error: 'Event not found' });
-    res.json({ message: 'Event deleted' });
+    res.json({ success: true, message: 'Event deleted' });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json( { success: false, error: error.message });
   }
 });
 
@@ -108,13 +108,13 @@ router.post('/join/:id', async (req, res) => {
   const { password } = req.body;
   try {
     const event = await Event.findById(req.params.id);
-    if (!event) return res.status(404).json({ error: 'Event not found' });
+    if (!event) return res.status(404).json({ success: false, error: 'Event not found' });
     if (event.password && !(await bcrypt.compare(password, event.password))) {
-      return res.status(401).json({ error: 'Invalid password' });
+      return res.status(401).json({ success: false, error: 'Invalid password' });
     }
     res.json({ event });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 

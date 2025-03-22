@@ -8,6 +8,7 @@ import Login from './components/auth/Login'
 import Preferences from './components/auth/Preferences'
 import Header from './components/layout/Header'
 import Dashboard from './pages/Dashboard'
+import EventForm from './components/Events/EventForm'
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
         <Route path='/login' element= {<Login/>} ></Route>
         <Route path='/preferences' element= {<Preferences/>} ></Route>
         <Route path='/dashboard' element= {<Dashboard/>} ></Route>
+        <Route path='/events/new' element= {<EventForm/>} ></Route>
       </Routes>
      </BrowserRouter>
     </>

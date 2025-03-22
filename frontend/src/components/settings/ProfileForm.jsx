@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import styles from '../../styles/ProfileForm.module.css'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function ProfileForm() {
       const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ function ProfileForm() {
         password:"",
         confirmPassword:"",
       })
+      const navigate = useNavigate();
 
       useEffect(() => {
         const fetchUserData = async () => {
@@ -45,10 +47,11 @@ function ProfileForm() {
 
         axios.put('http://localhost:5000/api/auth/profile', formData, config)
         .then((response)=>{
-            if(response.data.success){
-              localStorage.setItem('token', response.data.token);
-              navigate('/dashboard')
+            if(response.data.shouldLogout){
+              localStorage.removeItem('token');
+              navigate('/login')
             }else{
+              navigate('/dashboard')
             }
         })
         .catch((err)=>{
@@ -71,10 +74,10 @@ function ProfileForm() {
                   <label htmlFor = 'email'>Email</label>
                   <input type="email" name='email' value={formData.email} onChange={handleChange} required/>
                   <label htmlFor = 'password'>Password</label>
-                  <input type="password" name='password' value={formData.password} onChange={handleChange} required/>
+                  <input type="password" name='password' value={formData.password} onChange={handleChange} />
                   <label htmlFor = 'confirmPassword'>Confirm Password</label>
                   <input type="password" name='confirmPassword' 
-                  value={formData.confirmPassword} onChange={handleChange} required/>
+                  value={formData.confirmPassword} onChange={handleChange} />
                   <button type="submit">Save</button>
                 </form>
             </div>

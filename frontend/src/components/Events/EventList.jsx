@@ -3,7 +3,7 @@ import styles from '../../styles/EventList.module.css'
 import EventCard from './EventCard'
 import axios from 'axios'
 
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 function EventList() {
 
@@ -32,6 +32,7 @@ function EventList() {
       ])
 
       const token = localStorage.getItem('token')
+      const navigate = useNavigate()
 
       useEffect(()=>{
         const fetchData = ()=>{
@@ -41,7 +42,14 @@ function EventList() {
             }
           })
           .then((response)=>{ 
+            if(!response.data.success){
+              navigate('/login')
+            }
             setEvents(response.data.events)})
+            .catch((error)=>{
+              console.log(error)
+              navigate('/login')
+            })
         }
         fetchData()
       }, [])

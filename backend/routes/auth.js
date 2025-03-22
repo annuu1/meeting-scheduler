@@ -77,9 +77,9 @@ router.put('/profile', auth, async (req, res) => {
     user.updatedAt = Date.now();
     await user.save();
 
-    res.json({ message: 'Profile updated', shouldLogout });
+    res.json({ success: true, message: 'Profile updated', shouldLogout });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 
