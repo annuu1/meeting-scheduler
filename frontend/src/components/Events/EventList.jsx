@@ -40,7 +40,8 @@ function EventList() {
               Authorization: `${token}`
             }
           })
-          .then((response)=>{ setEvents(response.data)})
+          .then((response)=>{ 
+            setEvents(response.data.events)})
         }
         fetchData()
       }, [])

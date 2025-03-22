@@ -1,35 +1,51 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react';
+import axios from 'axios';
 
 function EventForm() {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [dateTime, setDateTime] = useState('');
-  const [duration, setDuration] = useState('');
-  const [link, setLink] = useState('');
-  const [bannerImage, setBannerImage] = useState('');
-  const [backgroundColor, setBackgroundColor] = useState('');
-  const [password, setPassword] = useState('');
-  const [status, setStatus] = useState('upcoming');
-  const [createdBy, setCreatedBy] = useState('');
-  const [participants, setParticipants] = useState([]);
+  const [formData, setFormData] = useState({
+    title: 'event1',
+    description: 'anurag rajpt',
+    dateTime: '',
+    duration: '60',
+    link: 'https://google.com',
+    bannerImage: '',
+    backgroundColor: 'red',
+    password: '123456',
+    status: 'upcoming',
+    createdBy: '',
+    participants: [],
+  });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    if (name === 'participants') {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value.split(','),
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const eventData = {
-      title,
-      description,
-      dateTime,
-      duration,
-      link,
-      bannerImage,
-      backgroundColor,
-      password,
-      status,
-      createdBy,
-      participants,
+    const token = localStorage.getItem('token');
+    const config = {
+      headers: {
+        'Authorization': `${token}`,
+      },
     };
-    // Call API to create event
-    console.log(eventData);
+    axios.post('http://localhost:5000/api/events', formData, config)
+      .then((response) => {
+      console.log(response);
+    })
+    .catch((err) => {
+      console.error(err);
+    })
   };
 
   return (
@@ -37,47 +53,90 @@ function EventForm() {
       <form onSubmit={handleSubmit}>
         <label>
           Title:
-          <input type="text" value={title} onChange={(event) => setTitle(event.target.value)} />
+          <input
+            type="text"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+          />
         </label>
         <br />
         <label>
           Description:
-          <textarea value={description} onChange={(event) => setDescription(event.target.value)} />
+          <textarea
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+          />
         </label>
         <br />
         <label>
           Date and Time:
-          <input type="datetime-local" value={dateTime} onChange={(event) => setDateTime(event.target.value)} />
+          <input
+            type="datetime-local"
+            name="dateTime"
+            value={formData.dateTime}
+            onChange={handleChange}
+          />
         </label>
         <br />
         <label>
           Duration:
-          <input type="number" value={duration} onChange={(event) => setDuration(event.target.value)} />
+          <input
+            type="number"
+            name="duration"
+            value={formData.duration}
+            onChange={handleChange}
+          />
         </label>
         <br />
         <label>
           Link:
-          <input type="text" value={link} onChange={(event) => setLink(event.target.value)} />
+          <input
+            type="text"
+            name="link"
+            value={formData.link}
+            onChange={handleChange}
+          />
         </label>
         <br />
         <label>
           Banner Image:
-          <input type="text" value={bannerImage} onChange={(event) => setBannerImage(event.target.value)} />
+          <input
+            type="text"
+            name="bannerImage"
+            value={formData.bannerImage}
+            onChange={handleChange}
+          />
         </label>
         <br />
         <label>
           Background Color:
-          <input type="text" value={backgroundColor} onChange={(event) => setBackgroundColor(event.target.value)} />
+          <input
+            type="text"
+            name="backgroundColor"
+            value={formData.backgroundColor}
+            onChange={handleChange}
+          />
         </label>
         <br />
         <label>
           Password:
-          <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} />
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+          />
         </label>
         <br />
         <label>
           Status:
-          <select value={status} onChange={(event) => setStatus(event.target.value)}>
+          <select
+            name="status"
+            value={formData.status}
+            onChange={handleChange}
+          >
             <option value="upcoming">Upcoming</option>
             <option value="pending">Pending</option>
             <option value="canceled">Canceled</option>
@@ -87,13 +146,13 @@ function EventForm() {
         </label>
         <br />
         <label>
-          Created By:
-          <input type="text" value={createdBy} onChange={(event) => setCreatedBy(event.target.value)} />
-        </label>
-        <br />
-        <label>
           Participants:
-          <input type="text" value={participants} onChange={(event) => setParticipants(event.target.value.split(','))} />
+          <input
+            type="text"
+            name="participants"
+            value={formData.participants.join(',')}
+            onChange={handleChange}
+          />
         </label>
         <br />
         <button type="submit">Create Event</button>
