@@ -1,12 +1,13 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import styles from '../../styles/EventList.module.css'
 import EventCard from './EventCard'
+import axios from 'axios'
 
 import { Link } from 'react-router-dom'
 
 function EventList() {
 
-      const [evnets, setEvents] = useState([
+      const [events, setEvents] = useState([
         {
           id: 1,
           title: "Event 1",
@@ -30,6 +31,19 @@ function EventList() {
         }
       ])
 
+      const token = localStorage.getItem('token')
+
+      useEffect(()=>{
+        const fetchData = ()=>{
+          axios.get("http://localhost:5000/api/events/", {
+            headers:{
+              Authorization: `${token}`
+            }
+          })
+          .then((response)=>{ setEvents(response.data)})
+        }
+        fetchData()
+      }, [])
 
   return (
     
@@ -38,9 +52,19 @@ function EventList() {
       <p>Create events to share for people to book on your calendar. New</p>
       <Link to="/events/new" >Add New Event</Link>
         <div className={styles.eventContainer}>
-              {evnets.map((event) => (
-                <EventCard key={event.id} title={event.title} date={event.date} time={event.time} duration={event.duration} />
-              ))}
+        {events.length > 0 ? (
+    events.map((event) => (
+      <EventCard 
+        key={event.id} 
+        title={event.title} 
+        date={event.date} 
+        time={event.time} 
+        duration={event.duration} 
+      />
+    ))
+  ) : (
+    <div>No events found</div>
+  )}
             </div>
     </div>
   )
