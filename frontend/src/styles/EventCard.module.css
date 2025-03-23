@@ -1,5 +1,6 @@
 .card{
     width: 30%;
+    min-width: 300px;
     margin: 10px;
     border-radius: 1rem;
     overflow: hidden;
@@ -9,16 +10,29 @@
     height: 1.2rem;
     background-color: #1877F2;
 }
-.content{
+.cardHeader{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 1rem;
+    margin-bottom: 8px;
 }
+.cardDetails {
+    font-size: 14px;
+    color: #5f6368;
+    margin-bottom: 16px;
+    padding: 0 1rem;
+  }
 .title{
-    font-size: 1.5rem;
-    font-weight: 500;
-    padding: 0;
-    margin: 0;
+    font-size: 16px;
+  color: #202124;
 }
-.actions{
+.editIcon {
+    font-size: 16px;
+    color: #5f6368;
+    cursor: pointer;
+  }
+.cardFooter{
     display: flex;
     justify-content: right;
     align-items: center;
