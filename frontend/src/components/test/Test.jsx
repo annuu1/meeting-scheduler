@@ -1,316 +1,268 @@
-import React, { useState } from 'react';
-import styles from '../../styles/Test.module.css';
+import React from 'react';
 
-const AvailabilityScheduler = () => {
-  const [activeTab, setActiveTab] = useState('Availability');
-  const [days, setDays] = useState({
-    Sun: { checked: false, times: [] },
-    Mon: { checked: true, times: [{ start: '09:00', end: '17:00' }] },
-    Tue: { checked: true, times: [{ start: '09:00', end: '17:00' }] },
-    Wed: { checked: true, times: [{ start: '09:00', end: '17:00' }] },
-    Thu: { checked: true, times: [{ start: '09:00', end: '17:00' }] },
-    Fri: { checked: true, times: [{ start: '09:00', end: '17:00' }] },
-    Sat: { checked: true, times: [{ start: '09:00', end: '17:00' }] },
-  });
-  const [activity, setActivity] = useState('Event type');
-  const [timeZone, setTimeZone] = useState('India Standard Time');
-
-  const events = [
-    { day: 'Thu', start: '10:00', end: '11:00', title: 'Meeting 2' },
-    { day: 'Fri', start: '09:00', end: '10:00', title: 'Meeting' },
-    { day: 'Fri', start: '14:00', end: '15:00', title: 'Meeting 2' },
-  ];
-
-  const handleDayToggle = (day) => {
-    setDays((prev) => ({
-      ...prev,
-      [day]: { ...prev[day], checked: !prev[day].checked },
-    }));
-  };
-
-  const handleTimeChange = (day, index, field, value) => {
-    const updatedTimes = [...days[day].times];
-    updatedTimes[index] = { ...updatedTimes[index], [field]: value };
-    setDays((prev) => ({
-      ...prev,
-      [day]: { ...prev[day], times: updatedTimes },
-    }));
-  };
-
-  const addTimeSlot = (day) => {
-    setDays((prev) => ({
-      ...prev,
-      [day]: { ...prev[day], times: [...prev[day].times, { start: '', end: '' }] },
-    }));
-  };
-
-  const removeTimeSlot = (day, index) => {
-    const updatedTimes = days[day].times.filter((_, i) => i !== index);
-    setDays((prev) => ({
-      ...prev,
-      [day]: { ...prev[day], times: updatedTimes },
-    }));
-  };
-
-  const timeToRow = (time) => {
-    const [hours, minutes] = time.split(':').map(Number);
-    return (hours - 9) * 2 + (minutes / 30) + 2;
-  };
-
-  const timeToSpan = (start, end) => {
-    const startMinutes = parseInt(start.split(':')[0]) * 60 + parseInt(start.split(':')[1]);
-    const endMinutes = parseInt(end.split(':')[0]) * 60 + parseInt(end.split(':')[1]);
-    return (endMinutes - startMinutes) / 30;
-  };
-
-  const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  const dates = ['23', '24', '25', '26', '27', '28', '1'];
-
+const EventTypesPage = () => {
   return (
-    <div className={styles.container}>
+    <div style={styles.body}>
       {/* Sidebar */}
-      <div className={styles.sidebar}>
-        <div className={styles.logoContainer}>
-          <img src="/logo.png" alt="Logo" className={styles.logo} />
-          <span className={styles.logoText}>CNNCT</span>
+      <div style={styles.sidebar}>
+        <div style={styles.logoContainer}>
+          <img
+            src="https://via.placeholder.com/32"
+            alt="Logo"
+            style={styles.logo}
+          />
+          <span style={styles.logoText}>CNNCT</span>
         </div>
-        <nav className={styles.nav}>
-          <ul>
-            <li>
-              <a href="#" className={styles.navItem}>
-                <span className={styles.navItemIcon}>📅</span> Events
-              </a>
-            </li>
-            <li>
-              <a href="#" className={`${styles.navItem} ${styles.active}`}>
-                <span className={styles.navItemIcon}>⏰</span> Availability
-              </a>
-            </li>
-            <li>
-              <a href="#" className={styles.navItem}>
-                <span className={styles.navItemIcon}>⚙️</span> Settings
-              </a>
-            </li>
-          </ul>
+        <nav style={styles.nav}>
+          <a href="#" style={{ ...styles.navItem, ...styles.navItemActive }}>
+            <span style={styles.navItemIcon}>📅</span> Events
+          </a>
+          <a href="#" style={styles.navItem}>
+            <span style={styles.navItemIcon}>📆</span> Booking
+          </a>
+          <a href="#" style={styles.navItem}>
+            <span style={styles.navItemIcon}>⏰</span> Availability
+          </a>
+          <a href="#" style={styles.navItem}>
+            <span style={styles.navItemIcon}>⚙️</span> Settings
+          </a>
         </nav>
-        <div className={styles.userProfile}>
-          <img src="/avatar.png" alt="User" className={styles.userAvatar} />
-          <span className={styles.userName}>Sarthak Pal</span>
+        <div style={styles.userProfile}>
+          <img
+            src="https://via.placeholder.com/32"
+            alt="User Avatar"
+            style={styles.userAvatar}
+          />
+          <span style={styles.userName}>sarthak pal</span>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className={styles.main}>
-        <h1 className={styles.header}>Availability</h1>
-        <p className={styles.subHeader}>Configure times when you are available for bookings</p>
-
-        <div className={styles.tabContainer}>
-          <button
-            onClick={() => setActiveTab('Availability')}
-            className={`${styles.tab} ${activeTab === 'Availability' ? styles.active : ''}`}
-          >
-            Availability
-          </button>
-          <button
-            onClick={() => setActiveTab('Calendar View')}
-            className={`${styles.tab} ${activeTab === 'Calendar View' ? styles.active : ''}`}
-          >
-            Calendar View
-          </button>
+      <div style={styles.main}>
+        <div style={styles.header}>
+          <div>
+            <h1 style={styles.headerTitle}>Event Types</h1>
+            <p style={styles.headerSubtitle}>
+              Create events to share for people to book on your calendar.
+            </p>
+          </div>
+          <button style={styles.addButton}>+ Add New Event</button>
         </div>
-
-        {activeTab === 'Availability' ? (
-          <div className={styles.card}>
-            <div className={styles.dropdownContainer}>
-              <div className={styles.dropdownWrapper}>
-                <label className={styles.dropdownLabel}>Activity</label>
-                <select
-                  value={activity}
-                  onChange={(e) => setActivity(e.target.value)}
-                  className={styles.dropdown}
-                >
-                  <option>Event type</option>
-                  <option>Meeting</option>
-                  <option>Call</option>
-                </select>
-              </div>
-              <div className={styles.dropdownWrapper}>
-                <label className={styles.dropdownLabel}>Time Zone</label>
-                <select
-                  value={timeZone}
-                  onChange={(e) => setTimeZone(e.target.value)}
-                  className={styles.dropdown}
-                >
-                  <option>India Standard Time</option>
-                  <option>UTC</option>
-                  <option>Eastern Standard Time</option>
-                </select>
-              </div>
+        <div style={styles.eventList}>
+          <div style={styles.eventCard}>
+            <div style={styles.eventCardHeader}>
+              <h3 style={styles.eventCardTitle}>Meeting</h3>
+              <span style={styles.editIcon}>✏️</span>
             </div>
-
-            <h2 className={styles.sectionTitle}>Weekly hours</h2>
-            {Object.keys(days).map((day) => (
-              <div key={day} className={styles.dayRow}>
-                <input
-                  type="checkbox"
-                  checked={days[day].checked}
-                  onChange={() => handleDayToggle(day)}
-                />
-                <span className={styles.dayLabel}>{day}</span>
-                {days[day].checked ? (
-                  <div className={styles.timeInputs}>
-                    {days[day].times.length === 0 ? (
-                      <span className={styles.unavailableText}>Unavailable</span>
-                    ) : (
-                      days[day].times.map((time, index) => (
-                        <div key={index} className={styles.timeInputs}>
-                          <input
-                            type="time"
-                            value={time.start}
-                            onChange={(e) =>
-                              handleTimeChange(day, index, 'start', e.target.value)
-                            }
-                            className={styles.timeInput}
-                          />
-                          <span>-</span>
-                          <input
-                            type="time"
-                            value={time.end}
-                            onChange={(e) =>
-                              handleTimeChange(day, index, 'end', e.target.value)
-                            }
-                            className={styles.timeInput}
-                          />
-                          <button
-                            onClick={() => removeTimeSlot(day, index)}
-                            className={styles.removeButton}
-                          >
-                            ✕
-                          </button>
-                        </div>
-                      ))
-                    )}
-                    <button
-                      onClick={() => addTimeSlot(day)}
-                      className={styles.addButton}
-                    >
-                      +
-                    </button>
-                  </div>
-                ) : (
-                  <span className={styles.unavailableText}>Unavailable</span>
-                )}
+            <p style={styles.eventCardDetails}>
+              Friday, 28 Feb<br />
+              10:00 AM - 12:00 AM<br />
+              1hr, Group meeting
+            </p>
+            <div style={styles.eventCardFooter}>
+              <div style={{ ...styles.toggleSwitch, ...styles.toggleSwitchActive }}></div>
+              <div style={styles.icons}>
+                <span style={styles.icon}>📋</span>
+                <span style={styles.icon}>🗑️</span>
               </div>
-            ))}
-          </div>
-        ) : (
-          <div className={styles.card}>
-            <div className={styles.dropdownContainer}>
-              <div className={styles.dropdownWrapper}>
-                <label className={styles.dropdownLabel}>Activity</label>
-                <select
-                  value={activity}
-                  onChange={(e) => setActivity(e.target.value)}
-                  className={styles.dropdown}
-                >
-                  <option>Event type</option>
-                  <option>Meeting</option>
-                  <option>Call</option>
-                </select>
-              </div>
-              <div className={styles.dropdownWrapper}>
-                <label className={styles.dropdownLabel}>Time Zone</label>
-                <select
-                  value={timeZone}
-                  onChange={(e) => setTimeZone(e.target.value)}
-                  className={styles.dropdown}
-                >
-                  <option>India Standard Time</option>
-                  <option>UTC</option>
-                  <option>Eastern Standard Time</option>
-                </select>
-              </div>
-            </div>
-
-            <div className={styles.calendarControls}>
-              <div className={styles.navButtons}>
-                <button className={styles.navButton}>{'<'}</button>
-                <button className={styles.navButton}>Today</button>
-                <button className={styles.navButton}>{'>'}</button>
-              </div>
-              <div className={styles.viewButtons}>
-                <button className={styles.viewButton}>Day</button>
-                <button className={`${styles.viewButton} ${styles.active}`}>
-                  Week
-                </button>
-                <button className={styles.viewButton}>Month</button>
-                <button className={styles.viewButton}>Year</button>
-              </div>
-              <div>
-                <input
-                  type="text"
-                  placeholder="Search"
-                  className={styles.searchInput}
-                />
-              </div>
-            </div>
-
-            <div className={styles.calendarGrid}>
-              <div className={styles.timeColumn}>
-                <div className={styles.timeHeader}></div>
-                {[...Array(8)].map((_, i) => (
-                  <div key={i} className={styles.timeSlot}>
-                    {i + 9} {i + 9 < 12 ? 'AM' : 'PM'}
-                  </div>
-                ))}
-              </div>
-
-              {weekDays.map((day, index) => (
-                <div key={day} className={styles.dayColumn}>
-                  <div className={styles.dayHeader}>
-                    {day} {dates[index]}
-                  </div>
-                  <div className={styles.dayGrid}>
-                    {days[day].checked &&
-                      days[day].times.map((time, i) => (
-                        <div
-                          key={i}
-                          className={styles.availabilitySlot}
-                          style={{
-                            gridRowStart: timeToRow(time.start),
-                            gridRowEnd: `span ${timeToSpan(time.start, time.end)}`,
-                          }}
-                        ></div>
-                      ))}
-
-                    {events
-                      .filter((event) => event.day === day)
-                      .map((event, i) => (
-                        <div
-                          key={i}
-                          className={`${styles.eventSlot} ${
-                            event.title === 'Meeting 2'
-                              ? styles.meeting2
-                              : styles.meeting
-                          }`}
-                          style={{
-                            gridRowStart: timeToRow(event.start),
-                            gridRowEnd: `span ${timeToSpan(event.start, event.end)}`,
-                          }}
-                        >
-                          {event.start} - {event.title}
-                        </div>
-                      ))}
-                  </div>
-                </div>
-              ))}
-              <div className={styles.timeZoneIndicator}>EST (GMT-5)</div>
             </div>
           </div>
-        )}
+          <div style={styles.eventCard}>
+            <div style={styles.eventCardHeader}>
+              <h3 style={styles.eventCardTitle}>Meeting-2</h3>
+              <span style={styles.editIcon}>✏️</span>
+            </div>
+            <p style={styles.eventCardDetails}>
+              Friday, 28 Feb<br />
+              2:00 PM - 3:00 PM<br />
+              1hr, Group meeting
+            </p>
+            <div style={styles.eventCardFooter}>
+              <div style={{ ...styles.toggleSwitch, ...styles.toggleSwitchActive }}></div>
+              <div style={styles.icons}>
+                <span style={styles.icon}>📋</span>
+                <span style={styles.icon}>🗑️</span>
+              </div>
+            </div>
+          </div>
+          <div style={styles.eventCard}>
+            <div style={styles.eventCardHeader}>
+              <h3 style={styles.eventCardTitle}>Appointment</h3>
+              <span style={styles.editIcon}>✏️</span>
+            </div>
+            <p style={styles.eventCardDetails}>
+              Friday, 28 Feb<br />
+              2:35 PM - 3:00 PM<br />
+              1hr, Group meeting
+            </p>
+            <div style={styles.eventCardFooter}>
+              <div style={styles.toggleSwitch}></div>
+              <div style={styles.icons}>
+                <span style={styles.icon}>📋</span>
+                <span style={styles.icon}>🗑️</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
-export default AvailabilityScheduler;
+// Styles (converted to JavaScript objects for React inline styling)
+const styles = {
+  body: {
+    display: 'flex',
+    minHeight: '100vh',
+    backgroundColor: '#f5f5f5',
+    fontFamily: "'Roboto', sans-serif",
+  },
+  // Sidebar Styles
+  sidebar: {
+    width: '260px',
+    backgroundColor: '#ffffff',
+    padding: '24px',
+    boxShadow: '2px 0 5px rgba(0, 0, 0, 0.1)',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  logoContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    marginBottom: '32px',
+  },
+  logo: {
+    width: '32px',
+    height: '32px',
+    marginRight: '8px',
+  },
+  logoText: {
+    fontSize: '20px',
+    fontWeight: 'bold',
+    color: '#1a73e8',
+  },
+  nav: {
+    flexGrow: 1,
+  },
+  navItem: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: '8px 0',
+    color: '#5f6368',
+    textDecoration: 'none',
+    fontSize: '16px',
+  },
+  navItemActive: {
+    color: '#1a73e8',
+  },
+  navItemIcon: {
+    marginRight: '8px',
+  },
+  userProfile: {
+    display: 'flex',
+    alignItems: 'center',
+    marginTop: 'auto',
+  },
+  userAvatar: {
+    width: '32px',
+    height: '32px',
+    borderRadius: '50%',
+    marginRight: '8px',
+  },
+  userName: {
+    fontSize: '14px',
+    color: '#5f6368',
+  },
+  // Main Content Styles
+  main: {
+    flexGrow: 1,
+    padding: '32px',
+    backgroundColor: '#f5f5f5',
+  },
+  header: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: '24px',
+  },
+  headerTitle: {
+    fontSize: '24px',
+    color: '#202124',
+  },
+  headerSubtitle: {
+    fontSize: '14px',
+    color: '#5f6368',
+    marginTop: '4px',
+  },
+  addButton: {
+    backgroundColor: '#1a73e8',
+    color: '#ffffff',
+    padding: '8px 16px',
+    border: 'none',
+    borderRadius: '4px',
+    fontSize: '14px',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  eventList: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '16px',
+  },
+  eventCard: {
+    backgroundColor: '#ffffff',
+    border: '1px solid #dadce0',
+    borderRadius: '8px',
+    width: '300px',
+    padding: '16px',
+    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+  },
+  eventCardHeader: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: '8px',
+  },
+  eventCardTitle: {
+    fontSize: '16px',
+    color: '#202124',
+  },
+  editIcon: {
+    fontSize: '16px',
+    color: '#5f6368',
+    cursor: 'pointer',
+  },
+  eventCardDetails: {
+    fontSize: '14px',
+    color: '#5f6368',
+    marginBottom: '16px',
+  },
+  eventCardFooter: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  toggleSwitch: {
+    width: '40px',
+    height: '20px',
+    backgroundColor: '#dadce0',
+    borderRadius: '10px',
+    position: 'relative',
+    cursor: 'pointer',
+  },
+  toggleSwitchActive: {
+    backgroundColor: '#1a73e8',
+  },
+  icons: {
+    display: 'flex',
+    gap: '8px',
+  },
+  icon: {
+    fontSize: '16px',
+    color: '#5f6368',
+    cursor: 'pointer',
+  },
+};
+
+export default EventTypesPage;
