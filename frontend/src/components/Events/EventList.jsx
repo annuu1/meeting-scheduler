@@ -14,20 +14,6 @@ function EventList() {
           date: "2023-01-01",
           time: "10:00",
           duration: 60
-        },
-        {
-          id: 2,
-          title: "Event 2",
-          date: "2023-01-01",
-          time: "10:00",
-          duration: 60
-        },
-        {
-          id: 3,
-          title: "Event 3",
-          date: "2023-01-01",
-          time: "10:00",
-          duration: 60
         }
       ])
 
@@ -45,6 +31,7 @@ function EventList() {
             if(!response.data.success){
               navigate('/login')
             }
+            console.log(response.data.events)
             setEvents(response.data.events)})
             .catch((error)=>{
               console.log(error)
@@ -66,7 +53,7 @@ function EventList() {
       <EventCard 
         key={`${event.id}-${event.title}`} 
         title={event.title} 
-        date={event.date} 
+        date={event.dateTime} 
         time={event.time} 
         duration={event.duration} 
       />
