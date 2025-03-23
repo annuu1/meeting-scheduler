@@ -1,268 +1,252 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
+import styles from '../../styles/Test.module.css';
 
-const EventTypesPage = () => {
+const Test = ({ onClose }) => {
+  const [formData, setFormData] = useState({
+    eventTopic: '',
+    password: '',
+    hostName: 'Sarthak Pal', // Default value as shown in the image
+    description: '',
+    date: '',
+    time: '02:30',
+    period: 'PM',
+    timezone: 'UTC+5:00 (Delhi)',
+    duration: '1 hour',
+    backgroundColor: '#000000',
+    link: '',
+    emails: '',
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const token = localStorage.getItem('token');
+    const config = {
+      headers: {
+        Authorization: `${token}`,
+      },
+    };
+    axios
+      .post('http://localhost:5000/api/events', formData, config)
+      .then((response) => {
+        console.log(response);
+        onClose();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
   return (
-    <div style={styles.body}>
-      {/* Sidebar */}
-      <div style={styles.sidebar}>
-        <div style={styles.logoContainer}>
-          <img
-            src="https://via.placeholder.com/32"
-            alt="Logo"
-            style={styles.logo}
-          />
-          <span style={styles.logoText}>CNNCT</span>
-        </div>
-        <nav style={styles.nav}>
-          <a href="#" style={{ ...styles.navItem, ...styles.navItemActive }}>
-            <span style={styles.navItemIcon}>📅</span> Events
-          </a>
-          <a href="#" style={styles.navItem}>
-            <span style={styles.navItemIcon}>📆</span> Booking
-          </a>
-          <a href="#" style={styles.navItem}>
-            <span style={styles.navItemIcon}>⏰</span> Availability
-          </a>
-          <a href="#" style={styles.navItem}>
-            <span style={styles.navItemIcon}>⚙️</span> Settings
-          </a>
-        </nav>
-        <div style={styles.userProfile}>
-          <img
-            src="https://via.placeholder.com/32"
-            alt="User Avatar"
-            style={styles.userAvatar}
-          />
-          <span style={styles.userName}>sarthak pal</span>
-        </div>
-      </div>
+    <div className={styles.modalOverlay}>
+      <div className={styles.modal}>
+        <h2 className={styles.modalTitle}>Add Event</h2>
+        <form onSubmit={handleSubmit}>
+          {/* Event Topic */}
+          <div className={styles.formGroup}>
+            <label className={styles.label}>
+              Event Topic <span className={styles.required}>*</span>
+            </label>
+            <input
+              type="text"
+              name="eventTopic"
+              value={formData.eventTopic}
+              onChange={handleChange}
+              placeholder="Set a conference topic before it starts"
+              className={styles.input}
+              required
+            />
+          </div>
 
-      {/* Main Content */}
-      <div style={styles.main}>
-        <div style={styles.header}>
-          <div>
-            <h1 style={styles.headerTitle}>Event Types</h1>
-            <p style={styles.headerSubtitle}>
-              Create events to share for people to book on your calendar.
-            </p>
+          {/* Password */}
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Password</label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Password"
+              className={styles.input}
+            />
           </div>
-          <button style={styles.addButton}>+ Add New Event</button>
-        </div>
-        <div style={styles.eventList}>
-          <div style={styles.eventCard}>
-            <div style={styles.eventCardHeader}>
-              <h3 style={styles.eventCardTitle}>Meeting</h3>
-              <span style={styles.editIcon}>✏️</span>
+
+          {/* Host Name */}
+          <div className={styles.formGroup}>
+            <label className={styles.label}>
+              Host name <span className={styles.required}>*</span>
+            </label>
+            <select
+              name="hostName"
+              value={formData.hostName}
+              onChange={handleChange}
+              className={styles.select}
+              required
+            >
+              <option value="Sarthak Pal">Sarthak Pal</option>
+              {/* Add more options if needed */}
+            </select>
+          </div>
+
+          {/* Description */}
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Description</label>
+            <textarea
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              className={styles.textarea}
+            />
+          </div>
+
+          {/* Date and Time */}
+          <div className={styles.formGroup}>
+            <label className={styles.label}>
+              Date and time <span className={styles.required}>*</span>
+            </label>
+            <div className={styles.dateTimeGroup}>
+              <input
+                type="text"
+                name="date"
+                value={formData.date}
+                onChange={handleChange}
+                placeholder="dd/mm/yy"
+                className={styles.inputSmall}
+                required
+              />
+              <select
+                name="time"
+                value={formData.time}
+                onChange={handleChange}
+                className={styles.selectSmall}
+              >
+                <option value="02:30">02:30</option>
+                {/* Add more time options if needed */}
+              </select>
+              <select
+                name="period"
+                value={formData.period}
+                onChange={handleChange}
+                className={styles.selectSmall}
+              >
+                <option value="AM">AM</option>
+                <option value="PM">PM</option>
+              </select>
+              <select
+                name="timezone"
+                value={formData.timezone}
+                onChange={handleChange}
+                className={styles.selectMedium}
+              >
+                <option value="UTC+5:00 (Delhi)">UTC+5:00 (Delhi)</option>
+                {/* Add more timezone options if needed */}
+              </select>
             </div>
-            <p style={styles.eventCardDetails}>
-              Friday, 28 Feb<br />
-              10:00 AM - 12:00 AM<br />
-              1hr, Group meeting
-            </p>
-            <div style={styles.eventCardFooter}>
-              <div style={{ ...styles.toggleSwitch, ...styles.toggleSwitchActive }}></div>
-              <div style={styles.icons}>
-                <span style={styles.icon}>📋</span>
-                <span style={styles.icon}>🗑️</span>
+          </div>
+
+          {/* Set Duration */}
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Set duration</label>
+            <select
+              name="duration"
+              value={formData.duration}
+              onChange={handleChange}
+              className={styles.select}
+            >
+              <option value="1 hour">1 hour</option>
+              <option value="30 minutes">30 minutes</option>
+              <option value="2 hours">2 hours</option>
+            </select>
+          </div>
+
+          {/* Banner */}
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Banner</label>
+            <div
+              className={styles.bannerPreview}
+              style={{ backgroundColor: formData.backgroundColor }}
+            >
+              <div className={styles.bannerContent}>
+                <img
+                  src="https://via.placeholder.com/50"
+                  alt="Avatar"
+                  className={styles.bannerAvatar}
+                />
+                <p className={styles.bannerText}>
+                  {formData.eventTopic || 'Team A Meeting'}
+                </p>
               </div>
             </div>
           </div>
-          <div style={styles.eventCard}>
-            <div style={styles.eventCardHeader}>
-              <h3 style={styles.eventCardTitle}>Meeting-2</h3>
-              <span style={styles.editIcon}>✏️</span>
-            </div>
-            <p style={styles.eventCardDetails}>
-              Friday, 28 Feb<br />
-              2:00 PM - 3:00 PM<br />
-              1hr, Group meeting
-            </p>
-            <div style={styles.eventCardFooter}>
-              <div style={{ ...styles.toggleSwitch, ...styles.toggleSwitchActive }}></div>
-              <div style={styles.icons}>
-                <span style={styles.icon}>📋</span>
-                <span style={styles.icon}>🗑️</span>
-              </div>
-            </div>
-          </div>
-          <div style={styles.eventCard}>
-            <div style={styles.eventCardHeader}>
-              <h3 style={styles.eventCardTitle}>Appointment</h3>
-              <span style={styles.editIcon}>✏️</span>
-            </div>
-            <p style={styles.eventCardDetails}>
-              Friday, 28 Feb<br />
-              2:35 PM - 3:00 PM<br />
-              1hr, Group meeting
-            </p>
-            <div style={styles.eventCardFooter}>
-              <div style={styles.toggleSwitch}></div>
-              <div style={styles.icons}>
-                <span style={styles.icon}>📋</span>
-                <span style={styles.icon}>🗑️</span>
-              </div>
+
+          {/* Custom Background Color */}
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Custom Background Color</label>
+            <div className={styles.colorPicker}>
+              <div className={styles.colorOption} style={{ backgroundColor: '#FF5733' }}></div>
+              <div className={styles.colorOption} style={{ backgroundColor: '#FFFFFF' }}></div>
+              <div className={styles.colorOption} style={{ backgroundColor: '#000000' }}></div>
+              <input
+                type="text"
+                name="backgroundColor"
+                value={formData.backgroundColor}
+                onChange={handleChange}
+                placeholder="#000000"
+                className={styles.colorInput}
+              />
             </div>
           </div>
-        </div>
+
+          {/* Add Link */}
+          <div className={styles.formGroup}>
+            <label className={styles.label}>
+              Add link <span className={styles.required}>*</span>
+            </label>
+            <input
+              type="url"
+              name="link"
+              value={formData.link}
+              onChange={handleChange}
+              placeholder="Enter URL Here"
+              className={styles.input}
+              required
+            />
+          </div>
+
+          {/* Add Emails */}
+          <div className={styles.formGroup}>
+            <label className={styles.label}>
+              Add Emails <span className={styles.required}>*</span>
+            </label>
+            <input
+              type="text"
+              name="emails"
+              value={formData.emails}
+              onChange={handleChange}
+              placeholder="Add member Emails"
+              className={styles.input}
+              required
+            />
+          </div>
+
+          {/* Buttons */}
+          <div className={styles.buttonGroup}>
+            <button type="button" onClick={onClose} className={styles.cancelButton}>
+              Cancel
+            </button>
+            <button type="submit" className={styles.saveButton}>
+              Save
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );
 };
 
-// Styles (converted to JavaScript objects for React inline styling)
-const styles = {
-  body: {
-    display: 'flex',
-    minHeight: '100vh',
-    backgroundColor: '#f5f5f5',
-    fontFamily: "'Roboto', sans-serif",
-  },
-  // Sidebar Styles
-  sidebar: {
-    width: '260px',
-    backgroundColor: '#ffffff',
-    padding: '24px',
-    boxShadow: '2px 0 5px rgba(0, 0, 0, 0.1)',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  logoContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    marginBottom: '32px',
-  },
-  logo: {
-    width: '32px',
-    height: '32px',
-    marginRight: '8px',
-  },
-  logoText: {
-    fontSize: '20px',
-    fontWeight: 'bold',
-    color: '#1a73e8',
-  },
-  nav: {
-    flexGrow: 1,
-  },
-  navItem: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: '8px 0',
-    color: '#5f6368',
-    textDecoration: 'none',
-    fontSize: '16px',
-  },
-  navItemActive: {
-    color: '#1a73e8',
-  },
-  navItemIcon: {
-    marginRight: '8px',
-  },
-  userProfile: {
-    display: 'flex',
-    alignItems: 'center',
-    marginTop: 'auto',
-  },
-  userAvatar: {
-    width: '32px',
-    height: '32px',
-    borderRadius: '50%',
-    marginRight: '8px',
-  },
-  userName: {
-    fontSize: '14px',
-    color: '#5f6368',
-  },
-  // Main Content Styles
-  main: {
-    flexGrow: 1,
-    padding: '32px',
-    backgroundColor: '#f5f5f5',
-  },
-  header: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: '24px',
-  },
-  headerTitle: {
-    fontSize: '24px',
-    color: '#202124',
-  },
-  headerSubtitle: {
-    fontSize: '14px',
-    color: '#5f6368',
-    marginTop: '4px',
-  },
-  addButton: {
-    backgroundColor: '#1a73e8',
-    color: '#ffffff',
-    padding: '8px 16px',
-    border: 'none',
-    borderRadius: '4px',
-    fontSize: '14px',
-    cursor: 'pointer',
-    display: 'flex',
-    alignItems: 'center',
-  },
-  eventList: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    gap: '16px',
-  },
-  eventCard: {
-    backgroundColor: '#ffffff',
-    border: '1px solid #dadce0',
-    borderRadius: '8px',
-    width: '300px',
-    padding: '16px',
-    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
-  },
-  eventCardHeader: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: '8px',
-  },
-  eventCardTitle: {
-    fontSize: '16px',
-    color: '#202124',
-  },
-  editIcon: {
-    fontSize: '16px',
-    color: '#5f6368',
-    cursor: 'pointer',
-  },
-  eventCardDetails: {
-    fontSize: '14px',
-    color: '#5f6368',
-    marginBottom: '16px',
-  },
-  eventCardFooter: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  toggleSwitch: {
-    width: '40px',
-    height: '20px',
-    backgroundColor: '#dadce0',
-    borderRadius: '10px',
-    position: 'relative',
-    cursor: 'pointer',
-  },
-  toggleSwitchActive: {
-    backgroundColor: '#1a73e8',
-  },
-  icons: {
-    display: 'flex',
-    gap: '8px',
-  },
-  icon: {
-    fontSize: '16px',
-    color: '#5f6368',
-    cursor: 'pointer',
-  },
-};
-
-export default EventTypesPage;
+export default Test;

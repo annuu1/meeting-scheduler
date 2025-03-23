@@ -1,0 +1,159 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal {
+    background-color: #ffffff;
+    padding: 24px;
+    border-radius: 8px;
+    width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .modalTitle {
+    font-size: 20px;
+    color: #1a73e8;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+  
+  .formGroup {
+    margin-bottom: 16px;
+  }
+  
+  .label {
+    font-size: 14px;
+    color: #202124;
+    margin-bottom: 4px;
+    display: block;
+  }
+  
+  .required {
+    color: red;
+  }
+  
+  .input,
+  .select,
+  .textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #5f6368;
+  }
+  
+  .input:focus,
+  .select:focus,
+  .textarea:focus {
+    outline: none;
+    border-color: #1a73e8;
+  }
+  
+  .textarea {
+    height: 80px;
+    resize: none;
+  }
+  
+  .dateTimeGroup {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .inputSmall {
+    width: 100px;
+  }
+  
+  .selectSmall {
+    width: 80px;
+  }
+  
+  .selectMedium {
+    width: 150px;
+  }
+  
+  .bannerPreview {
+    background-color: #000000;
+    padding: 16px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+  }
+  
+  .bannerContent {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  .bannerAvatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+  
+  .bannerText {
+    color: #ffffff;
+    font-size: 16px;
+  }
+  
+  .colorPicker {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  
+  .colorOption {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid #dadce0;
+    cursor: pointer;
+  }
+  
+  .colorInput {
+    width: 100px;
+    padding: 8px;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .buttonGroup {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 24px;
+  }
+  
+  .cancelButton,
+  .saveButton {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .cancelButton {
+    background-color: #f1f3f4;
+    color: #5f6368;
+  }
+  
+  .saveButton {
+    background-color: #1a73e8;
+    color: #ffffff;
+  }

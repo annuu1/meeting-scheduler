@@ -1,335 +1,159 @@
-/* Container for the entire app */
-.container {
-    display: flex;
-    min-height: 100vh;
-    background-color: #f5f5f5;
-  }
-  
-  /* Sidebar */
-  .sidebar {
-    width: 260px;
-    background-color: #ffffff;
-    padding: 24px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .logoContainer {
-    display: flex;
-    align-items: center;
-    margin-bottom: 32px;
-  }
-  
-  .logo {
-    width: 32px;
-    height: 32px;
-    margin-right: 8px;
-  }
-  
-  .logoText {
-    font-size: 20px;
-    font-weight: bold;
-    color: #1a73e8;
-  }
-  
-  .nav {
-    flex-grow: 1;
-  }
-  
-  .navItem {
-    display: flex;
-    align-items: center;
-    padding: 8px 0;
-    color: #5f6368;
-    text-decoration: none;
-    font-size: 16px;
-  }
-  
-  .navItem.active {
-    color: #1a73e8;
-  }
-  
-  .navItemIcon {
-    margin-right: 8px;
-  }
-  
-  .userProfile {
-    display: flex;
-    align-items: center;
-    margin-top: auto;
-  }
-  
-  .userAvatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    margin-right: 8px;
-  }
-  
-  .userName {
-    font-size: 14px;
-    color: #5f6368;
-  }
-  
-  /* Main Content */
-  .main {
-    flex: 1;
-    padding: 32px;
-  }
-  
-  .header {
-    font-size: 24px;
-    font-weight: bold;
-    color: #202124;
-    margin-bottom: 8px;
-  }
-  
-  .subHeader {
-    font-size: 14px;
-    color: #5f6368;
-    margin-bottom: 24px;
-  }
-  
-  .tabContainer {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 24px;
-  }
-  
-  .tab {
-    padding: 8px 16px;
-    background-color: #e8eaed;
-    border: 1px solid #dadce0;
-    border-radius: 4px;
-    font-size: 14px;
-    color: #5f6368;
-    cursor: pointer;
-  }
-  
-  .tab.active {
-    background-color: #ffffff;
-    color: #202124;
-  }
-  
-  /* Card (used for both Availability and Calendar View) */
-  .card {
-    background-color: #ffffff;
-    padding: 24px;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Dropdowns (Activity and Time Zone) */
-  .dropdownContainer {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 24px;
-  }
-  
-  .dropdownWrapper {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .dropdownLabel {
-    font-size: 14px;
-    font-weight: 500;
-    color: #5f6368;
-    margin-bottom: 4px;
-  }
-  
-  .dropdown {
-    width: 200px;
-    padding: 8px;
-    border: 1px solid #dadce0;
-    border-radius: 4px;
-    font-size: 14px;
-    color: #202124;
-    background-color: #ffffff;
-  }
-  
-  /* Availability Tab */
-  .sectionTitle {
-    font-size: 18px;
-    font-weight: 600;
-    color: #202124;
-    margin-bottom: 16px;
-  }
-  
-  .dayRow {
-    display: flex;
-    align-items: center;
-    margin-bottom: 16px;
-  }
-  
-  .dayLabel {
-    width: 60px;
-    font-size: 14px;
-    color: #202124;
-  }
-  
-  .timeInputs {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex: 1;
-  }
-  
-  .timeInput {
-    width: 120px;
-    padding: 8px;
-    border: 1px solid #dadce0;
-    border-radius: 4px;
-    font-size: 14px;
-    color: #202124;
-  }
-  
-  .unavailableText {
-    font-size: 14px;
-    color: #5f6368;
-  }
-  
-  .removeButton {
-    color: #5f6368;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  .removeButton:hover {
-    color: #202124;
-  }
-  
-  .addButton {
-    color: #1a73e8;
-    font-size: 20px;
-    margin-left: 8px;
-    cursor: pointer;
-  }
-  
-  .addButton:hover {
-    color: #1557b0;
-  }
-  
-  /* Calendar View */
-  .calendarControls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-  }
-  
-  .navButtons,
-  .viewButtons {
-    display: flex;
-    gap: 8px;
-  }
-  
-  .navButton,
-  .viewButton {
-    padding: 8px 16px;
-    border: 1px solid #dadce0;
-    border-radius: 4px;
-    font-size: 14px;
-    color: #5f6368;
-    background-color: #ffffff;
-    cursor: pointer;
-  }
-  
-  .viewButton.active {
-    background-color: #1a73e8;
-    color: #ffffff;
-    border-color: #1a73e8;
-  }
-  
-  .searchInput {
-    padding: 8px;
-    border: 1px solid #dadce0;
-    border-radius: 4px;
-    font-size: 14px;
-    color: #202124;
-    width: 150px;
-  }
-  
-  .calendarGrid {
-    position: relative;
-    display: grid;
-    grid-template-columns: 60px repeat(7, 1fr);
-    gap: 1px;
-    background-color: #dadce0;
-  }
-  
-  .timeColumn {
-    background-color: #ffffff;
-    padding: 8px;
-  }
-  
-  .timeHeader {
-    height: 48px;
-  }
-  
-  .timeSlot {
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding-right: 8px;
-    font-size: 12px;
-    color: #5f6368;
-  }
-  
-  .dayColumn {
-    background-color: #ffffff;
-    position: relative;
-  }
-  
-  .dayHeader {
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    font-weight: 600;
-    color: #202124;
-    border-bottom: 1px solid #dadce0;
-  }
-  
-  .dayGrid {
-    display: grid;
-    grid-template-rows: repeat(16, 24px);
-  }
-  
-  .availabilitySlot {
-    position: absolute;
-    background-color: rgba(26, 115, 232, 0.1);
-    border-left: 4px solid #1a73e8;
-    left: 0;
-    right: 0;
-  }
-  
-  .eventSlot {
-    position: absolute;
-    padding: 4px;
-    font-size: 12px;
-    color: #202124;
-    left: 0;
-    right: 0;
-  }
-  
-  .eventSlot.meeting {
-    background-color: rgba(0, 0, 0, 0.05);
-    border-left: 4px solid #5f6368;
-  }
-  
-  .eventSlot.meeting2 {
-    background-color: rgba(103, 58, 183, 0.1);
-    border-left: 4px solid #673ab7;
-  }
-  
-  .timeZoneIndicator {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    font-size: 12px;
-    color: #5f6368;
-  }
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 8px;
+  width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modalTitle {
+  font-size: 20px;
+  color: #1a73e8;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.formGroup {
+  margin-bottom: 16px;
+}
+
+.label {
+  font-size: 14px;
+  color: #202124;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.required {
+  color: red;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #dadce0;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #5f6368;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  outline: none;
+  border-color: #1a73e8;
+}
+
+.textarea {
+  height: 80px;
+  resize: none;
+}
+
+.dateTimeGroup {
+  display: flex;
+  gap: 8px;
+}
+
+.inputSmall {
+  width: 100px;
+}
+
+.selectSmall {
+  width: 80px;
+}
+
+.selectMedium {
+  width: 150px;
+}
+
+.bannerPreview {
+  background-color: #000000;
+  padding: 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+}
+
+.bannerContent {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.bannerAvatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.bannerText {
+  color: #ffffff;
+  font-size: 16px;
+}
+
+.colorPicker {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.colorOption {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid #dadce0;
+  cursor: pointer;
+}
+
+.colorInput {
+  width: 100px;
+  padding: 8px;
+  border: 1px solid #dadce0;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.cancelButton,
+.saveButton {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.cancelButton {
+  background-color: #f1f3f4;
+  color: #5f6368;
+}
+
+.saveButton {
+  background-color: #1a73e8;
+  color: #ffffff;
+}
