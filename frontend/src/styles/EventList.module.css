@@ -1,5 +1,43 @@
-.eventContainer{
+.container {
+    flex-grow: 1;
+    width: 100%;
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  .headerTitle {
+    font-size: 24px;
+    color: #202124;
+  }
+  .headerSubtitle {
+    font-size: 14px;
+    color: #5f6368;
+    margin-top: 4px;
+  }
+  
+  .addButton {
+    background-color: #1a73e8;
+    color: #ffffff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  
+  .addIcon {
+    margin-right: 8px;
+    font-size: 16px;
+  }
+  
+  .eventList {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-}
+    gap: 16px;
+    justify-content: space-between;
+  }
