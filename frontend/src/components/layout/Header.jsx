@@ -6,8 +6,8 @@ import styles from '../../styles/Header.module.css'
 function Header() {
   return (
     <div className={styles.header}>
-        <img src={logo} alt="Logo" />
-        <h2>CNNCT</h2>
+        <img src={logo} alt="Logo" className={styles.logo} />
+        <h2 className={styles.logoText}>CNNCT</h2>
     </div>
   )
 }

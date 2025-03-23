@@ -6,4 +6,14 @@
     padding: 10px;
     position: sticky;
     top: 0;
+    background-color: #fff;
+    gap: 3px;
+}
+.logo{
+    width: 31.76px;
+    height: 29.59px;
+}
+.logoText{
+    width: 86px;
+    height: 30px;
 }

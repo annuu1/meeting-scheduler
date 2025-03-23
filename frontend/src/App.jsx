@@ -9,13 +9,14 @@ import Preferences from './components/auth/Preferences'
 import Header from './components/layout/Header'
 import Dashboard from './pages/Dashboard'
 import EventForm from './components/Events/EventForm'
+import Test from './components/test/Test'
 
 function App() {
 
   return (
     <>
      <BrowserRouter>
-     <Header/>
+     {/* <Header/> */}
       <Routes>
         <Route path='/' element= {<Home/>} ></Route>
         <Route path='/signup' element= {<Signup/>} ></Route>
@@ -23,6 +24,7 @@ function App() {
         <Route path='/preferences' element= {<Preferences/>} ></Route>
         <Route path='/dashboard' element= {<Dashboard/>} ></Route>
         <Route path='/events/new' element= {<EventForm/>} ></Route>
+        <Route path='/test' element= {<Test/>} ></Route>
       </Routes>
      </BrowserRouter>
     </>
