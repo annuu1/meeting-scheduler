@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import EventForm from './EventForm';
 import styles from "../../styles/EventList.module.css";
 import EventCard from "./EventCard";
 import axios from "axios";
@@ -14,8 +15,18 @@ function EventList() {
       time: "10:00",
       duration: 60,
       isActive: true,
-    },
+    }, 
   ]);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleAddEvent = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
@@ -52,7 +63,7 @@ function EventList() {
             Create events to share for people to book on your calendar.
           </p>
         </div>
-        <button className={styles.addButton}>
+        <button className={styles.addButton} onClick={handleAddEvent} >
           <span className={styles.addIcon}>+</span> Add New Event
         </button>
       </div>
@@ -72,6 +83,7 @@ function EventList() {
           <div>No events found</div>
         )}
       </div>
+      {isModalOpen && <EventForm onClose={handleCloseModal} />}
     </div>
   );
 }
