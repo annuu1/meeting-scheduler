@@ -1,8 +1,51 @@
 import React, {useState} from 'react'
 import styles from '../../styles/Booking.module.css'
+import BookingTabs from './BookingTabs';
 
 function Booking() {
+      const [events, setEvents] = useState([
+        {
+          id: 1,
+          date: 'Friday, 28 Feb',
+          time: '2:35 PM - 3:00 PM',
+          title: 'Appointment',
+          participants: ['You', 'Dr. Kumar'],
+          status: 'cancelled',
+        },
+        {
+          id: 2,
+          date: 'Friday, 28 Feb',
+          time: '1:30 PM - 2:30 PM',
+          title: 'Meeting-2',
+          participants: ['You', 'Team 2'],
+          participantCount: 13,
+          status: 'upcoming',
+        },
+        {
+          id: 3,
+          date: 'Friday, 28 Feb',
+          time: '10:30 AM - 12:30 PM',
+          title: 'Meeting',
+          participants: ['You', 'Team 1'],
+          participantCount: 4,
+          status: 'pending',
+          participantList: [
+            { name: 'Akbar Husain', accepted: true },
+            { name: 'Aneesh Menon', accepted: false },
+            { name: 'Rahul Saini', accepted: false },
+            { name: 'Bharat Thakur', accepted: false },
+            { name: 'Natalia', accepted: false },
+            { name: 'Alia Toy', accepted: false },
+          ],
+        },
+      ]);
+
     const [activeTab, setActiveTab] = useState('upcoming')
+    const filteredEvents = events.filter(event => event.status === activeTab)
+
+    const handleTabChange = (tab) => {
+        setActiveTab(tab);
+      };
 
   return (
     <div className={styles.cotainer}>
@@ -11,17 +54,16 @@ function Booking() {
             <p>See upcoming and past events booked through your event type links.</p>
         </div>
         <div className={styles.booking}>
-            <div className={styles.tabs}>
-                <button className={styles.tab} onClick={() => setActiveTab('upcoming')}>Upcoming</button>
-                <button className={styles.tab} onClick={()=> setActiveTab('pending')} >Pending</button>
-                <button className={styles.tab} onClick={()=> setActiveTab('cancelled')} >Cancelled</button>
-                <button className={styles.tab} onClick={()=> setActiveTab('past')} >Past</button>
-            </div>
+            <BookingTabs activeTab={activeTab} onTabChange={handleTabChange} />
             <div className={styles.bookingList}>
-                {activeTab==='upcoming' && (<h1>{activeTab}</h1>)}
-                {activeTab==='pending' && (<h1>{activeTab}</h1>)}
-                {activeTab==='cancelled' && (<h1>{activeTab}</h1>)}
-                {activeTab==='past' && (<h1>{activeTab}</h1>)}
+                {
+                    filteredEvents.length === 0 ? ( <p>No events Found</p>) :
+                    (
+                        filteredEvents.map((events, index) =>(
+                            <p>{events.title}</p>
+                        ))
+                    )
+                }
             </div>
 
         </div>
