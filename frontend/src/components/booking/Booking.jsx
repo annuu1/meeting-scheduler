@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 import styles from '../../styles/Booking.module.css'
+
 import BookingTabs from './BookingTabs';
+import BookingList from './BookingList';
 
 function Booking() {
       const [events, setEvents] = useState([
@@ -38,6 +40,23 @@ function Booking() {
             { name: 'Alia Toy', accepted: false },
           ],
         },
+        {
+            id: 4,
+            date: 'Friday, 28 Feb',
+            time: '10:30 AM - 12:30 PM',
+            title: 'Meeting',
+            participants: ['You', 'Team 1'],
+            participantCount: 4,
+            status: 'pending',
+            participantList: [
+              { name: 'Akbar Husain', accepted: true },
+              { name: 'Aneesh Menon', accepted: false },
+              { name: 'Rahul Saini', accepted: false },
+              { name: 'Bharat Thakur', accepted: false },
+              { name: 'Natalia', accepted: false },
+              { name: 'Alia Toy', accepted: false },
+            ],
+          },
       ]);
 
     const [activeTab, setActiveTab] = useState('upcoming')
@@ -55,16 +74,7 @@ function Booking() {
         </div>
         <div className={styles.booking}>
             <BookingTabs activeTab={activeTab} onTabChange={handleTabChange} />
-            <div className={styles.bookingList}>
-                {
-                    filteredEvents.length === 0 ? ( <p>No events Found</p>) :
-                    (
-                        filteredEvents.map((events, index) =>(
-                            <p>{events.title}</p>
-                        ))
-                    )
-                }
-            </div>
+            <BookingList events={filteredEvents} />
 
         </div>
     </div>

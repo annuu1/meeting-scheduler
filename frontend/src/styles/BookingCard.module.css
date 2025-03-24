@@ -1,0 +1,73 @@
+.eventCard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .eventDetails {
+    display: flex;
+    align-items: center;
+  }
+  
+  .eventDateTime p {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .eventInfo {
+    margin-left: 20px;
+  }
+  
+  .eventTitle {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .eventInfo p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .eventActions {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  .statusButton {
+    padding: 5px 15px;
+    border-radius: 20px;
+    border: none;
+    font-size: 14px;
+    cursor: default;
+  }
+  
+  .accepted {
+    background-color: #e6f0ff;
+    color: #007bff;
+  }
+  
+  .rejected {
+    background-color: #f8d7da;
+    color: #dc3545;
+  }
+  
+  .participantButton {
+    padding: 5px 15px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .participantCount {
+    margin-left: 10px;
+    font-size: 14px;
+    color: #666;
+  }
