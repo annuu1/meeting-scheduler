@@ -1,159 +1,239 @@
-.modalOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+.container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+  height: 100vh;
+  font-family: Arial, sans-serif;
 }
 
-.modal {
-  background-color: #ffffff;
-  padding: 24px;
-  border-radius: 8px;
-  width: 500px;
-  max-height: 80vh;
-  overflow-y: auto;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.modalTitle {
-  font-size: 20px;
-  color: #1a73e8;
-  margin-bottom: 24px;
-  text-align: center;
-}
-
-.formGroup {
-  margin-bottom: 16px;
-}
-
-.label {
-  font-size: 14px;
-  color: #202124;
-  margin-bottom: 4px;
-  display: block;
-}
-
-.required {
-  color: red;
-}
-
-.input,
-.select,
-.textarea {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #dadce0;
-  border-radius: 4px;
-  font-size: 14px;
-  color: #5f6368;
-}
-
-.input:focus,
-.select:focus,
-.textarea:focus {
-  outline: none;
-  border-color: #1a73e8;
-}
-
-.textarea {
-  height: 80px;
-  resize: none;
-}
-
-.dateTimeGroup {
+.sidebar {
+  width: 250px;
+  background-color: #f5f5f5;
+  padding: 20px;
   display: flex;
-  gap: 8px;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.inputSmall {
-  width: 100px;
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #007bff;
 }
 
-.selectSmall {
-  width: 80px;
+.menu {
+  margin-top: 40px;
 }
 
-.selectMedium {
-  width: 150px;
-}
-
-.bannerPreview {
-  background-color: #000000;
-  padding: 16px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100px;
-}
-
-.bannerContent {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.bannerAvatar {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-}
-
-.bannerText {
-  color: #ffffff;
+.menuItem {
+  padding: 10px;
   font-size: 16px;
+  color: #666;
+  cursor: pointer;
 }
 
-.colorPicker {
+.menuItemActive {
+  padding: 10px;
+  font-size: 16px;
+  color: #007bff;
+  background-color: #e6f0ff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.user {
   display: flex;
-  gap: 8px;
+  align-items: center;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.mainContent {
+  flex: 1;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.mainContent h1 {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.tabs {
+  display: flex;
+  border-bottom: 2px solid #ddd;
+  margin-bottom: 20px;
+}
+
+.tab {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #666;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.tab.active {
+  color: #007bff;
+  border-bottom: 2px solid #007bff;
+}
+
+.eventList {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.eventCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.eventDetails {
+  display: flex;
   align-items: center;
 }
 
-.colorOption {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  border: 1px solid #dadce0;
-  cursor: pointer;
-}
-
-.colorInput {
-  width: 100px;
-  padding: 8px;
-  border: 1px solid #dadce0;
-  border-radius: 4px;
+.eventDateTime p {
+  margin: 0;
   font-size: 14px;
+  color: #333;
 }
 
-.buttonGroup {
+.eventInfo {
+  margin-left: 20px;
+}
+
+.eventTitle {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.eventInfo p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.eventActions {
   display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  margin-top: 24px;
+  align-items: center;
+  position: relative;
 }
 
-.cancelButton,
-.saveButton {
-  padding: 8px 16px;
+.statusButton {
+  padding: 5px 15px;
+  border-radius: 20px;
   border: none;
-  border-radius: 4px;
+  font-size: 14px;
+  cursor: default;
+}
+
+.accepted {
+  background-color: #e6f0ff;
+  color: #007bff;
+}
+
+.rejected {
+  background-color: #f8d7da;
+  color: #dc3545;
+}
+
+.participantButton {
+  padding: 5px 15px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  background-color: #fff;
   font-size: 14px;
   cursor: pointer;
 }
 
-.cancelButton {
-  background-color: #f1f3f4;
-  color: #5f6368;
+.participantCount {
+  margin-left: 10px;
+  font-size: 14px;
+  color: #666;
 }
 
-.saveButton {
-  background-color: #1a73e8;
-  color: #ffffff;
+.participantDropdown {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 250px;
+  z-index: 10;
+}
+
+.participantHeader {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.participantList {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.participantItem {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.participantAvatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.participantCheckbox {
+  margin-left: auto;
+}
+
+.actionButtons {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.rejectButton {
+  padding: 5px 15px;
+  border-radius: 20px;
+  border: none;
+  background-color: #dc3545;
+  color: #fff;
+  cursor: pointer;
+}
+
+.acceptButton {
+  padding: 5px 15px;
+  border-radius: 20px;
+  border: none;
+  background-color: #28a745;
+  color: #fff;
+  cursor: pointer;
 }

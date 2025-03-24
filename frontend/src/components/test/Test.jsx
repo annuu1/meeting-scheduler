@@ -1,249 +1,224 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import styles from '../../styles/Test.module.css';
+import styles from '../../styles/Test.module.css'; // Assuming you have a CSS module for styling
 
-const Test = ({ onClose }) => {
-  const [formData, setFormData] = useState({
-    eventTopic: '',
-    password: '',
-    hostName: 'Sarthak Pal', // Default value as shown in the image
-    description: '',
-    date: '',
-    time: '02:30',
-    period: 'PM',
-    timezone: 'UTC+5:00 (Delhi)',
-    duration: '1 hour',
-    backgroundColor: '#000000',
-    link: '',
-    emails: '',
-  });
+const Test = () => {
+  // State to manage the active tab
+  const [activeTab, setActiveTab] = useState('upcoming');
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+  // State to manage event statuses (for accept/reject functionality in Pending tab)
+  const [events, setEvents] = useState([
+    {
+      id: 1,
+      date: 'Friday, 28 Feb',
+      time: '2:35 PM - 3:00 PM',
+      title: 'Appointment',
+      participants: ['You', 'Dr. Kumar'],
+      status: 'cancelled',
+    },
+    {
+      id: 2,
+      date: 'Friday, 28 Feb',
+      time: '1:30 PM - 2:30 PM',
+      title: 'Meeting-2',
+      participants: ['You', 'Team 2'],
+      participantCount: 13,
+      status: 'upcoming',
+    },
+    {
+      id: 3,
+      date: 'Friday, 28 Feb',
+      time: '10:30 AM - 12:30 PM',
+      title: 'Meeting',
+      participants: ['You', 'Team 1'],
+      participantCount: 4,
+      status: 'pending',
+      participantList: [
+        { name: 'Akbar Husain', accepted: true },
+        { name: 'Aneesh Menon', accepted: false },
+        { name: 'Rahul Saini', accepted: false },
+        { name: 'Bharat Thakur', accepted: false },
+        { name: 'Natalia', accepted: false },
+        { name: 'Alia Toy', accepted: false },
+      ],
+    },
+  ]);
+
+  // State to manage the visibility of the participant dropdown
+  const [showParticipants, setShowParticipants] = useState(null);
+
+  // Function to handle tab switching
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+    setShowParticipants(null); // Close participant dropdown when switching tabs
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const token = localStorage.getItem('token');
-    const config = {
-      headers: {
-        Authorization: `${token}`,
-      },
-    };
-    axios
-      .post('http://localhost:5000/api/events', formData, config)
-      .then((response) => {
-        console.log(response);
-        onClose();
+  // Function to handle accept/reject for pending events
+  const handleEventAction = (eventId, action) => {
+    setEvents((prevEvents) =>
+      prevEvents.map((event) => {
+        if (event.id === eventId) {
+          return {
+            ...event,
+            status: action === 'accept' ? 'upcoming' : 'cancelled',
+          };
+        }
+        return event;
       })
-      .catch((err) => {
-        console.error(err);
-      });
+    );
+    setShowParticipants(null); // Close participant dropdown after action
   };
+
+  // Filter events based on the active tab
+  const filteredEvents = events.filter((event) => event.status === activeTab);
 
   return (
-    <div className={styles.modalOverlay}>
-      <div className={styles.modal}>
-        <h2 className={styles.modalTitle}>Add Event</h2>
-        <form onSubmit={handleSubmit}>
-          {/* Event Topic */}
-          <div className={styles.formGroup}>
-            <label className={styles.label}>
-              Event Topic <span className={styles.required}>*</span>
-            </label>
-            <input
-              type="text"
-              name="eventTopic"
-              value={formData.eventTopic}
-              onChange={handleChange}
-              placeholder="Set a conference topic before it starts"
-              className={styles.input}
-              required
-            />
-          </div>
+    <div className={styles.container}>
+      {/* Sidebar */}
+      <div className={styles.sidebar}>
+        <div className={styles.logo}>CNNCT</div>
+        <div className={styles.menu}>
+          <div className={styles.menuItem}>Events</div>
+          <div className={styles.menuItemActive}>Booking</div>
+          <div className={styles.menuItem}>Availability</div>
+          <div className={styles.menuItem}>Settings</div>
+        </div>
+        <div className={styles.user}>
+          <img src="https://via.placeholder.com/40" alt="User Avatar" className={styles.avatar} />
+          <span>Sarthak Pal</span>
+        </div>
+      </div>
 
-          {/* Password */}
-          <div className={styles.formGroup}>
-            <label className={styles.label}>Password</label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="Password"
-              className={styles.input}
-            />
-          </div>
+      {/* Main Content */}
+      <div className={styles.mainContent}>
+        <h1>Booking</h1>
+        <p className={styles.subtitle}>
+          See upcoming and past events booked through your event type links.
+        </p>
 
-          {/* Host Name */}
-          <div className={styles.formGroup}>
-            <label className={styles.label}>
-              Host name <span className={styles.required}>*</span>
-            </label>
-            <select
-              name="hostName"
-              value={formData.hostName}
-              onChange={handleChange}
-              className={styles.select}
-              required
-            >
-              <option value="Sarthak Pal">Sarthak Pal</option>
-              {/* Add more options if needed */}
-            </select>
-          </div>
+        {/* Tabs */}
+        <div className={styles.tabs}>
+          <button
+            className={`${styles.tab} ${activeTab === 'upcoming' ? styles.active : ''}`}
+            onClick={() => handleTabChange('upcoming')}
+          >
+            Upcoming
+          </button>
+          <button
+            className={`${styles.tab} ${activeTab === 'pending' ? styles.active : ''}`}
+            onClick={() => handleTabChange('pending')}
+          >
+            Pending
+          </button>
+          <button
+            className={`${styles.tab} ${activeTab === 'cancelled' ? styles.active : ''}`}
+            onClick={() => handleTabChange('cancelled')}
+          >
+            Cancelled
+          </button>
+          <button
+            className={`${styles.tab} ${activeTab === 'past' ? styles.active : ''}`}
+            onClick={() => handleTabChange('past')}
+          >
+            Past
+          </button>
+        </div>
 
-          {/* Description */}
-          <div className={styles.formGroup}>
-            <label className={styles.label}>Description</label>
-            <textarea
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              className={styles.textarea}
-            />
-          </div>
+        {/* Event List */}
+        <div className={styles.eventList}>
+          {filteredEvents.length === 0 ? (
+            <p>No events found for this status.</p>
+          ) : (
+            filteredEvents.map((event) => (
+              <div key={event.id} className={styles.eventCard}>
+                <div className={styles.eventDetails}>
+                  <div className={styles.eventDateTime}>
+                    <p>{event.date}</p>
+                    <p>{event.time}</p>
+                  </div>
+                  <div className={styles.eventInfo}>
+                    <p className={styles.eventTitle}>{event.title}</p>
+                    <p>{event.participants.join(' and ')}</p>
+                  </div>
+                </div>
 
-          {/* Date and Time */}
-          <div className={styles.formGroup}>
-            <label className={styles.label}>
-              Date and time <span className={styles.required}>*</span>
-            </label>
-            <div className={styles.dateTimeGroup}>
-              <input
-                type="text"
-                name="date"
-                value={formData.date}
-                onChange={handleChange}
-                placeholder="dd/mm/yy"
-                className={styles.inputSmall}
-                required
-              />
-              <select
-                name="time"
-                value={formData.time}
-                onChange={handleChange}
-                className={styles.selectSmall}
-              >
-                <option value="02:30">02:30</option>
-                {/* Add more time options if needed */}
-              </select>
-              <select
-                name="period"
-                value={formData.period}
-                onChange={handleChange}
-                className={styles.selectSmall}
-              >
-                <option value="AM">AM</option>
-                <option value="PM">PM</option>
-              </select>
-              <select
-                name="timezone"
-                value={formData.timezone}
-                onChange={handleChange}
-                className={styles.selectMedium}
-              >
-                <option value="UTC+5:00 (Delhi)">UTC+5:00 (Delhi)</option>
-                {/* Add more timezone options if needed */}
-              </select>
-            </div>
-          </div>
-
-          {/* Set Duration */}
-          <div className={styles.formGroup}>
-            <label className={styles.label}>Set duration</label>
-            <select
-              name="duration"
-              value={formData.duration}
-              onChange={handleChange}
-              className={styles.select}
-            >
-              <option value="1 hour">1 hour</option>
-              <option value="30 minutes">30 minutes</option>
-              <option value="2 hours">2 hours</option>
-            </select>
-          </div>
-
-          {/* Banner */}
-          <div className={styles.formGroup}>
-            <label className={styles.label}>Banner</label>
-            <div
-              className={styles.bannerPreview}
-              style={{ backgroundColor: formData.backgroundColor }}
-            >
-              <div className={styles.bannerContent}>
-                <img
-                  src="https://via.placeholder.com/50"
-                  alt="Avatar"
-                  className={styles.bannerAvatar}
-                />
-                <p className={styles.bannerText}>
-                  {formData.eventTopic || 'Team A Meeting'}
-                </p>
+                {/* Status and Actions */}
+                <div className={styles.eventActions}>
+                  {event.status === 'pending' ? (
+                    <>
+                      <button
+                        className={styles.participantButton}
+                        onClick={() =>
+                          setShowParticipants(showParticipants === event.id ? null : event.id)
+                        }
+                      >
+                        Participant ({event.participantList.length})
+                      </button>
+                      {showParticipants === event.id && (
+                        <div className={styles.participantDropdown}>
+                          <div className={styles.participantHeader}>
+                            <span>Participant ({event.participantList.length})</span>
+                          </div>
+                          <div className={styles.participantList}>
+                            {event.participantList.map((participant, index) => (
+                              <div key={index} className={styles.participantItem}>
+                                <img
+                                  src="https://via.placeholder.com/30"
+                                  alt="Participant Avatar"
+                                  className={styles.participantAvatar}
+                                />
+                                <span>{participant.name}</span>
+                                <input
+                                  type="checkbox"
+                                  checked={participant.accepted}
+                                  readOnly
+                                  className={styles.participantCheckbox}
+                                />
+                              </div>
+                            ))}
+                          </div>
+                          <div className={styles.actionButtons}>
+                            <button
+                              className={styles.rejectButton}
+                              onClick={() => handleEventAction(event.id, 'reject')}
+                            >
+                              Reject
+                            </button>
+                            <button
+                              className={styles.acceptButton}
+                              onClick={() => handleEventAction(event.id, 'accept')}
+                            >
+                              Accept
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <button
+                      className={`${styles.statusButton} ${
+                        event.status === 'upcoming'
+                          ? styles.accepted
+                          : event.status === 'cancelled'
+                          ? styles.rejected
+                          : ''
+                      }`}
+                    >
+                      {event.status === 'upcoming' ? 'Accepted' : 'Rejected'}
+                    </button>
+                  )}
+                  {event.participantCount && (
+                    <div className={styles.participantCount}>
+                      <span role="img" aria-label="people">
+                        👥
+                      </span>{' '}
+                      {event.participantCount} people
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          </div>
-
-          {/* Custom Background Color */}
-          <div className={styles.formGroup}>
-            <label className={styles.label}>Custom Background Color</label>
-            <div className={styles.colorPicker}>
-              <div className={styles.colorOption} style={{ backgroundColor: '#FF5733' }}></div>
-              <div className={styles.colorOption} style={{ backgroundColor: '#FFFFFF' }}></div>
-              <div className={styles.colorOption} style={{ backgroundColor: '#000000' }}></div>
-              <input
-                type="text"
-                name="backgroundColor"
-                value={formData.backgroundColor}
-                onChange={handleChange}
-                placeholder="#000000"
-                className={styles.colorInput}
-              />
-            </div>
-          </div>
-
-          {/* Add Link */}
-          <div className={styles.formGroup}>
-            <label className={styles.label}>
-              Add link <span className={styles.required}>*</span>
-            </label>
-            <input
-              type="url"
-              name="link"
-              value={formData.link}
-              onChange={handleChange}
-              placeholder="Enter URL Here"
-              className={styles.input}
-              required
-            />
-          </div>
-
-          {/* Add Emails */}
-          <div className={styles.formGroup}>
-            <label className={styles.label}>
-              Add Emails <span className={styles.required}>*</span>
-            </label>
-            <input
-              type="text"
-              name="emails"
-              value={formData.emails}
-              onChange={handleChange}
-              placeholder="Add member Emails"
-              className={styles.input}
-              required
-            />
-          </div>
-
-          {/* Buttons */}
-          <div className={styles.buttonGroup}>
-            <button type="button" onClick={onClose} className={styles.cancelButton}>
-              Cancel
-            </button>
-            <button type="submit" className={styles.saveButton}>
-              Save
-            </button>
-          </div>
-        </form>
+            ))
+          )}
+        </div>
       </div>
     </div>
   );
