@@ -10,6 +10,9 @@
   }
   
   .participantHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 10px;
     border-bottom: 1px solid #eee;
     font-size: 14px;

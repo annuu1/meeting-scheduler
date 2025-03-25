@@ -124,8 +124,6 @@ router.get("/userMeetings", auth, async (req, res) => {
       .populate("createdBy", "name email")
       .populate("participants.user", "name email");
 
-      console.log(meetings[0].participants[0].status)
-
     const categorizedMeetings = {
       upcoming: meetings.filter(
         (m) =>          (
