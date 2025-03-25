@@ -4,7 +4,7 @@ import styles from "../../styles/BookingCard.module.css";
 
 import ParticipantDropdown from "./ParticipantDropdown";
 
-function BookingCard({ event }) {
+function BookingCard({ event,  activeTab }) {
     const [showParticipants, setShowParticipants] = useState(false);
 
     const handleEventAction = async (action) => {
@@ -16,8 +16,8 @@ function BookingCard({ event }) {
             },
           };
           await axios.put(
-            `http://localhost:5000/api/events/${event.id}`,
-            { status: action === 'accept' ? 'upcoming' : 'cancelled' },
+            `http://localhost:5000/api/events/status/${event.id}`,
+            { status: action === 'accept' ? 'upcoming' : 'rejected' },
             config
           );
           // Optionally, refetch events or update the local state
@@ -42,7 +42,7 @@ function BookingCard({ event }) {
       </div>
 
       <div className={styles.eventActions}>
-        {event.status === "pending" ? (
+        {activeTab === "pending" ? (
             <>
             <button className={styles.participantButton} onClick={() => setShowParticipants(!showParticipants)}>
                 Participant ({event.participantList?.length || 0})

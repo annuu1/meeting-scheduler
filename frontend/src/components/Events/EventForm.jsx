@@ -4,18 +4,18 @@ import styles from '../../styles/EventForm.module.css';
 
 const EventForm = ({ onClose }) => {
   const [formData, setFormData] = useState({
-    eventTopic: "",
-    password: "",
-    hostName: "Sarthak Pal", // Default value as shown in the image
-    description: "",
-    date: "",
+    title: "Event",
+    password: "123456",
+    hostName: "Sarthak Pal",
+    description: "Test Event",
+    date: "12/12/25",
     time: "02:30",
     period: "PM",
     timezone: "UTC+5:00 (Delhi)",
     duration: "1 hour",
     backgroundColor: "#000000",
-    link: "",
-    emails: "",
+    link: "https://zoom.us",
+    emails: "a@gmail.com,b@gmail.com",
   });
 
   const handleChange = (e) => {
@@ -25,6 +25,21 @@ const EventForm = ({ onClose }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    const { date, time, period, duration, ...rest } = formData;
+    const dateTimeString = `${date} ${time} ${period}`;
+    const dateTime = new Date(dateTimeString);
+    if (isNaN(dateTime.getTime())) {
+      alert('Invalid date format. Please use dd/mm/yy.');
+      return;
+    }
+    const durationInMinutes = parseInt(duration.split(' ')[0]) * (duration.includes('hour') ? 60 : 1);
+
+    const payload = {
+      ...rest, dateTime : dateTime.toISOString(),
+      duration: durationInMinutes,
+    }
+
     const token = localStorage.getItem("token");
     const config = {
       headers: {
@@ -32,7 +47,7 @@ const EventForm = ({ onClose }) => {
       },
     };
     axios
-      .post("http://localhost:5000/api/events", formData, config)
+      .post("http://localhost:5000/api/events", payload, config)
       .then((response) => {
         console.log(response);
         onClose();
@@ -54,8 +69,8 @@ const EventForm = ({ onClose }) => {
             </label>
             <input
               type="text"
-              name="eventTopic"
-              value={formData.eventTopic}
+              name="title"
+              value={formData.title}
               onChange={handleChange}
               placeholder="Set a conference topic before it starts"
               className={styles.input}
@@ -178,7 +193,7 @@ const EventForm = ({ onClose }) => {
                   className={styles.bannerAvatar}
                 />
                 <p className={styles.bannerText}>
-                  {formData.eventTopic || "Team A Meeting"}
+                  {formData.title || "Team A Meeting"}
                 </p>
               </div>
             </div>
