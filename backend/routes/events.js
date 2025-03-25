@@ -132,18 +132,34 @@ router.get("/userMeetings", auth, async (req, res) => {
             m.createdBy.id.toString() === req.user.id ||
             m.participants.find((p) => p.status === "accepted"))
       ),
-      past: meetings.filter(
-        (m) => m.dateTime && m.dateTime + m.duration * 60000 < now
-      ),
-      pending: meetings.filter((m) =>
-        m.participants.find((p) => p.status === "pending")
-      ),
-      cancelled: meetings.filter((m) =>
-        m.participants.find((p) => p.status === "rejected")
+      past: meetings.filter((m) => {
+        const isPast = new Date(m.dateTime).getTime() + m.duration * 60000 < now.getTime();
+        const isCreator = m.createdBy._id.toString() === req.user.id;
+        const participant = m.participants.find(
+          (p) => p.user && p.user._id.toString() === req.user.id
+        );
+        return isPast && (isCreator || participant);
+      }),
+      pending: meetings.filter((m) =>{
+        const isCreator = m.createdBy._id.toString() === req.user.id;
+        const participant = m.participants.find(
+          (p) => p.user && p.user._id.toString() === req.user.id
+        );
+        return !isCreator && participant && participant.status === "pending";
+    }),
+      cancelled: meetings.filter((m) =>{
+        const isCreator = m.createdBy._id.toString() === req.user.id;
+        const participant = m.participants.find(
+          (p) => p.user && p.user._id.toString() === req.user.id
+        );
+        return !isCreator && participant && participant.status === "rejected";
+      }
       ),
     };
     res.json({ success: true, events: categorizedMeetings });
   } catch (error) {
+
+    console.log(error);
     res.status(500).json({ success: false, message: "Server error" });
   }
 });

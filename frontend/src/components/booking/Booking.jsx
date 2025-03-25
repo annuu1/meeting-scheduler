@@ -59,6 +59,7 @@ function Booking() {
         // Set filteredEvents for the current active tab
         const tabEvents = fetchedEvents[activeTab] || [];
         const transformed = transformEvents(tabEvents);
+        // console.log(transformed)
         setFilteredEvents(transformed);
       } catch (err) {
         setError(err.message || 'Failed to fetch events. Please try again later.');
@@ -71,7 +72,7 @@ function Booking() {
       fetchEvents();
     }, []);
     const handleTabChange = (tab) => {
-      console.log(events)
+      // console.log(events)
       const tabEvents = events[tab] || [];
       const transformed = transformEvents(tabEvents);
       setFilteredEvents(transformed);
