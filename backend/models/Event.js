@@ -15,7 +15,11 @@ const EventSchema = new mongoose.Schema({
     default: 'upcoming',
   },
   createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  participants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  participants: [{ 
+    name : {type: String, required: true},
+    user:{type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+    status: { type: String, default: 'pending' }, 
+  }],
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });
