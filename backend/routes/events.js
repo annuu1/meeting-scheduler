@@ -97,13 +97,7 @@ router.get('/userMeetings',auth, async (req, res) => {
     };
     const meetings = await Event.find(query)
     .populate('createdBy', 'name email')
-      // .populate('participants.user', 'name email')
-      // meetings.map((m) => {
-      //   const meets = m.participants.find((p)=>{
-      //     return p.status === "pending1"
-      //   })
-      //   console.log("meeting:", meets)
-      // })
+
     const categorizedMeetings = {
       upcoming: meetings.filter(m => m.dateTime > now && (
         m.createdBy.id.toString() === req.user.id || 
@@ -117,8 +111,6 @@ router.get('/userMeetings',auth, async (req, res) => {
         m.participants.find(p => p.status === 'rejected')
       ),
     };
-    // console.log(categorizedMeetings)
-
     res.json( {success: true , events :categorizedMeetings});
   } catch (error) {
     res.status(500).json({success: false, message: 'Server error' });
@@ -173,7 +165,7 @@ router.put('/status/:id', auth, async (req, res) => {
     if (!event) return res.status(404).json({ message: 'Meeting not found' });
 
     const participant = event.participants.find(p => p.user._id.toString() === req.user.id);
-    // console.log(event.participants[0].user._id.toString() === req.user.id)
+    
     if (!participant) return res.status(403).json({ success: false, message: 'Not a participant' });
 
     participant.status = status;
