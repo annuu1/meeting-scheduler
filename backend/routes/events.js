@@ -5,6 +5,7 @@ const Availability = require("../models/Availability");
 const auth = require("../middleware/auth");
 const bcrypt = require("bcryptjs");
 const User = require("../models/User");
+const mongoose = require("mongoose");
 
 // Create Event
 router.post("/", auth, async (req, res) => {
@@ -119,16 +120,16 @@ router.get("/userMeetings", auth, async (req, res) => {
     const query = {
       $or: [{ createdBy: req.user.id }, { "participants.user": req.user.id }],
     };
-    const meetings = await Event.find(query).populate(
-      "createdBy",
-      "name email"
-    );
+    const meetings = await Event.find(query)
+      .populate("createdBy", "name email")
+      .populate("participants.user", "name email");
+
+      console.log(meetings[0].participants[0].status)
 
     const categorizedMeetings = {
       upcoming: meetings.filter(
-        (m) =>
-          m.dateTime > now &&
-          (m.createdBy.id.toString() === req.user.id ||
+        (m) =>          (
+            m.createdBy.id.toString() === req.user.id ||
             m.participants.find((p) => p.status === "accepted"))
       ),
       past: meetings.filter(
@@ -152,9 +153,8 @@ router.get("/", auth, async (req, res) => {
   const { page = 1, limit = 10, status } = req.query;
   try {
     const query = {
-      $or: [{ createdBy: req.user.id }, { "participants.user": req.user.id }],
+      $or: [{ createdBy: req.user.id }],
     };
-    if (status) query.status = status;
     const events = await Event.find(query)
       .populate("createdBy", "name email")
       .populate("participants.user", "name email")
@@ -189,7 +189,7 @@ router.put("/:id", auth, async (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 });
-// update user status
+// update participant status
 router.put("/status/:id", auth, async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;

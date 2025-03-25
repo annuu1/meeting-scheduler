@@ -4,11 +4,16 @@ import styles from "../../styles/BookingCard.module.css";
 
 import ParticipantDropdown from "./ParticipantDropdown";
 
-function BookingCard({ event,  activeTab }) {
+function BookingCard({ event,  activeTab, refetchEvents }) {
     const [showParticipants, setShowParticipants] = useState(false);
+    const [localStatus, setLocalStatus] = useState(activeTab);
 
     const handleEventAction = async (action) => {
+      const newStatus = action === 'accept' ? 'accepted' : 'rejected';
         try {
+          setLocalStatus(newStatus);
+          setShowParticipants(false);
+
           const token = localStorage.getItem('token');
           const config = {
             headers: {
@@ -17,15 +22,19 @@ function BookingCard({ event,  activeTab }) {
           };
           await axios.put(
             `http://localhost:5000/api/events/status/${event.id}`,
-            { status: action === 'accept' ? 'upcoming' : 'rejected' },
+            { status: action === 'accept' ? 'accepted' : 'rejected' },
             config
           );
-          // Optionally, refetch events or update the local state
+          // refetch the events
+          await refetchEvents();
           setShowParticipants(false);
         } catch (err) {
           console.error('Failed to update event status:', err);
+          setLocalStatus(activeTab);
         }
       };
+
+      const displayStatus = localStatus || activeTab;
 
 
   return (
@@ -57,9 +66,14 @@ function BookingCard({ event,  activeTab }) {
             </>
         ) : (
             <>
-            <button className={styles.statusButton}>
-                {event.status === "upcoming" ? "Accepted" : "Rejected"}
-            </button>
+            
+            <button
+            className={`${styles.statusButton} ${
+              displayStatus === "upcoming" ? styles.accepted : styles.rejected
+            }`}
+          >
+            {displayStatus === "upcoming" ? "Accepted" : "Rejected"}
+          </button>
             </>
         )}
         {event.participantCount && (

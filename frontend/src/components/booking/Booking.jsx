@@ -9,35 +9,14 @@ function Booking() {
       const [events, setEvents] = useState({}
         );
 
-    const [activeTab, setActiveTab] = useState('pending')
+    const [activeTab, setActiveTab] = useState('upcoming');
     const [error, setError] = useState('')
+    const [loading, setLoading] = useState(true)
     const [filteredEvents, setFilteredEvents] = useState([])
-
-  
-    useEffect(() => {
-      const fetchEvents = async () => {
-        try {
-          const token = localStorage.getItem('token');
-          const config = {
-            headers: {
-              Authorization: `${token}`,
-            },
-          };
-          const response = await axios.get('http://localhost:5000/api/events/userMeetings', config);
-          // console.log(response.data.events)
-    
-          setEvents(response.data.events);
-        } catch (err) {
-          setError('Failed to fetch events. Please try again later.');
-        }
-      };
-
-      fetchEvents();
-    }, []);
-    const handleTabChange = (tab) => {
-      // console.log(events)
-      // Transform the API response to match the UI format
-      const transformedEvents = events[tab].map((event) => ({
+        
+    //Transform the event array as per UI format
+    const transformEvents = (eventArray) => {
+      return eventArray.map((event) => ({
         id: event._id,
         date: new Date(event.dateTime).toLocaleDateString('en-US', {
           weekday: 'long',
@@ -60,11 +39,44 @@ function Booking() {
           userId: p.user.id,
         })),
       }));
-      console.log(transformedEvents)
+    };
 
-      setFilteredEvents(transformedEvents);
-        setActiveTab(tab);
-      };
+    const fetchEvents = async () => {
+      try {
+        setLoading(true);
+        const token = localStorage.getItem('token');
+        if (!token) throw new Error('No authentication token found');
+  
+        const config = {
+          headers: {
+            Authorization: `${token}`,
+          },
+        };
+        const response = await axios.get('http://localhost:5000/api/events/userMeetings', config);
+        const fetchedEvents = response.data.events || {};
+        setEvents(fetchedEvents);
+  
+        // Set filteredEvents for the current active tab
+        const tabEvents = fetchedEvents[activeTab] || [];
+        const transformed = transformEvents(tabEvents);
+        setFilteredEvents(transformed);
+      } catch (err) {
+        setError(err.message || 'Failed to fetch events. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    useEffect(() => {
+      fetchEvents();
+    }, []);
+    const handleTabChange = (tab) => {
+      console.log(events)
+      const tabEvents = events[tab] || [];
+      const transformed = transformEvents(tabEvents);
+      setFilteredEvents(transformed);
+      setActiveTab(tab);
+    };
 
   return (
     <div className={styles.cotainer}>
@@ -74,7 +86,15 @@ function Booking() {
         </div>
         <div className={styles.booking}>
             <BookingTabs activeTab={activeTab} onTabChange={handleTabChange} />
-            <BookingList events={filteredEvents} activeTab={activeTab} />
+            {loading ? (
+              <div className={styles.loading}>Loading...</div>
+            ) : error ? (
+              <div className={styles.error}>{error}</div>
+            ) : (
+              <BookingList events={filteredEvents} activeTab={activeTab} refetchEvents={fetchEvents} />
+            )
+
+            }
 
         </div>
     </div>
