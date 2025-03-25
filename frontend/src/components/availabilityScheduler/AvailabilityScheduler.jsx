@@ -21,6 +21,12 @@ function AvailabilityScheduler() {
     const [activity, setActivity] = useState('Event type');
     const [timeZone, setTimeZone] = useState('India Standard Time');
 
+    const events = [
+        { day: 'Thu', start: '11:00', end: '11:00', title: 'Meeting 2' },
+        { day: 'Fri', start: '09:00', end: '10:00', title: 'Meeting' },
+        { day: 'Fri', start: '14:00', end: '15:00', title: 'Meeting 2' },
+      ];
+
     const handleDayToggle = (day)=>{
         setDays((prev)=>({
             ...prev,
