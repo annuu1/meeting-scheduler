@@ -59,7 +59,6 @@ function Booking() {
         // Set filteredEvents for the current active tab
         const tabEvents = fetchedEvents[activeTab] || [];
         const transformed = transformEvents(tabEvents);
-        // console.log(transformed)
         setFilteredEvents(transformed);
       } catch (err) {
         setError(err.message || 'Failed to fetch events. Please try again later.');
@@ -72,7 +71,6 @@ function Booking() {
       fetchEvents();
     }, []);
     const handleTabChange = (tab) => {
-      // console.log(events)
       const tabEvents = events[tab] || [];
       const transformed = transformEvents(tabEvents);
       setFilteredEvents(transformed);
@@ -82,7 +80,7 @@ function Booking() {
   return (
     <div className={styles.cotainer}>
         <div className={styles.bookingHead}>
-            <h1>Booking</h1>
+            <h1 className={styles.heading}>Booking</h1>
             <p>See upcoming and past events booked through your event type links.</p>
         </div>
         <div className={styles.booking}>
