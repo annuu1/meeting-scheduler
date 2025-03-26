@@ -7,16 +7,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
 function EventList() {
-  const [events, setEvents] = useState([
-    {
-      id: 1,
-      title: "Event 1",
-      date: "2023-01-01",
-      time: "10:00",
-      duration: 60,
-      isActive: true,
-    }, 
-  ]);
+  const [events, setEvents] = useState([]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
