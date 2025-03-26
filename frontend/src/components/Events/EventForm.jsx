@@ -58,10 +58,18 @@ const EventForm = ({ onClose, refetchEvents }) => {
   };
 
   return (
-    <div className={styles.modalOverlay}>
+    <div className={styles.container}>
+      <div className={styles.header}>
+              <div>
+                <h1 className={styles.headerTitle}>Create Event</h1>
+                <p className={styles.headerSubtitle}>
+                  Create events to share for people to book on your calendar.
+                </p>
+              </div>
+            </div>
       <div className={styles.modal}>
         <h2 className={styles.modalTitle}>Add Event</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className={styles.form}>
           {/* Event Topic */}
           <div className={styles.formGroup}>
             <label className={styles.label}>

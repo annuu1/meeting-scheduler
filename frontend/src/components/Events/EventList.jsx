@@ -44,6 +44,7 @@ function EventList() {
     setIsModalOpen(false);
   };
 
+  if(isModalOpen) return <EventForm onClose={handleCloseModal} refetchEvents={fetchData}/>
 
   return (
     <div className={styles.container}>
@@ -74,7 +75,6 @@ function EventList() {
           <div>No events found</div>
         )}
       </div>
-      {isModalOpen && <EventForm onClose={handleCloseModal} refetchEvents={fetchData}/>}
     </div>
   );
 }
