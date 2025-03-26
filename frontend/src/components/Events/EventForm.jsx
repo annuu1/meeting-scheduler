@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import styles from '../../styles/EventForm.module.css';
 
-const EventForm = ({ onClose }) => {
+const EventForm = ({ onClose, refetchEvents }) => {
   const [formData, setFormData] = useState({
     title: "Event",
     password: "123456",
@@ -50,6 +50,7 @@ const EventForm = ({ onClose }) => {
       .post("http://localhost:5000/api/events", payload, config)
       .then((response) => {
         console.log(response);
+        refetchEvents();
         onClose();
       })
       .catch((err) => {

@@ -20,6 +20,32 @@ function EventList() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/events/", {
+        headers: {
+          Authorization: `${token}`,
+        },
+      });
+      if (!response.data.success) {
+        navigate("/login");
+        return;
+      }
+      console.log(response.data.events);
+      setEvents(response.data.events);
+    } catch (error) {
+      console.log(error);
+      navigate("/login");
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const handleAddEvent = () => {
     setIsModalOpen(true);
   };
@@ -28,31 +54,6 @@ function EventList() {
     setIsModalOpen(false);
   };
 
-  const token = localStorage.getItem("token");
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchData = () => {
-      axios
-        .get("http://localhost:5000/api/events/", {
-          headers: {
-            Authorization: `${token}`,
-          },
-        })
-        .then((response) => {
-          if (!response.data.success) {
-            navigate("/login");
-          }
-          console.log(response.data.events);
-          setEvents(response.data.events);
-        })
-        .catch((error) => {
-          console.log(error);
-          navigate("/login");
-        });
-    };
-    fetchData();
-  }, []);
 
   return (
     <div className={styles.container}>
@@ -71,7 +72,7 @@ function EventList() {
         {events.length > 0 ? (
           events.map((event, index) => (
             <EventCard
-              key={index}
+              key={event._id || index}
               title={event.title}
               date={event.dateTime}
               time={event.time}
@@ -83,7 +84,7 @@ function EventList() {
           <div>No events found</div>
         )}
       </div>
-      {isModalOpen && <EventForm onClose={handleCloseModal} />}
+      {isModalOpen && <EventForm onClose={handleCloseModal} refetchEvents={fetchData}/>}
     </div>
   );
 }
