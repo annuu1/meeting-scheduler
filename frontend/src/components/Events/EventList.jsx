@@ -74,8 +74,8 @@ function EventList() {
             <EventCard
               key={event._id || index}
               title={event.title}
-              date={event.dateTime}
-              time={event.time}
+              date={new Date(event.dateTime).toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'short' })}
+              time={new Date(event.dateTime).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric' })}
               description={event.duration}
               isActive={event.isActive}
             />
