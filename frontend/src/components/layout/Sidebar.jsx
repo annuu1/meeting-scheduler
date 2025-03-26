@@ -46,7 +46,7 @@ function Sidebar({ setActiveTab }) {
       </nav>
       <div className={styles.userProfile}>
                 <img src={avatar} alt="User" className={styles.userAvatar} />
-                <span className={styles.userName}>Sarthak Pal</span>
+                <span className={styles.userName}>{localStorage.getItem("name")}</span>
       </div>
      
     </div>
