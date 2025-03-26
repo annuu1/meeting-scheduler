@@ -36,7 +36,6 @@ function AvailabilityScheduler() {
             const token = localStorage.getItem('token');
             const config = { headers: { Authorization: `${token}` } };
             const response = await axios.get('http://localhost:5000/api/availability', config);
-            console.log(response.data)
             if (response.data.success) {
               setDays(response.data.availability.days);
               setTimeZone(response.data.availability.timeZone);

@@ -34,7 +34,6 @@ function EventList() {
         navigate("/login");
         return;
       }
-      console.log(response.data.events);
       setEvents(response.data.events);
     } catch (error) {
       console.log(error);
