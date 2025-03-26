@@ -7,7 +7,6 @@ const auth = require('../middleware/auth');
 router.get('/', auth, async (req, res) => {
   try {
     let availability = await Availability.findOne({ user: req.user.id });
-    console.log(availability)
     if(!availability){
       availability = new Availability({
         // user : req.user.id,
