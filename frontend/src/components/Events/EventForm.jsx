@@ -49,7 +49,6 @@ const EventForm = ({ onClose, refetchEvents }) => {
     axios
       .post("http://localhost:5000/api/events", payload, config)
       .then((response) => {
-        console.log(response);
         refetchEvents();
         onClose();
       })
