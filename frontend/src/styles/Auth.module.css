@@ -9,7 +9,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 70%;
+    width: 60%;
     height: 100%;
 }
 .formHeader{
@@ -40,7 +40,7 @@
     font-size: 16px;
     color: #666666;
 }
-.Btn{
+.btn{
     padding: 20px;
     margin-bottom: 15px;
     border-radius: 5rem;
@@ -49,10 +49,8 @@
     border: none;
     cursor: pointer;
 }
-
-/* bg image styles  */
 .imageContainer{
-    width: 30%;
+    width: 35%;
     height: 100vh;
 }
 .imageContainer img{

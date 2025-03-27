@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import styles from '../../styles/Auth.module.css';
 import authImg from '../../assets/auth_bg.png';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
+import Header from '../layout/Header';
 
 function Login() {
 const [formData, setFormData] = useState({
@@ -46,12 +48,14 @@ const [formData, setFormData] = useState({
               <h1>Sign in to your Spark</h1>
           </div>
           <form className={styles.form} onSubmit={handleSubmit}>
-            <label htmlFor ='firstName'>First Name</label>
-            <input type="email" name='email' value={formData.email} onChange={handleChange} required/>
+            <label htmlFor ='firstName' >First Name</label>
+            <input type="email" name='email' className={styles.input} value={formData.email} onChange={handleChange} required/>
             <label htmlFor = 'password'>Password</label>
-            <input type="password" name='password' value={formData.password} onChange={handleChange} required/>
-            <button type="submit">Login</button>
+            <input type="password" name='password' className={styles.input} value={formData.password} onChange={handleChange} required/>
+            <button type="submit" className={styles.btn} >Login</button>
+            <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
           </form>
+
           {
             error && <p style={{color:'red'}}>{error}</p>
           }
