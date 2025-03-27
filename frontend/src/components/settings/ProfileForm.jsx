@@ -132,7 +132,7 @@ function ProfileForm() {
               onChange={handleChange}
             />
           </div>
-          <button type="submit">Save</button>
+          <button className={styles.submitBtn} type="submit">Save</button>
         </form>
       </div>
     </div>
