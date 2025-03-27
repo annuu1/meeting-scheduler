@@ -34,7 +34,7 @@ const [formData, setFormData] = useState({
               <h1>Your Preferences</h1>
           </div>
           <form className={styles.form}>
-            <input type="text" placeholder='Tell us your username' name='username' value={formData.username} onChange={handleChange} required/>
+            <input type="text" placeholder='Tell us your username' name='username' value={formData.username} onChange={handleChange} className={styles.input} required/>
             <h2>Select one category that best describes your CNNCT:</h2>
             <div className={styles.grid}>
             {
