@@ -6,6 +6,8 @@ import toggleOff from "../../assets/icons/toggleOff.svg";
 import copyBtn from "../../assets/icons/copyBtn.svg";
 import deleteBtn from "../../assets/icons/deleteBtn.svg";
 
+import Slider from "../ui/Slider";
+
 function EventCard({ title, date, time, description, isActive }) {
   return (
     <div className={styles.card}>
@@ -25,7 +27,7 @@ function EventCard({ title, date, time, description, isActive }) {
       </div>
       <hr className={styles.divider} />
       <div className={styles.cardFooter}>
-        <img src={toggleOn} alt="" className={styles.action} />
+        <Slider/>
         <span className={styles.icon}>📋</span>
         <img src={deleteBtn} alt="" className={styles.action} />
       </div>
