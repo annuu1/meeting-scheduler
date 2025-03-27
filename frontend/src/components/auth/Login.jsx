@@ -43,7 +43,7 @@ const [formData, setFormData] = useState({
     <div className={styles.container}>
       <div className={styles.formContainer}>
           <div className={styles.formHeaderSignin}>
-              <h1>Login in</h1>
+              <h1>Sign in to your Spark</h1>
           </div>
           <form className={styles.form} onSubmit={handleSubmit}>
             <label htmlFor ='firstName'>First Name</label>
