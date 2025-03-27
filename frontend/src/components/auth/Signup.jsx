@@ -48,15 +48,15 @@ function Signup() {
               <Link to="/login">Sign in instead</Link>
           </div>
           <form className={styles.form} onSubmit={handleSubmit} >
-            <label htmlFor ='firstName'>First Name</label>
+            <label htmlFor ='firstName' className={styles.label}>First Name</label>
             <input type="text" name='firstName' className={styles.input} value={formData.firstName} onChange={handleChange} required/>
-            <label htmlFor = 'lastName'>Last Name</label>
+            <label htmlFor = 'lastName' className={styles.label}>Last Name</label>
             <input type="text" name='lastName' className={styles.input} value={formData.lastName} onChange={handleChange} required/>
-            <label htmlFor = 'email'>Email</label>
+            <label htmlFor = 'email' className={styles.label}>Email</label>
             <input type="email" name='email' className={styles.input} value={formData.email} onChange={handleChange} required/>
-            <label htmlFor = 'password'>Password</label>
+            <label htmlFor = 'password' className={styles.label}>Password</label>
             <input type="password" name='password' className={styles.input} value={formData.password} onChange={handleChange} required/>
-            <label htmlFor = 'confirmPassword'>Confirm Password</label>
+            <label htmlFor = 'confirmPassword' className={styles.label}>Confirm Password</label>
             <input type="password" name='confirmPassword' className={styles.input} 
             value={formData.confirmPassword} onChange={handleChange} required/>
             <div className={styles.terms}>

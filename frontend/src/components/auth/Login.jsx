@@ -48,21 +48,22 @@ const [formData, setFormData] = useState({
               <h1>Sign in to your Spark</h1>
           </div>
           <form className={styles.form} onSubmit={handleSubmit}>
-            <label htmlFor ='firstName' >First Name</label>
+            <label htmlFor ='firstName' className={styles.label} >First Name</label>
             <input type="email" name='email' className={styles.input} value={formData.email} onChange={handleChange} required/>
-            <label htmlFor = 'password'>Password</label>
+            <label htmlFor = 'password' className={styles.label} >Password</label>
             <input type="password" name='password' className={styles.input} value={formData.password} onChange={handleChange} required/>
             <button type="submit" className={styles.btn} >Login</button>
             <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
-          </form>
-
-          {
+            {
             error && <p style={{color:'red'}}>{error}</p>
           }
+          </form>
+          <p>This site is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply.</p>
       </div>
       <div className={styles.imageContainer}>
         <img src={authImg} alt="auth image bg" />
       </div>
+
     </div>
   )}
 
