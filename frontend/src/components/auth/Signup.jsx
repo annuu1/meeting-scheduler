@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import axios from 'axios' 
-import {useNavigate} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 
 import styles from '../../styles/Auth.module.css'
 
@@ -44,29 +44,31 @@ function Signup() {
     <div className={styles.container}>
       <div className={styles.formContainer}>
           <div className={styles.formHeader}>
-              <h1>form header</h1>
+              <h1>Create an account</h1>
+              <Link to="/login">Sign in instead</Link>
           </div>
           <form className={styles.form} onSubmit={handleSubmit} >
             <label htmlFor ='firstName'>First Name</label>
-            <input type="text" name='firstName' value={formData.firstName} onChange={handleChange} required/>
+            <input type="text" name='firstName' className={styles.input} value={formData.firstName} onChange={handleChange} required/>
             <label htmlFor = 'lastName'>Last Name</label>
-            <input type="text" name='lastName' value={formData.lastName} onChange={handleChange} required/>
+            <input type="text" name='lastName' className={styles.input} value={formData.lastName} onChange={handleChange} required/>
             <label htmlFor = 'email'>Email</label>
-            <input type="email" name='email' value={formData.email} onChange={handleChange} required/>
+            <input type="email" name='email' className={styles.input} value={formData.email} onChange={handleChange} required/>
             <label htmlFor = 'password'>Password</label>
-            <input type="password" name='password' value={formData.password} onChange={handleChange} required/>
+            <input type="password" name='password' className={styles.input} value={formData.password} onChange={handleChange} required/>
             <label htmlFor = 'confirmPassword'>Confirm Password</label>
-            <input type="password" name='confirmPassword' 
+            <input type="password" name='confirmPassword' className={styles.input} 
             value={formData.confirmPassword} onChange={handleChange} required/>
             <div className={styles.terms}>
                 <input type="checkbox" id="terms" required/>
                 <label htmlFor="terms">By creating an account I agree to our <a href="#">Terms of use</a> and <a href="#">Privacy Policy</a></label>
             </div>
-            <button type="submit">Create an account</button>
+            <button  className={styles.btn}  type="submit">Create an account</button>
             {
               error && <p style={{color:'red'}}>{error}</p>
             }
           </form>
+          <p>This site is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply.</p>
       </div>
       <div className={styles.imageContainer}>
         <img src={authImg} alt="auth image bg" />
