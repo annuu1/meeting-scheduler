@@ -8,3 +8,10 @@
     flex: 1;
     margin: 0 2rem;
 }
+
+@media (max-width: 768px) {
+    .container{
+        display: flex;
+        flex-direction: column-reverse;
+    } 
+}
