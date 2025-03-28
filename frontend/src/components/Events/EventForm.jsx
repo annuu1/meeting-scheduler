@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import styles from '../../styles/EventForm.module.css';
-
+import {showToast} from '../ui/ToastContainer'
 const EventForm = ({ onClose, refetchEvents }) => {
   const [formData, setFormData] = useState({
     title: "Event",
@@ -49,10 +49,17 @@ const EventForm = ({ onClose, refetchEvents }) => {
     axios
       .post("http://localhost:5000/api/events", payload, config)
       .then((response) => {
+        if(response.data.success){
+          showToast()("successfully added link", "success")
+        }
+        else{
+          showToast()("Failed to add link", "error")
+        }
         refetchEvents();
         onClose();
       })
       .catch((err) => {
+        showToast()("Failed to add link", "error")
         console.error(err);
       });
   };

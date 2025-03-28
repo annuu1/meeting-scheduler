@@ -3,6 +3,8 @@ import styles from "../../styles/ProfileForm.module.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+import { showToast } from "../ui/ToastContainer";
+
 function ProfileForm() {
   const [formData, setFormData] = useState({
     firstName: "",
@@ -25,11 +27,11 @@ function ProfileForm() {
             },
           }
         );
-        const { firstName, lastName, email } = response.data;
+        const { firstName, lastName, email } = response.data.user;
         setFormData({
-          firstName,
-          lastName,
-          email,
+          firstName: firstName || "",
+          lastName: lastName || "",
+          email: email || "", 
           password: "",
           confirmPassword: "",
         });
@@ -63,6 +65,8 @@ function ProfileForm() {
         } else {
           navigate("/dashboard");
         }
+
+        showToast()(response.data.message, "success")
       })
       .catch((err) => {
         console.log(err.response.data.error);
