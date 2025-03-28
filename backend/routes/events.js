@@ -164,7 +164,7 @@ router.get("/userMeetings", auth, async (req, res) => {
 
 // Get Events (with pagination)
 router.get("/", auth, async (req, res) => {
-  const { page = 1, limit = 10, status } = req.query;
+  const { page = 1, limit = 10} = req.query;
   try {
     const query = {
       $or: [{ createdBy: req.user.id }],
