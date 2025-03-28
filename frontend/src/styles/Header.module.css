@@ -1,7 +1,6 @@
 .header{
     background-color: #F0F0F0;
     display: flex;
-    /* justify-content: center; */
     align-items: center;
     padding: 10px;
     position: sticky;
@@ -16,4 +15,22 @@
 .logoText{
     width: 86px;
     height: 30px;
+}
+
+@media (max-width: 768px) {
+    .header{
+        padding: 10px;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+    .logo{
+        width: 31.76px;
+        height: 29.59px;
+    }
+    .logoText{
+        width: 86px;
+        height: 30px;
+    }
 }
