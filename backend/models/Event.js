@@ -11,8 +11,8 @@ const EventSchema = new mongoose.Schema({
   password: { type: String },
   status: {
     type: String,
-    enum: ['upcoming', 'pending', 'canceled', 'active', 'deactivated'],
-    default: 'upcoming',
+    enum: ['active', 'deactivated'],
+    default: 'active',
   },
   createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   participants: [{ 
