@@ -2,14 +2,7 @@ import { useState } from 'react';
 import Toast from './Toast';
 
 const ToastContainer = () => {
-  const [toasts, setToasts] = useState([
-    {
-      id: 1,
-      message: 'This is a success toast.',
-      type: 'success',
-      duration: 30000
-    }
-  ]);
+  const [toasts, setToasts] = useState([]);
 
   const addToast = (message, type = 'success', duration = 3000) => {
     const id = Date.now();
