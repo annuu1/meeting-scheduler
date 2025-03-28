@@ -3,12 +3,12 @@ import Toast from './Toast';
 
 const ToastContainer = () => {
   const [toasts, setToasts] = useState([
-    // {
-    //   id: 1,
-    //   message: 'This is a success toast.',
-    //   type: 'success',
-    //   duration: 30000
-    // }
+    {
+      id: 1,
+      message: 'This is a success toast.',
+      type: 'success',
+      duration: 30000
+    }
   ]);
 
   const addToast = (message, type = 'success', duration = 3000) => {
