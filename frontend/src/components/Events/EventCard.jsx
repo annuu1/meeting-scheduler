@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import axios from "axios"; // Import axios for API calls
 import styles from "../../styles/EventCard.module.css";
 
-import toggleOn from "../../assets/icons/toggleOn.svg";
-import toggleOff from "../../assets/icons/toggleOff.svg";
 import copyBtn from "../../assets/icons/copyBtn.svg";
 import deleteBtn from "../../assets/icons/deleteBtn.svg";
 
