@@ -10,6 +10,7 @@ import Header from './components/layout/Header'
 import Dashboard from './pages/Dashboard'
 import EventForm from './components/Events/EventForm'
 import Test from './components/test/Test'
+import ToastContainer from './components/ui/ToastContainer'
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
     <>
      <BrowserRouter>
      {/* <Header/> */}
+     <ToastContainer />
       <Routes>
         <Route path='/' element= {<Home/>} ></Route>
         <Route path='/signup' element= {<Signup/>} ></Route>
