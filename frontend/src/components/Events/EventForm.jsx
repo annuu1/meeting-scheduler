@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import styles from '../../styles/EventForm.module.css';
-import {showToast} from '../ui/ToastContainer'
+import { showToast } from '../ui/ToastContainer';
+
 const EventForm = ({ onClose, refetchEvents }) => {
   const [formData, setFormData] = useState({
     title: "Event",
     password: "123456",
     hostName: "Sarthak Pal",
     description: "Test Event",
-    date: "12/12/25",
+    date: "12/12/25", // DD/MM/YY
     time: "02:30",
     period: "PM",
     timezone: "UTC+5:00 (Delhi)",
@@ -23,43 +24,67 @@ const EventForm = ({ onClose, refetchEvents }) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const parseDDMMYY = (dateStr, time, period) => {
+    const [day, month, year] = dateStr.split('/').map(Number);
+    let hours = parseInt(time.split(':')[0], 10);
+    const minutes = parseInt(time.split(':')[1], 10);
+
+    if (period === 'PM' && hours !== 12) hours += 12;
+    if (period === 'AM' && hours === 12) hours = 0;
+    const fullYear = year < 100 ? 2000 + year : year;
+    const date = new Date(fullYear, month - 1, day, hours, minutes);
+    
+    if (isNaN(date.getTime())) {
+      return null; // Invalid date
+    }
+    return date;
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
     const { date, time, period, duration, ...rest } = formData;
-    const dateTimeString = `${date} ${time} ${period}`;
-    const dateTime = new Date(dateTimeString);
-    if (isNaN(dateTime.getTime())) {
-      alert('Invalid date format. Please use dd/mm/yy.');
+
+    // Parse DD/MM/YY date
+    const dateTime = parseDDMMYY(date, time, period);
+    if (!dateTime) {
+      showToast('Invalid date format. Please use DD/MM/YY (e.g., 12/12/25).', 'error');
       return;
     }
     const durationInMinutes = parseInt(duration.split(' ')[0]) * (duration.includes('hour') ? 60 : 1);
 
     const payload = {
-      ...rest, dateTime : dateTime.toISOString(),
+      ...rest,
+      dateTime: dateTime.toISOString(),
       duration: durationInMinutes,
-    }
+    };
 
     const token = localStorage.getItem("token");
+    if (!token) {
+      showToast()('No token found. Please log in.', 'error');
+      return;
+    }
+
     const config = {
       headers: {
         Authorization: `${token}`,
       },
     };
+
     axios
       .post("http://localhost:5000/api/events", payload, config)
       .then((response) => {
-        if(response.data.success){
-          showToast()("successfully added link", "success")
+        if (response.data.success) {
+          showToast()("Successfully added event", "success"); // Fixed syntax
+          refetchEvents();
+          onClose();
+        } else {
+          showToast()(response.data.error, "error"); // Fixed syntax
         }
-        else{
-          showToast()(response.data.error, "error")
-        }
-        refetchEvents();
-        onClose();
       })
       .catch((err) => {
-        showToast()(err.response.data.error, "error")
+        const errorMessage = err.response?.data?.error || 'An error occurred';
+        showToast()(errorMessage, "error");
         console.error(err);
       });
   };
@@ -67,13 +92,13 @@ const EventForm = ({ onClose, refetchEvents }) => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-              <div>
-                <h1 className={styles.headerTitle}>Create Event</h1>
-                <p className={styles.headerSubtitle}>
-                  Create events to share for people to book on your calendar.
-                </p>
-              </div>
-            </div>
+        <div>
+          <h1 className={styles.headerTitle}>Create Event</h1>
+          <p className={styles.headerSubtitle}>
+            Create events to share for people to book on your calendar.
+          </p>
+        </div>
+      </div>
       <div className={styles.modal}>
         <h2 className={styles.modalTitle}>Add Event</h2>
         <form onSubmit={handleSubmit} className={styles.form}>
@@ -145,7 +170,7 @@ const EventForm = ({ onClose, refetchEvents }) => {
                 name="date"
                 value={formData.date}
                 onChange={handleChange}
-                placeholder="dd/mm/yy"
+                placeholder="DD/MM/YY"
                 className={styles.inputSmall}
                 required
               />
