@@ -5,12 +5,12 @@ import booking from '../../assets/icons/booking.svg';
 import settings from '../../assets/icons/settings.svg';
 import avatar from '../../assets/icons/avatar.png';
 
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import styles from '../../styles/Sidebar.module.css';
 import Header from './Header';
 
-function Sidebar({ setActiveTab }) {
+function Sidebar({activeTab, setActiveTab }) {
 
   const handleClick = (tab) => {
     setActiveTab(tab);
@@ -42,13 +42,23 @@ function Sidebar({ setActiveTab }) {
           <img src={settings} alt="Settings" className={styles.navItemIcon} />
           Settings</button>
         </li>
+        {
+          activeTab === "events" && (
+            <li>
+        <button className={`${styles.createButton}`}>
+        <span className={styles.plus} >+</span>
+        Create
+        </button>   
+        </li>
+          )
+        }
+         
       </ul>
-      </nav>
+      </nav>  
       <div className={styles.userProfile}>
                 <img src={avatar} alt="User" className={styles.userAvatar} />
                 <span className={styles.userName}>{localStorage.getItem("name")}</span>
-      </div>
-     
+      </div>      
     </div>
   );
 }
