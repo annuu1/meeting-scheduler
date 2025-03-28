@@ -167,7 +167,6 @@ const EventForm = ({ onClose, refetchEvents }) => {
                 required
               >
                 <option value="Sarthak Pal">Sarthak Pal</option>
-                {/* Add more options if needed */}
               </select>
             </div>
 
