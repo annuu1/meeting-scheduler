@@ -24,7 +24,7 @@ router.post('/signup', async (req, res) => {
     await user.save();
     res.status(201).json({success:true, message: 'User created' });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ success:false, error: error.message });
   }
 });
 
@@ -48,10 +48,10 @@ router.post('/login', async (req, res) => {
 router.get('/profile', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    if (!user) return res.status(404).json({ error: 'User not found' });
-    res.json(user);
+    if (!user) return res.status(404).json({success:false, error: 'User not found' });
+    res.json({success:true, user});
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ success:false, error: error.message });
   }
 });
 
@@ -60,13 +60,13 @@ router.put('/profile', auth, async (req, res) => {
   const { firstName, lastName, username , email, password } = req.body;
   try {
     const user = await User.findById(req.user.id);
-    if (!user) return res.status(404).json({ error: 'User not found' });
+    if (!user) return res.status(404).json({ success:false, error: 'User not found' });
 
     let shouldLogout = false;
     if (username) user.username = username;
     if (firstName) user.firstName = firstName;
     if (lastName) user.lastName = lastName;
-    if (email) {
+    if (email && email !== user.email) {
       user.email = email;
       shouldLogout = true;
     }

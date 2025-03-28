@@ -107,7 +107,7 @@ router.post("/", auth, async (req, res) => {
     await event.save();
     res
       .status(201)
-      .json({ success: true, message: "Event created successfully" });
+      .json({ success: true, message: "successfully added link" });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
@@ -197,8 +197,8 @@ router.put("/:id", auth, async (req, res) => {
       { new: true }
     );
     if (!event)
-      return res.status(404).json({ success: true, error: "Event not found" });
-    res.json(event);
+      return res.status(404).json({ success: false, error: "Event not found" });
+    res.json( { success: true, message: "Event updated successfully", event });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
