@@ -10,9 +10,9 @@ import deleteBtn from "../../assets/icons/deleteBtn.svg";
 import Slider from "../ui/Slider";
 
 function EventCard({ title, date, time, description, isActive, id, eventLink, refetchEvents }) {
-  const [active, setActive] = useState(isActive); // State for slider
+  const [active, setActive] = useState(isActive);
 
-  const token = localStorage.getItem('token'); // Adjust this line based on where the token is stored
+  const token = localStorage.getItem('token');
 
   const handleSliderChange = async () => {
     try {
