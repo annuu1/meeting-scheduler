@@ -7,16 +7,15 @@ import deleteBtn from "../../assets/icons/deleteBtn.svg";
 
 import Slider from "../ui/Slider";
 
-function EventCard({ title, date, time, description, isActive, id, eventLink, refetchEvents }) {
-  const [active, setActive] = useState(isActive);
-
+function EventCard({ title, date, time, description, status, id, eventLink, refetchEvents }) {
+  const [active, setActive] = useState(status);
   const token = localStorage.getItem('token');
 
   const handleSliderChange = async () => {
     try {
-      const newStatus = !active;
-      await axios.put(`http://localhost:5000/api/events/${id}`, { isActive: newStatus }, {
-        headers: { Authorization: `Bearer ${token}` }
+      const newStatus = active === "active" ? "deactivated" : "active";
+      await axios.put(`http://localhost:5000/api/events/${id}`, { status: newStatus }, {
+        headers: { Authorization: `${token}` }
       });
       setActive(newStatus);
     } catch (error) {
@@ -47,7 +46,7 @@ function EventCard({ title, date, time, description, isActive, id, eventLink, re
   
   return (
     <div className={styles.card}>
-      <div className={styles.line}></div>
+      <div className={`${styles.line } ${styles[active]}`}></div>
       <div className={styles.content}>
         <div className={styles.cardHeader}>
           <h2 className={styles.title}>{title}</h2>
@@ -63,7 +62,7 @@ function EventCard({ title, date, time, description, isActive, id, eventLink, re
       </div>
       <hr className={styles.divider} />
       <div className={styles.cardFooter}>
-        <Slider checked={active} onChange={handleSliderChange} />
+        <Slider checked={active==="active"} onChange={handleSliderChange} />
         <span className={styles.icon} onClick={handleCopyEvent}>📋</span>
         <img src={deleteBtn} alt="" className={styles.action} onClick={handleDeleteEvent} />
       </div>

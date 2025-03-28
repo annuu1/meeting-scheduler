@@ -68,7 +68,7 @@ function EventList() {
               date={new Date(event.dateTime).toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'short' })}
               time={new Date(event.dateTime).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric' })}
               description={event.duration}
-              isActive={event.isActive}
+              status={event.status}
               id={event._id}
               eventLink = {event.link}
               refetchEvents={fetchData}

@@ -1,11 +1,11 @@
 import React from 'react';
 import styles from "../../styles/Slider.module.css";
 
-function Slider({ width = 50, height = 25 }) {
+function Slider({onChange, checked, width = 50, height = 25 }) {
   return (
     <div className={styles.switchContainer}>
       <label className={styles.switch}>
-        <input type="checkbox" />
+        <input type="checkbox" checked={checked} onChange={onChange} />
         <span
           className={styles.slider}
           style={{
