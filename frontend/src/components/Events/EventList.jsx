@@ -69,6 +69,9 @@ function EventList() {
               time={new Date(event.dateTime).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric' })}
               description={event.duration}
               isActive={event.isActive}
+              id={event._id}
+              eventLink = {event.link}
+              refetchEvents={fetchData}
             />
           ))
         ) : (
