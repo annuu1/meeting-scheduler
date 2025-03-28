@@ -20,96 +20,114 @@ router.post("/", auth, async (req, res) => {
     password,
     emails,
   } = req.body;
+
   try {
-    // Conflict check with existing events
-    const start = new Date(dateTime);
-    const end = new Date(start.getTime() + duration * 60000);
+    // Convert event times to Date objects
+    const eventStart = new Date(dateTime); 
+    const eventEnd = new Date(eventStart.getTime() + duration * 60000);
 
     const conflicts = await Event.find({
       createdBy: req.user.id,
       $or: [
         {
-          dateTime: { $lt: end },
+          dateTime: { $lt: eventEnd },
           $expr: {
             $gt: [
               { $add: ["$dateTime", { $multiply: ["$duration", 60000] }] },
-              start,
+              eventStart,
             ],
           },
         },
         {
-          dateTime: { $gte: start },
-          dateTime: { $lt: end },
+          dateTime: { $gte: eventStart, $lt: eventEnd },
         },
       ],
     });
 
-    if (conflicts.length > 1000)
+    if (conflicts.length > 0) { 
       return res
         .status(409)
-        .json({ success: false, error: "Time slot conflict" });
+        .json({ success: false, error: "Time slot conflicts with an existing event" });
+    }
 
-    // Check availability
-    const dayOfWeek = start.getDay();
-    const startTime = start.toTimeString().slice(0, 5);
-    const endTime = end.toTimeString().slice(0, 5);
-    const availability = await Availability.findOne({
-      userId: req.user.id,
-      dayOfWeek,
-      startTime: { $lte: startTime },
-      endTime: { $gte: endTime },
-      isAvailable: true,
+    const dayOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][eventStart.getDay()];
+    const eventStartTime = eventStart.toTimeString().slice(0, 5); // e.g., "09:30"
+    const eventEndTime = eventEnd.toTimeString().slice(0, 5); // e.g., "10:00"
+
+    const availability = await Availability.findOne({ user: req.user.id });
+    if (!availability) {
+      return res
+        .status(404)
+        .json({ success: false, error: "No availability set for this user" });
+    }
+
+    const dayAvailability = availability.days[dayOfWeek];
+    if (!dayAvailability.checked) {
+      return res
+        .status(409)
+        .json({ success: false, error: `Not available on ${dayOfWeek}` });
+    }
+
+    const isAvailable = dayAvailability.times.some((slot) => {
+      const slotStart = slot.start;
+      const slotEnd = slot.end;
+      
+      return slotStart <= eventStartTime && slotEnd >= eventEndTime;
     });
-    if (availability)
+
+    if (!isAvailable) {
       return res
         .status(409)
-        .json({ success: false, error: "Not available at this time" });
+        .json({ success: false, error: "Event time is outside available time slots" });
+    }
 
-    //find the particapants and add them to the event
-    const participantEmails = emails.split(",").map((email) => email.trim());
+    const participantEmails = emails ? emails.split(",").map((email) => email.trim()) : [];
     const participants = await User.find({ email: { $in: participantEmails } });
 
-    //check if all emails are valid
-    if (participants.length !== participantEmails.length) {
+    if (participantEmails.length > 0 && participants.length !== participantEmails.length) {
       const foundEmails = participants.map((user) => user.email);
       const missingEmails = participantEmails.filter(
         (email) => !foundEmails.includes(email)
       );
       return res.status(400).json({
         success: false,
-        error: `These emails are not registered users: ${missingEmails.join(
-          ", "
-        )}`,
+        error: `These emails are not registered users: ${missingEmails.join(", ")}`,
       });
     }
 
-    // get participants' list
-    const particapantList = participants.map((user) => ({
-      name: user.firstName + " " + user.lastName,
+    // Create participant list
+    const participantList = participants.map((user) => ({
+      name: `${user.firstName} ${user.lastName}`,
       user: user._id,
       status: "pending",
     }));
 
-    // particapantList.push({ name: req.user.firstName + ' ' + req.user.lastName, user: req.user.id, accepted: true });
+    // Optionally add the creator as an accepted participant (uncomment if needed)
+    // participantList.push({
+    //   name: `${req.user.firstName} ${req.user.lastName}`,
+    //   user: req.user.id,
+    //   status: "accepted",
+    // });
 
+    // Step 4: Create and save the event
     const event = new Event({
       title,
       description,
-      dateTime,
+      dateTime: eventStart,
       duration,
       link,
       bannerImage,
       backgroundColor,
       password: password ? await bcrypt.hash(password, 10) : undefined,
-      participants: particapantList,
+      participants: participantList,
       createdBy: req.user.id,
     });
+
     await event.save();
-    res
-      .status(201)
-      .json({ success: true, message: "successfully added link" });
+    res.status(201).json({ success: true, message: "Event created successfully" });
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    console.error("Error creating event:", error);
+    res.status(500).json({ success: false, error: "Server error" });
   }
 });
 
