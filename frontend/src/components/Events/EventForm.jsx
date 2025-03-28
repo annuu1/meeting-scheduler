@@ -53,13 +53,13 @@ const EventForm = ({ onClose, refetchEvents }) => {
           showToast()("successfully added link", "success")
         }
         else{
-          showToast()("Failed to add link", "error")
+          showToast()(response.data.error, "error")
         }
         refetchEvents();
         onClose();
       })
       .catch((err) => {
-        showToast()("Failed to add link", "error")
+        showToast()(err.response.data.error, "error")
         console.error(err);
       });
   };
