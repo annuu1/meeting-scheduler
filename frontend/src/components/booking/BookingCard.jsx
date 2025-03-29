@@ -46,7 +46,7 @@ function BookingCard({ event,  activeTab, refetchEvents }) {
         </div>
         <div className={styles.eventInfo}>
           <p className={styles.eventTitle}>{event.title}</p>
-          <p>{event.participants.join(" and ")}</p>
+          <p>{"You and " + event.participantCount + " others"}</p>
         </div>
       </div>
 
