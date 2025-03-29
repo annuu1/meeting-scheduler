@@ -1,7 +1,8 @@
 .card{
     width: 30%;
+    height: 225px;
     min-width: 300px;
-    border-radius: 1rem;
+    border-radius: 1.5rem;
     overflow: hidden;
     background-color: #fff;
 }
@@ -18,8 +19,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
-    margin-bottom: 8px;
+    padding: 1rem 1rem;
+    margin-bottom: 0px;
 }
 .cardDetails {
     font-size: 14px;
@@ -27,8 +28,13 @@
     margin-bottom: 16px;
     padding: 0 1rem;
   }
+  .cardHeader p{
+    padding: 0;
+    margin: 0;
+  }
 .title{
-    font-size: 16px;
+    font-size: 18px;
+    font-weight: 400;
   color: #202124;
 }
 .editIcon {
@@ -40,10 +46,11 @@
     display: flex;
     justify-content: right;
     align-items: center;
-    padding: 1rem;
+    padding: 10px;
 }
 .action{
     margin: 0 0.5rem;
+    height: 25px;
 }
 .divider{
     margin:0;

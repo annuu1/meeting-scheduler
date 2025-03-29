@@ -49,7 +49,7 @@ function EventCard({ title, date, time, description, status, id, eventLink, refe
       <div className={`${styles.line } ${styles[active]}`}></div>
       <div className={styles.content}>
         <div className={styles.cardHeader}>
-          <h2 className={styles.title}>{title}</h2>
+          <p className={styles.title}>{title}</p>
           <span className={styles.editIcon}>✏️</span>
         </div>
         <p className={styles.cardDetails}>
@@ -62,8 +62,9 @@ function EventCard({ title, date, time, description, status, id, eventLink, refe
       </div>
       <hr className={styles.divider} />
       <div className={styles.cardFooter}>
-        <Slider checked={active==="active"} onChange={handleSliderChange} />
-        <span className={styles.icon} onClick={handleCopyEvent}>📋</span>
+        <Slider  checked={active==="active"} onChange={handleSliderChange} />
+        {/* <span className={styles.icon} onClick={handleCopyEvent}>📋</span> */}
+        <img src={copyBtn} alt="" className={styles.action} onClick={handleCopyEvent} />
         <img src={deleteBtn} alt="" className={styles.action} onClick={handleDeleteEvent} />
       </div>
     </div>
