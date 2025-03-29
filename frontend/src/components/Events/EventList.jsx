@@ -79,7 +79,14 @@ const fetchData = async () => {
     }
 }
 
-  if(isModalOpen) return <EventForm onClose={handleCloseModal} refetchEvents={fetchData}/>
+const [selectedEvent, setSelectedEvent] = useState(null);
+
+const handleEditEvent = (event) => {
+  setSelectedEvent(event);
+  setIsModalOpen(true);
+};
+
+if(isModalOpen) return <EventForm onClose={handleCloseModal} refetchEvents={fetchData} initialData={selectedEvent}/>
 
   return (
     <div className={styles.container}>
@@ -124,6 +131,9 @@ const fetchData = async () => {
               eventLink = {event.link}
               hasConflict={event.hasConflict}
               refetchEvents={fetchData}
+              setIsModalOpen={setIsModalOpen}
+              event={event}
+              onEdit={handleEditEvent}
             />
           )})
         ) : (

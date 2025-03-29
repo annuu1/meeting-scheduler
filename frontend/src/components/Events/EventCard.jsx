@@ -10,7 +10,8 @@ import conflictIcon from "../../assets/icons/conflictIcon.svg";
 
 import Slider from "../ui/Slider";
 
-function EventCard({ title, date, startTime, endTime, description, status, id, eventLink, hasConflict, refetchEvents }) {
+function EventCard({ title, date, startTime, endTime, description, 
+  status, id, eventLink, hasConflict, refetchEvents , event, onEdit}) {
   const [active, setActive] = useState(status);
   const token = localStorage.getItem('token');
 
@@ -53,11 +54,14 @@ function EventCard({ title, date, startTime, endTime, description, status, id, e
   return (
     <div className={styles.card}>
       <div className={`${styles.line } ${styles[active]}`}></div>
-      {hasConflict && <div className={styles.conflictContainer}><img src={conflictIcon} alt="" className={styles.conflictIcon} /> <span className={styles.conflict}>Conflict of timing</span></div>}
+      {hasConflict && <div className={styles.conflictContainer}>
+        <img src={conflictIcon} alt="" className={styles.conflictIcon} /> 
+        <span className={styles.conflict}>Conflict of timing</span>
+        </div>}
       <div className={styles.content}>
         <div className={styles.cardHeader}>
           <p className={styles.title}>{title}</p>
-          <img src={editBtn} alt="" className={styles.action} />
+          <img src={editBtn} alt="" onClick={() => onEdit(event)} className={styles.action} />
         </div>
         <p className={styles.cardDetails}>
         <span className={styles.date}>{date}</span>

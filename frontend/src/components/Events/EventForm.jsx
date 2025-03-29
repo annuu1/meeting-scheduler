@@ -3,15 +3,15 @@ import axios from 'axios';
 import styles from '../../styles/EventForm.module.css';
 import { showToast } from '../ui/ToastContainer';
 
-const EventForm = ({ onClose, refetchEvents }) => {
-  const [step, setStep] = useState(1); // Track the current step (1 or 2)
+const EventForm = ({ onClose, refetchEvents, initialData=null }) => {
+  const [step, setStep] = useState(1);
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState(initialData || {
     title: "Event",
     password: "123456",
     hostName: "Sarthak Pal",
     description: "Test Event",
-    date: "12/12/25", // DD/MM/YY
+    date: "12/12/25",
     time: "02:30",
     period: "PM",
     timezone: "UTC+5:00 (Delhi)",
