@@ -26,30 +26,6 @@ router.post("/", auth, async (req, res) => {
     const eventStart = new Date(dateTime); 
     const eventEnd = new Date(eventStart.getTime() + duration * 60000);
 
-    const conflicts = await Event.find({
-      createdBy: req.user.id,
-      $or: [
-        {
-          dateTime: { $lt: eventEnd },
-          $expr: {
-            $gt: [
-              { $add: ["$dateTime", { $multiply: ["$duration", 60000] }] },
-              eventStart,
-            ],
-          },
-        },
-        {
-          dateTime: { $gte: eventStart, $lt: eventEnd },
-        },
-      ],
-    });
-
-    if (conflicts.length > 0) { 
-      return res
-        .status(409)
-        .json({ success: false, error: "Time slot conflicts with an existing event" });
-    }
-
     const dayOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][eventStart.getDay()];
     const eventStartTime = eventStart.toTimeString().slice(0, 5); // e.g., "09:30"
     const eventEndTime = eventEnd.toTimeString().slice(0, 5); // e.g., "10:00"
