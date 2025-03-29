@@ -12,8 +12,6 @@ const Dropdowns = ({ activity, setActivity, timeZone, setTimeZone }) => {
           className={styles.dropdown}
         >
           <option>Event type</option>
-          <option>Meeting</option>
-          <option>Call</option>
         </select>
       </div>
       <div className={styles.dropdownWrapper}>
@@ -23,9 +21,7 @@ const Dropdowns = ({ activity, setActivity, timeZone, setTimeZone }) => {
           onChange={(e) => setTimeZone(e.target.value)}
           className={styles.dropdown}
         >
-          <option>India Standard Time</option>
-          <option>UTC</option>
-          <option>Eastern Standard Time</option>
+          <option>Indian Standard Time</option>
         </select>
       </div>
     </div>
