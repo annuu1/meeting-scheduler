@@ -1,6 +1,6 @@
 .card{
     width: 30%;
-    height: 225px;
+    max-height: 325px;
     min-width: 300px;
     border-radius: 1.5rem;
     overflow: hidden;
@@ -15,6 +15,26 @@
 .line.deactivated{
     background-color: #676767;
 }
+.conflictContainer{
+    position: relative;
+    margin-left: 1rem;
+}
+.conflictIcon{
+    height: 12px;
+    width: 12px;
+}
+.conflict{
+    color: #5A5A5A;
+    border-radius: 2rem;
+    box-shadow: 0 4px 14.7px 0 rgba(0, 0, 0, 0.25);
+    width: 133px;
+    height: 20px;
+    padding: 5px 2rem;
+    font-weight: 300;
+    line-height: 32.63px;
+    vertical-align: middle;
+    font-size: 12px;
+}
 .cardHeader{
     display: flex;
     justify-content: space-between;
@@ -22,16 +42,10 @@
     padding: 1rem 1rem;
     margin-bottom: 0px;
 }
-.cardDetails {
-    font-size: 14px;
-    color: #5f6368;
-    margin-bottom: 16px;
-    padding: 0 1rem;
-  }
-  .cardHeader p{
-    padding: 0;
-    margin: 0;
-  }
+.cardHeader p{
+  padding: 0;
+  margin: 0;
+}
 .title{
     font-size: 18px;
     font-weight: 400;
@@ -41,6 +55,32 @@
     font-size: 16px;
     color: #5f6368;
     cursor: pointer;
+  }
+  .cardDetails {
+    font-size: 14px;
+    color: #5f6368;
+    margin-bottom: 16px;
+    padding: 0 1rem;
+  }
+  .cardDetails p{
+    margin: 0;
+    padding: 0;
+  }
+  .date{
+    font-size: 14px;
+    font-weight: 300;
+    color: #000000;
+  }
+  .time{
+    font-size: 14px;
+    font-weight: 300;
+    color: #1877F2;
+  }
+  .description{
+    font-size: 12px;
+    font-weight: 300;
+    color: #7E7E7E; 
+    line-height: 100%;
   }
 .cardFooter{
     display: flex;

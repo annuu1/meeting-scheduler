@@ -14,21 +14,46 @@ function EventList() {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
-  const fetchData = async () => {
+const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/events/", {
+      const response = await axios.get('http://localhost:5000/api/events/', {
         headers: {
           Authorization: `${token}`,
         },
       });
       if (!response.data.success) {
-        navigate("/login");
+        navigate('/login');
         return;
       }
-      setEvents(response.data.events);
+      const fetchedEvents = response.data.events;
+      // Add conflict detection
+      const eventsWithConflicts = fetchedEvents.map((event, index) => {
+        const eventDateTime = new Date(event.dateTime);
+        const eventEndTime = new Date(
+          eventDateTime.getTime() + parseInt(event.duration) * 60 * 60 * 1000
+        );
+        let hasConflict = false;
+        for (let i = 0; i < fetchedEvents.length; i++) {
+          if (i === index) continue;
+          const otherEvent = fetchedEvents[i];
+          const otherDateTime = new Date(otherEvent.dateTime);
+          const otherEndTime = new Date(
+            otherDateTime.getTime() + parseInt(otherEvent.duration) * 60 * 60 * 1000
+          );
+          if (
+            (eventDateTime >= otherDateTime && eventDateTime < otherEndTime) ||
+            (eventEndTime > otherDateTime && eventEndTime <= otherEndTime)
+          ) {
+            hasConflict = true;
+            break;
+          }
+        }
+        return { ...event, hasConflict };
+      });
+      setEvents(eventsWithConflicts);
     } catch (error) {
       console.log(error);
-      navigate("/login");
+      navigate('/login');
     }
   };
 
@@ -43,6 +68,16 @@ function EventList() {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+  function minutesToFormattedHours(minutes) {
+    const hours = minutes / 60; 
+    const wholeHours = Math.floor(hours); 
+    const decimalHours = (hours - wholeHours).toFixed(1); 
+    if (wholeHours > 0) {
+        return wholeHours + (decimalHours > 0 ? decimalHours : ''); 
+    } else {
+        return decimalHours;
+    }
+}
 
   if(isModalOpen) return <EventForm onClose={handleCloseModal} refetchEvents={fetchData}/>
 
@@ -61,19 +96,36 @@ function EventList() {
       </div>
       <div className={styles.eventList}>
         {events.length > 0 ? (
-          events.map((event, index) => (
+          events.map((event, index) => {
+            const startTime = new Date(event.dateTime);
+          const endTime = new Date(
+            startTime.getTime() + parseInt(event.duration) *60*1000
+          );
+            return (
             <EventCard
               key={event._id || index}
               title={event.title}
-              date={new Date(event.dateTime).toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'short' })}
-              time={new Date(event.dateTime).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric' })}
-              description={event.duration}
+              date={startTime.toLocaleDateString('en-US', {
+                weekday: 'long',
+                day: 'numeric',
+                month: 'short',
+              })}
+              startTime={startTime.toLocaleTimeString('en-US', {
+                hour: 'numeric',
+                minute: 'numeric',
+              })}
+              endTime={endTime.toLocaleTimeString('en-US', {
+                hour: 'numeric',
+                minute: 'numeric',
+              })}
+              description={`${minutesToFormattedHours(event.duration)}hr, ${event.description.slice(0, 50)}`}
               status={event.status}
               id={event._id}
               eventLink = {event.link}
+              hasConflict={event.hasConflict}
               refetchEvents={fetchData}
             />
-          ))
+          )})
         ) : (
           <div>No events found</div>
         )}

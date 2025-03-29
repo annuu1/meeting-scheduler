@@ -6,10 +6,11 @@ import { showToast } from "../ui/ToastContainer";
 import copyBtn from "../../assets/icons/copyBtn.svg";
 import deleteBtn from "../../assets/icons/deleteBtn.svg";
 import editBtn from "../../assets/icons/editBtn.svg";
+import conflictIcon from "../../assets/icons/conflictIcon.svg";
 
 import Slider from "../ui/Slider";
 
-function EventCard({ title, date, time, description, status, id, eventLink, refetchEvents }) {
+function EventCard({ title, date, startTime, endTime, description, status, id, eventLink, hasConflict, refetchEvents }) {
   const [active, setActive] = useState(status);
   const token = localStorage.getItem('token');
 
@@ -52,17 +53,18 @@ function EventCard({ title, date, time, description, status, id, eventLink, refe
   return (
     <div className={styles.card}>
       <div className={`${styles.line } ${styles[active]}`}></div>
+      {hasConflict && <div className={styles.conflictContainer}><img src={conflictIcon} alt="" className={styles.conflictIcon} /> <span className={styles.conflict}>Conflict of timing</span></div>}
       <div className={styles.content}>
         <div className={styles.cardHeader}>
           <p className={styles.title}>{title}</p>
           <img src={editBtn} alt="" className={styles.action} />
         </div>
         <p className={styles.cardDetails}>
-        {date}
+        <span className={styles.date}>{date}</span>
         <br />
-        {time}
+        <span className={styles.time}>{startTime} - {endTime}</span>
         <br />
-        {description}
+        <span className={styles.description}>{description}</span>
       </p>
       </div>
       <hr className={styles.divider} />
