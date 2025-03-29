@@ -3,6 +3,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import styles from "../../styles/ParticipantDropdown.module.css";
 
+import avatar from "../../assets/icons/avatar.png";
+
 const ParticipantDropdown = ({ participants, onAccept, onReject }) => {
   return (
     <div className={styles.participantDropdown}>
@@ -21,7 +23,7 @@ const ParticipantDropdown = ({ participants, onAccept, onReject }) => {
         {participants.map((participant, index) => (
           <div key={index} className={styles.participantItem}>
             <img
-              src="https://via.placeholder.com/30"
+              src={avatar}
               alt="Participant Avatar"
               className={styles.participantAvatar}
             />
