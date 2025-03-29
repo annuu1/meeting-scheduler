@@ -3,10 +3,11 @@
     top: 40px;
     right: 0;
     background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    width: 250px;
+    border-radius: 30px;
+    box-shadow: 0 2px 35px rgba(0, 0, 0, 0.25);
     z-index: 10;
+    padding: 2rem 0.5rem;
+    max-width: 500px
   }
   
   .participantHeader {
@@ -18,7 +19,53 @@
     font-size: 14px;
     font-weight: bold;
   }
+  .participantHeader p{
+    margin: 0;
+    padding: 0;
+  }
+  .participantTitle{
+    font-size: 24px;
+    font-weight: 500;
+    display: flex;
+    color: #343434;
+  }
+  .participantCount{
+    margin: 0;
+    padding: 0;
+    color: #B6B6B6;
+  }
+  .actionButtons {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    padding: 10px;
+  }
+  .actions{
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 400;
+    border-radius: 15px;
+    box-shadow: 0px 4px 11.6px 0px rgba(0, 0, 0, 0.25);
+  }
   
+  .rejectButton {
+    padding: 10px 15px;
+    border: none;
+    background-color: #ED0000;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .acceptButton {
+    padding: 10px 15px;
+    border: none;
+    background-color: #00C35F;
+    color: #fff;
+    cursor: pointer;
+  }
   .participantList {
     max-height: 200px;
     overflow-y: auto;
@@ -40,28 +87,12 @@
   
   .participantCheckbox {
     margin-left: auto;
-  }
-  
-  .actionButtons {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-  }
-  
-  .rejectButton {
-    padding: 5px 15px;
-    border-radius: 20px;
-    border: none;
-    background-color: #dc3545;
-    color: #fff;
-    cursor: pointer;
-  }
-  
-  .acceptButton {
-    padding: 5px 15px;
-    border-radius: 20px;
-    border: none;
-    background-color: #28a745;
-    color: #fff;
-    cursor: pointer;
+    height: 1.5rem;
+    width: 1.5rem;
+    /* appearance: ; */
+    border: 2px solid #676B5F;
+    border-radius: 4px;
+    cursor: not-allowed;
+    background-color: transparent;
+    position: relative; 
   }

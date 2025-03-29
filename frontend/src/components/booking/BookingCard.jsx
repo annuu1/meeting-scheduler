@@ -53,9 +53,9 @@ function BookingCard({ event,  activeTab, refetchEvents }) {
       <div className={styles.eventActions}>
         {activeTab === "pending" ? (
             <>
-            <button className={styles.participantButton} onClick={() => setShowParticipants(!showParticipants)}>
+            {/* <button className={styles.participantButton} onClick={() => setShowParticipants(!showParticipants)}>
                 Participant ({event.participantList?.length || 0})
-            </button>
+            </button> */}
             {showParticipants && (
               <ParticipantDropdown
                 participants={event.participantList || []}
@@ -76,8 +76,11 @@ function BookingCard({ event,  activeTab, refetchEvents }) {
           </button>
             </>
         )}
-        {event.participantCount && (
-          <div className={styles.participantCount}>
+        {event.participantCount && activeTab !== "cancelled" && (
+          <div className={styles.participantCount} 
+          onMouseOver={() => setShowParticipants(!showParticipants)} 
+          onMouseLeave={() => setShowParticipants(!showParticipants)}
+          >
             <span role="img" aria-label="people">
               👥
             </span>{' '}
