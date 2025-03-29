@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import axios from "axios"; // Import axios for API calls
+import axios from "axios";
 import styles from "../../styles/EventCard.module.css";
+import { showToast } from "../ui/ToastContainer";
 
 import copyBtn from "../../assets/icons/copyBtn.svg";
 import deleteBtn from "../../assets/icons/deleteBtn.svg";
+import editBtn from "../../assets/icons/editBtn.svg";
 
 import Slider from "../ui/Slider";
 
@@ -18,6 +20,7 @@ function EventCard({ title, date, time, description, status, id, eventLink, refe
         headers: { Authorization: `${token}` }
       });
       setActive(newStatus);
+      showToast()(`Event ${newStatus}`);
     } catch (error) {
       console.error("Error updating event status:", error);
     }
@@ -26,8 +29,9 @@ function EventCard({ title, date, time, description, status, id, eventLink, refe
   const handleCopyEvent = async () => {
     try {
       await navigator.clipboard.writeText(eventLink);
-      alert("Event link copied to clipboard!");
+      showToast()("Event link copied to clipboard!");
     } catch (error) {
+      showToast()(error.message, "error");
       console.error("Error copying event link:", error);
     }
   };
@@ -37,9 +41,10 @@ function EventCard({ title, date, time, description, status, id, eventLink, refe
       await axios.delete(`http://localhost:5000/api/events/${id}`, {
         headers: { Authorization: `${token}` }
       });
-      alert("Event deleted successfully!");
+      showToast()("Event deleted successfully!");
       refetchEvents();
     } catch (error) {
+      showToast()(error.message, "error");
       console.error("Error deleting event:", error);
     }
   };
@@ -50,7 +55,7 @@ function EventCard({ title, date, time, description, status, id, eventLink, refe
       <div className={styles.content}>
         <div className={styles.cardHeader}>
           <p className={styles.title}>{title}</p>
-          <span className={styles.editIcon}>✏️</span>
+          <img src={editBtn} alt="" className={styles.action} />
         </div>
         <p className={styles.cardDetails}>
         {date}
