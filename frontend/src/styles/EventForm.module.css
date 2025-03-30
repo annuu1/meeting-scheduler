@@ -182,6 +182,15 @@
     border: 1px solid #ffffff;
   }
   
+  .colorOptionWrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .colorOptionWrapper .label{
+    margin-bottom: 0;
+    font-size: 13px;
+  }
   .colorPicker {
     display: flex;
     gap: 8px;
@@ -195,13 +204,27 @@
     border: 1px solid #dadce0;
     cursor: pointer;
   }
-  
+  .colorPickerWrapper{
+    display: flex;
+    align-items: center;
+  }
   .colorInput {
     width: 100px;
     padding: 8px;
     border: 1px solid #dadce0;
     border-radius: 4px;
     font-size: 14px;
+  }
+  .colorPickerInput{
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border:none;
+    cursor: pointer;
+    background-color: transparent;
   }
   
   .buttonGroup {

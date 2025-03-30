@@ -293,11 +293,12 @@ const EventForm = ({ onClose, refetchEvents, initialData=null }) => {
 
             {/* Custom Background Color */}
             <div className={styles.formGroup}>
+              <div className={styles.colorOptionWrapper}>              
               <label className={styles.label}>Custom Background Color</label>
               <div className={styles.colorPicker}>
                 <div
                   className={styles.colorOption}
-                  style={{ backgroundColor: "#FF5733" }}
+                  style={{ backgroundColor: "#EF6500" }}
                   onClick={() => setFormData((prev) => ({ ...prev, backgroundColor: "#FF5733" }))}
                 ></div>
                 <div
@@ -310,6 +311,15 @@ const EventForm = ({ onClose, refetchEvents, initialData=null }) => {
                   style={{ backgroundColor: "#000000" }}
                   onClick={() => setFormData((prev) => ({ ...prev, backgroundColor: "#000000" }))}
                 ></div>
+                </div>
+                <div className={styles.colorPickerWrapper}> 
+                <input
+                  type="color"
+                  name="backgroundColor"
+                  value={formData.backgroundColor}
+                  onChange={handleChange}
+                  className={styles.colorPickerInput}
+                />
                 <input
                   type="text"
                   name="backgroundColor"
@@ -318,6 +328,7 @@ const EventForm = ({ onClose, refetchEvents, initialData=null }) => {
                   placeholder="#000000"
                   className={styles.colorInput}
                 />
+                </div>
               </div>
             </div>
 
