@@ -17,7 +17,14 @@ import availability from "../assets/icons/availability.svg";
 import booking from "../assets/icons/booking.svg";
 import settings from "../assets/icons/settings.svg";
 
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 const Dashboard = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate("/dashboard/events");    
+  },[])
   return (
     <div className={styles.dashboard}>
       <Sidebar />
