@@ -30,9 +30,9 @@ const UserProfile = () => {
           <p>Sign out</p>
         </div>
       )}
-      <div className={styles.userProfile}>
+      <div className={styles.userProfile} onClick={handleMouseClick}>
         <img src={avatar} alt="User Avatar" className={styles.userAvatar} />
-        <span className={styles.userName} onClick={handleMouseClick}>{userName}</span>
+        <span className={styles.userName}>{userName}</span>
       </div>
     </div>
   );

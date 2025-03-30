@@ -42,14 +42,21 @@
   }
 
   @media (max-width: 768px) {
-    .userProfileMobile {
-        display: flex;
-        align-items: center;
-        border: 2px solid #000000;
-        padding: 0.5rem 1rem;
-        border-radius: 50px;
+    .userProfile {
+        border: none;
       }
-    .userProfile, .logout {
+      .container{
+        position: fixed;
+        top: 0;
+        right: 0;
+        border: none;
+      }
+      .userName{
         display: none;
+      }
+    .logout {
+      width: 100px;
+      top: 60px;
+      right: 20px;
       }
   }
