@@ -204,15 +204,26 @@ const EventForm = ({ onClose, refetchEvents, initialData=null }) => {
                   className={styles.inputSmall}
                   required
                 />
-                <select
-                  name="time"
-                  value={formData.time}
-                  onChange={handleChange}
-                  className={`${styles.selectMedium} ${styles.select}`}
-                >
-                  <option value="02:30">02:30</option>
-                  {/* Add more time options if needed */}
-                </select>
+                <input
+                    type="text"
+                    list="timeOptions"
+                    name="time"
+                    value={formData.time}
+                    onChange={handleChange}
+                    className={` ${styles.select} ${styles.selectMedium}`}
+                    required
+                    placeholder="HH:MM"
+                  />
+
+                  <datalist id="timeOptions">
+                    {Array.from({ length: 12 * 4 }, (_, i) => { 
+                      const hours = Math.floor(i / 4);
+                      const minutes = (i % 4) * 15;
+                      const timeString = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+                      return <option key={timeString} value={timeString} />;
+                    })}
+                  </datalist>
+
                 <select
                   name="period"
                   value={formData.period}
@@ -229,7 +240,6 @@ const EventForm = ({ onClose, refetchEvents, initialData=null }) => {
                   className= {`${styles.selectLarge} ${styles.select}`}
                 >
                   <option value="UTC+5:00 (Delhi)">UTC+5:00 (Delhi)</option>
-                  {/* Add more timezone options if needed */}
                 </select>
               </div>
             </div>
