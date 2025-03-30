@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from '../../styles/Auth.module.css';
+import styles from '../../styles/Login.module.css';
 import authImg from '../../assets/auth_bg.png';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -52,17 +52,20 @@ const [formData, setFormData] = useState({
               <h1>Sign in to your Spark</h1>
           </div>
           <form className={styles.form} onSubmit={handleSubmit}>
-            <label htmlFor ='firstName' className={styles.label} >First Name</label>
+            <label htmlFor ='email' className={styles.label} >username</label>
             <input type="email" name='email' className={styles.input} value={formData.email} onChange={handleChange} required/>
             <label htmlFor = 'password' className={styles.label} >Password</label>
             <input type="password" name='password' className={styles.input} value={formData.password} onChange={handleChange} required/>
-            <button type="submit" className={styles.btn} >Login</button>
-            <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
+            <button type="submit" className={`${styles.btn} ${styles.loginBtn}`} >Sign in</button>
+            <div className={styles.formFooter}>
+                <a href="#">Forgot your password?</a>
+                <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
+            </div>
             {
             error && <p style={{color:'red'}}>{error}</p>
           }
           </form>
-          <p>This site is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply.</p>
+          <p className={styles.recaptcha}>This site is protected by reCAPTCHA and the <a href="#">Google Privacy Policy"</a> and <a href="#">Terms of Service"</a> apply.</p>
       </div>
       <div className={styles.imageContainer}>
         <img src={authImg} alt="auth image bg" />
