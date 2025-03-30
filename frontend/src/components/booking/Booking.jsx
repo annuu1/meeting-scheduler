@@ -36,7 +36,7 @@ function Booking() {
         participantList: event.participants.map((p) => ({
           name: p.name,
           status: p.status,
-          userId: p.user.id,
+          userId: p.user._id,
         })),
       }));
     };
