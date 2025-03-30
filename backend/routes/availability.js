@@ -12,12 +12,12 @@ router.get('/', auth, async (req, res) => {
         user : req.user.id,
         days: {
           Sun: { checked: false, times: [] },
-          Mon: { checked: true, times: [{ start: '00:00', end: '11:59' }] },
-          Tue: { checked: true, times: [{ start: '00:00', end: '11:59' }] },
-          Wed: { checked: true, times: [{ start: '00:00', end: '11:59' }] },
-          Thu: { checked: true, times: [{ start: '00:00', end: '11:59' }] },
-          Fri: { checked: true, times: [{ start: '00:00', end: '11:59' }] },
-          Sat: { checked: true, times: [{ start: '00:00', end: '11:59' }] },
+          Mon: { checked: true, times: [{ start: '00:00', end: '23:59' }] },
+          Tue: { checked: true, times: [{ start: '00:00', end: '23:59' }] },
+          Wed: { checked: true, times: [{ start: '00:00', end: '23:59' }] },
+          Thu: { checked: true, times: [{ start: '00:00', end: '23:59' }] },
+          Fri: { checked: true, times: [{ start: '00:00', end: '23:59' }] },
+          Sat: { checked: true, times: [{ start: '00:00', end: '23:59' }] },
         },
         timeZone: 'India Standard Time',
       })
