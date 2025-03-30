@@ -119,11 +119,14 @@ router.get("/userMeetings", auth, async (req, res) => {
       .populate("participants.user", "name email");
 
     const categorizedMeetings = {
-      upcoming: meetings.filter(
-        (m) =>          (
-            m.createdBy.id.toString() === req.user.id ||
-            m.participants.find((p) => p.status === "accepted"))
-      ),
+      upcoming: meetings.filter((m) => {
+        const isUpcoming = new Date(m.dateTime).getTime() > now.getTime(); // Check if the event is in the future
+        const isCreator = m.createdBy._id.toString() === req.user.id;
+        const participant = m.participants.find(
+          (p) => p.user && p.user._id.toString() === req.user.id
+        );
+        return isUpcoming && (isCreator || (participant && participant.status === "accepted"));
+      }),
       past: meetings.filter((m) => {
         const isPast = new Date(m.dateTime).getTime() + m.duration * 60000 < now.getTime();
         const isCreator = m.createdBy._id.toString() === req.user.id;
