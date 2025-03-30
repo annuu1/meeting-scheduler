@@ -76,12 +76,6 @@ function ProfileForm() {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <div>
-          <h1 className={styles.headerTitle}>Profile</h1>
-          <p className={styles.headerSubtitle}>
-            Manage settings for your profile
-          </p>
-        </div>
       </div>
       <div className={styles.formContainer}>
         <div className={styles.formHeader}>

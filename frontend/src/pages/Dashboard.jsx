@@ -1,28 +1,147 @@
-import React, {useState} from 'react'
-import Sidebar from '../components/layout/Sidebar'
-import styles from '../styles/Dashboard.module.css'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Routes, Route, NavLink } from "react-router-dom";
+import DashboardLayout from "../components/layout/DashboardLayout";
+import EventList from "../components/Events/EventList";
+import Booking from "../components/booking/Booking";
+import Availability from "../components/availabilityScheduler/AvailabilityScheduler";
+import Settings from "../components/settings/ProfileForm";
+import styles from "../styles/Dashboard.module.css";
+import Sidebar from "../components/layout/Sidebar";
+import Header from "../components/layout/Header";
+import UserProfile from "../components/layout/UserProfile";
 
-import EventList from '../components/Events/EventList'
-import Booking from '../components/booking/Booking'
-import ProfileForm from '../components/settings/ProfileForm'
-// import Availability from '../components/availability/Availability'
-import AvailabilityScheduler from '../components/availabilityScheduler/AvailabilityScheduler'
+import events from "../assets/icons/events.svg";
+import availability from "../assets/icons/availability.svg";
+import booking from "../assets/icons/booking.svg";
+import settings from "../assets/icons/settings.svg";
 
-function Dashboard() {
-    const [activeTab, setActiveTab] = useState('events');
-
+const Dashboard = () => {
   return (
-    <div className={styles.container}>
-        <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-        <main className={styles.main}>
-            {activeTab === 'events' && <EventList />}
-            {activeTab === 'booking' && <Booking />}
-            {activeTab === 'availability' && <AvailabilityScheduler />}
-            {activeTab === 'settings' && <ProfileForm />}
-        </main>
-    </div>
-  )
-}
+    <div className={styles.dashboard}>
+      {/* Sidebar */}
+      {/* <Sidebar /> */}
+      <div className={styles.sidebar}>
+        <Header />
+        <nav className={styles.nav}>
+          <NavLink
+            to="/dashboard/events"
+            className={({ isActive }) =>
+              `${styles.navLink} ${isActive ? styles.active : ""}`
+            }
+          >
+            <img src={events} alt="Events" className={styles.navItemIcon} />
+            Events
+          </NavLink>
 
-export default Dashboard
+          <NavLink
+            to="/dashboard/booking"
+            className={({ isActive }) =>
+              `${styles.navLink} ${isActive ? styles.active : ""}`
+            }
+          >
+            <img src={booking} alt="Bookings" className={styles.navItemIcon} />
+            Booking
+          </NavLink>
+
+          <NavLink
+            to="/dashboard/availability"
+            className={({ isActive }) =>
+              `${styles.navLink} ${isActive ? styles.active : ""}`
+            }
+          >
+            <img
+              src={availability}
+              alt="Availability"
+              className={styles.navItemIcon}
+            />
+            Availability
+          </NavLink>
+
+          <NavLink
+            to="/dashboard/settings"
+            className={({ isActive }) =>
+              `${styles.navLink} ${isActive ? styles.active : ""}`
+            }
+          >
+            <img src={settings} alt="Settings" className={styles.navItemIcon} />
+            Settings
+          </NavLink>
+
+          <NavLink
+            to="/dashboard/create"
+            className={({ isActive }) =>
+              `${styles.createButton} ${isActive ? styles.active : ""}`
+            }
+          >
+            <span className={styles.plus}>+</span> Create
+          </NavLink>
+        </nav>
+        <UserProfile />
+      </div>
+
+      {/* Main Content Area */}
+      <div className={styles.content}>
+        <Routes>
+          <Route
+            path="events"
+            element={
+              <DashboardLayout
+                title="Event Types"
+                subtitle="Create events to share for people to book on your calendar."
+              >
+                <EventList />
+              </DashboardLayout>
+            }
+          />
+          <Route
+            path="booking"
+            element={
+              <DashboardLayout
+                title="Booking"
+                subtitle="See upcoming and past events booked through your event type links."
+              >
+                <Booking />
+              </DashboardLayout>
+            }
+          />
+          <Route
+            path="availability"
+            element={
+              <DashboardLayout
+                title="Availability"
+                subtitle="Set your available times for scheduling."
+              >
+                <Availability />
+              </DashboardLayout>
+            }
+          />
+          <Route
+            path="settings"
+            element={
+              <DashboardLayout
+                title="Profile"
+                subtitle="Manage settings for your profile"
+              >
+                <Settings />
+              </DashboardLayout>
+            }
+          />
+          <Route
+            path="create"
+            element={
+              <DashboardLayout
+                title="Create Event"
+                subtitle="New events to share for people to book on your calendar."
+              >
+                {/* We'll handle the create event form in the next step */}
+                <div>Create Event Form Placeholder</div>
+              </DashboardLayout>
+            }
+          />
+        </Routes>
+      </div>
+    </div>
+  );
+};
+
+export default Dashboard;

@@ -97,17 +97,6 @@ if(isModalOpen) return <EventForm onClose={handleCloseModal} refetchEvents={fetc
 
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <div>
-          <h1 className={styles.headerTitle}>Event Types</h1>
-          <p className={styles.headerSubtitle}>
-            Create events to share for people to book on your calendar.
-          </p>
-        </div>
-        <button className={styles.addButton} onClick={handleAddEvent} >
-          <span className={styles.addIcon}>+</span> Add New Event
-        </button>
-      </div>
       <div className={styles.eventList}>
         {events.length > 0 ? (
           events.map((event, index) => {

@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from './DashboardLayout.module.css';
+import React from "react";
+import styles from "./DashboardLayout.module.css";
 
 const DashboardLayout = ({ title, subtitle, headerAction, children }) => {
   return (
@@ -10,13 +10,13 @@ const DashboardLayout = ({ title, subtitle, headerAction, children }) => {
           <h1 className={styles.headerTitle}>{title}</h1>
           <p className={styles.headerSubtitle}>{subtitle}</p>
         </div>
-        {headerAction && <div className={styles.headerAction}>{headerAction}</div>}
+        {headerAction && (
+          <div className={styles.headerAction}>{headerAction}</div>
+        )}
       </div>
 
       {/* Main Content Section */}
-      <div className={styles.mainContent}>
-        {children}
-      </div>
+      <div className={styles.mainContent}>{children}</div>
     </div>
   );
 };

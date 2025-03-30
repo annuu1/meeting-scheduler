@@ -24,9 +24,10 @@ function App() {
         <Route path='/signup' element= {<Signup/>} ></Route>
         <Route path='/login' element= {<Login/>} ></Route>
         <Route path='/preferences' element= {<Preferences/>} ></Route>
-        <Route path='/dashboard' element= {<Dashboard/>} ></Route>
+        <Route path='/dashboard/*' element= {<Dashboard/>} ></Route>
         <Route path='/events/new' element= {<EventForm/>} ></Route>
         <Route path='/test' element= {<Test/>} ></Route>
+        <Route path='/*' element= {<Dashboard/>} ></Route>
       </Routes>
      </BrowserRouter>
     </>

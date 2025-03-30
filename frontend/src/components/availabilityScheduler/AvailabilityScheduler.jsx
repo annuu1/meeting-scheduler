@@ -123,10 +123,7 @@ function AvailabilityScheduler() {
   }
 
   return (
-    <div className={styles.container}>
       <div className={styles.main}>
-        <h1 className={styles.header}>  Availability</h1>
-        <p className={styles.subHeader}>Configure times when you are available for bookings</p>
         <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
         <div className={styles.card}>
           <Dropdowns
@@ -151,7 +148,6 @@ function AvailabilityScheduler() {
           )}
         </div>
       </div>
-    </div>
   );
 }
 

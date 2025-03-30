@@ -79,10 +79,6 @@ function Booking() {
 
   return (
     <div className={styles.cotainer}>
-        <div className={styles.bookingHead}>
-            <h1 className={styles.heading}>Booking</h1>
-            <p>See upcoming and past events booked through your event type links.</p>
-        </div>
         <div className={styles.booking}>
             <BookingTabs activeTab={activeTab} onTabChange={handleTabChange} />
             {loading ? (
