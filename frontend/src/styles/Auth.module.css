@@ -1,11 +1,15 @@
+.headerComponent{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100px;
+}
 .container{
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 100vh;
     width: 100%;
-
-    color: #333333;
 }
 .formContainer{
     display: flex;
@@ -20,32 +24,64 @@
         justify-content: space-between;
         align-items: center;
         color: #333333;
-        margin-bottom: 20px; 
+        margin-bottom: 0px; 
         width: 50%;
+        font-size: 22px;
+        font-weight: 500;
+        line-height: 100%;
     }
+.formHeader p{
+    margin: 0;
+    padding: 0;
+}
 .formHeaderSignin{
     color: #333333;
     font-weight: bolder;
 }
+.gotoLogin{
+    font-size: 14.28px;
+    font-weight: 400;
+    line-height: 100%;
+    text-decoration: underline;
+    text-wrap: nowrap;
+    color: #1877F2;
+}
 .form{
     width: 50%;
+    height: auto;
    display: flex;
    flex-direction: column;
    justify-content: center;
    padding: 20px;
 }
 .label{
+    font-size: 13px;
+    font-weight: 400;
     margin-bottom: 5px;
-    font-weight: bold;
+    line-height: 100%;
     color: #666666;
 }
 .input{
-    padding: 20px;
+    padding: 10px;
     margin-bottom: 15px;
-    border: 1px solid #666666;
-    border-radius: 15px;
+    border: 1px solid rgba(102, 102, 102, 0.35);
+    border-radius: 9px;
     font-size: 16px;
     color: #666666;
+}
+.terms{
+    margin-bottom: 10px;
+}
+.terms label{
+    font-size: 12px;
+    color: #3D3D3D;
+}
+.terms a, .recaptcha a{
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 100%;
+    color: #3D3D3D;
+    text-decoration: underline;
 }
 .btn{
     padding: 20px;
@@ -56,6 +92,10 @@
     border: none;
     cursor: pointer;
 }
+.btn.signup{
+    background-color: #9a9c92;
+    color: #FFFFFF;
+}
 .imageContainer{
     width: 35%;
     height: 100vh;
@@ -65,10 +105,22 @@
     height: 100%;
     object-fit: cover;
 }
+.recaptcha{
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    position: relative;
+    margin: 0 10px;
+    bottom: -50px;
+}
 
 @media (max-width: 768px) {
     .formContainer {
         width: 100%;
+    }
+    .formHeader{
+        font-size: 18px;
+        width: 80%;
     }
 
     .form {

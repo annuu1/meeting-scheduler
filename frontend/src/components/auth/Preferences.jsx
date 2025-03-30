@@ -32,7 +32,9 @@ const [formData, setFormData] = useState({
 
   return (
     <div className={styles.container}>
-      <Header />
+     <div className={styles.headerComponent}>
+     <Header />
+     </div>
       <div className={styles.formContainer}> 
         <div className={styles.formWrapper}>
           <div className={styles.formHeader}>

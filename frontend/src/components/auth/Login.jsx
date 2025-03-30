@@ -43,7 +43,10 @@ const [formData, setFormData] = useState({
 
   return (
     <div className={styles.container}>
+      <div className={styles.headerComponent}>
       <Header />
+      </div>
+      
       <div className={styles.formContainer}>
           <div className={styles.formHeaderSignin}>
               <h1>Sign in to your Spark</h1>
