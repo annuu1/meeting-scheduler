@@ -5,22 +5,14 @@ import styles from "../../styles/ParticipantDropdown.module.css";
 import avatar from "../../assets/icons/avatar.png";
 import crossCircle from "../../assets/icons/crossCircle.svg";
 import checkMark from "../../assets/icons/checkMark.svg";
+import ApprovalButtons from "../ui/ApprovalButtons";
 
 const ParticipantDropdown = ({ participants, onAccept, onReject }) => {
   return (
     <div className={styles.participantDropdown}>
       <div className={styles.participantHeader}>
         <div className= {styles.participantTitle}><p>Participants</p> <span className={styles.participantCount}> ({participants.length})</span></div>
-        <div className={styles.actionButtons}>
-          <button className={`${styles.actions} ${styles.rejectButton}`} onClick={onReject}>
-          <img src={crossCircle} className="icon" alt="" />
-          Reject
-          </button>
-          <button className={`${styles.actions} ${styles.acceptButton}`} onClick={onAccept}>
-            <img src={checkMark} className="icon" alt="" />
-            Accept
-          </button>
-        </div>
+        <ApprovalButtons onAccept={onAccept} onReject={onReject} />
       </div>
       <div className={styles.participantList}>
         {participants.map((participant, index) => (
