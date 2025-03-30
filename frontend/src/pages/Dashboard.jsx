@@ -7,6 +7,8 @@ import Availability from "../components/availabilityScheduler/AvailabilitySchedu
 import Settings from "../components/settings/ProfileForm";
 import styles from "../styles/Dashboard.module.css";
 import Sidebar from "../components/layout/Sidebar";
+import EventForm from "../components/Events/EventForm";
+
 import Header from "../components/layout/Header";
 import UserProfile from "../components/layout/UserProfile";
 
@@ -74,8 +76,7 @@ const Dashboard = () => {
                 title="Create Event"
                 subtitle="New events to share for people to book on your calendar."
               >
-                {/* We'll handle the create event form in the next step */}
-                <div>Create Event Form Placeholder</div>
+                <EventForm />
               </DashboardLayout>
             }
           />

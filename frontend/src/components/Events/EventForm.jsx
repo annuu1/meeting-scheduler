@@ -2,15 +2,16 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import styles from '../../styles/EventForm.module.css';
 import { showToast } from '../ui/ToastContainer';
+import { useNavigate } from 'react-router-dom';
 
 import avatar from '../../assets/icons/avatar.png';
 import editBtn from '../../assets/icons/editBtn.svg';
 
-const EventForm = ({ onClose, refetchEvents, initialData=null }) => {
+const EventForm = () => {
   const [step, setStep] = useState(1);
   const [isBannerEditable, setIsBannerEditable] = useState(false);
 
-  const [formData, setFormData] = useState(initialData || {
+  const [formData, setFormData] = useState({
     title: "Event",
     password: "123456",
     hostName: "Sarthak Pal",
@@ -25,6 +26,8 @@ const EventForm = ({ onClose, refetchEvents, initialData=null }) => {
     emails: "a@gmail.com,b@gmail.com",
     bannerText: "Test Event",
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -102,8 +105,7 @@ const EventForm = ({ onClose, refetchEvents, initialData=null }) => {
       .then((response) => {
         if (response.data.success) {
           showToast()("Successfully added event", "success");
-          refetchEvents();
-          onClose();
+          navigate("/dashboard/events");
         } else {
           showToast()(response.data.error, "error");
         }
@@ -118,12 +120,6 @@ const EventForm = ({ onClose, refetchEvents, initialData=null }) => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <div>
-          <h1 className={styles.headerTitle}>Create Event</h1>
-          <p className={styles.headerSubtitle}>
-            Create events to share for people to book on your calendar.
-          </p>
-        </div>
       </div>
       <div className={styles.modal}>
         <h2 className={styles.modalTitle}>Add Event</h2>
@@ -263,7 +259,6 @@ const EventForm = ({ onClose, refetchEvents, initialData=null }) => {
             <div className={styles.buttonGroup}>
               <button
                 type="button"
-                onClick={onClose}
                 className={styles.cancelButton}
               >
                 Cancel
