@@ -110,6 +110,36 @@
     object-fit: cover;
 }
 
+.usernameStatus {
+    font-size: 0.9rem;
+    margin-top: 5px;
+    color: #1b27d4;
+  }
+  
+  .usernameStatus.available {
+    color: green;
+  }
+  
+  .usernameStatus.taken {
+    color: red;
+  }
+  
+  .categoryButton:hover {
+    background: #f5f5f5;
+  }
+  
+  .categoryButton.selected {
+    background: #007bff;
+    color: #fff;
+    border-color: #007bff;
+  }
+  
+  .inputGroup {
+    margin-bottom: 20px;
+  }
+
+
+
 
 @media (max-width: 768px) {
     .container{

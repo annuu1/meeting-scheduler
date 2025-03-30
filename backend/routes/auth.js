@@ -84,4 +84,54 @@ router.put('/profile', auth, async (req, res) => {
   }
 });
 
+
+// Check Username Availability
+router.get('/check-username/:username', async (req, res) => {
+  try {
+    const { username } = req.params;
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+      return res.json({ available: false, message: 'Username already taken' });
+    }
+    res.json({ available: true, message: 'Username available' });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Update Preferences (Protected Route)
+router.put('/preferences', auth, async (req, res) => {
+  const { username, preferences } = req.body;
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    if (username && username !== user.username) {
+      const existingUsername = await User.findOne({ username });
+      if (existingUsername) {
+        return res.status(409).json({ success: false, message: 'Username already taken' });
+      }
+      user.username = username;
+    }
+
+    if (preferences) {
+      user.preferences = preferences;
+    }
+
+    user.updatedAt = Date.now();
+    await user.save();
+
+    res.json({ 
+      success: true, 
+      message: 'Preferences updated', 
+      user: { id: user._id, username: user.username, preferences: user.preferences } 
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+
 module.exports = router;
