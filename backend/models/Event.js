@@ -6,7 +6,7 @@ const EventSchema = new mongoose.Schema({
   dateTime: { type: Date, required: true },
   duration: { type: Number, required: true },
   link: { type: String, required: true },
-  bannerImage: { type: String },
+  bannerText: { type: String },
   backgroundColor: { type: String },
   password: { type: String },
   status: {

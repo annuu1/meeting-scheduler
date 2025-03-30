@@ -15,7 +15,7 @@ router.post("/", auth, async (req, res) => {
     dateTime,
     duration,
     link,
-    bannerImage,
+    bannerText,
     backgroundColor,
     password,
     emails,
@@ -27,8 +27,8 @@ router.post("/", auth, async (req, res) => {
     const eventEnd = new Date(eventStart.getTime() + duration * 60000);
 
     const dayOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][eventStart.getDay()];
-    const eventStartTime = eventStart.toTimeString().slice(0, 5); // e.g., "09:30"
-    const eventEndTime = eventEnd.toTimeString().slice(0, 5); // e.g., "10:00"
+    const eventStartTime = eventStart.toTimeString().slice(0, 5);
+    const eventEndTime = eventEnd.toTimeString().slice(0, 5);
 
     const availability = await Availability.findOne({ user: req.user.id });
     if (!availability) {
@@ -92,7 +92,7 @@ router.post("/", auth, async (req, res) => {
       dateTime: eventStart,
       duration,
       link,
-      bannerImage,
+      bannerText,
       backgroundColor,
       password: password ? await bcrypt.hash(password, 10) : undefined,
       participants: participantList,
