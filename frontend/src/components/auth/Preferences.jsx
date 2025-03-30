@@ -13,6 +13,7 @@ function Preferences() {
   });
   const [usernameAvailable, setUsernameAvailable] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [userData, setUserData] = useState(null);
 
   const categories = [
     { name: 'Sales', icon: '🏢' },
@@ -25,6 +26,41 @@ function Preferences() {
     { name: 'Marketing', icon: '📈' },
   ];
 
+  // Fetch user data on mount
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/login');
+      return;
+    }
+
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/auth/me', {
+          headers: { Authorization: `${token}` },
+        });
+        const user = response.data.user;
+        setUserData(user);
+
+        // If username and preferences
+        if (user.username && user.preferences) {
+          navigate('/dashboard');
+        } else {
+          setFormData({
+            username: user.username || "",
+            preferences: user.preferences || "",
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+        navigate('/login'); // Redirect to login if token is invalid
+      }
+    };
+
+    fetchUserData();
+  }, [navigate]);
+
+  // Debounced
   const debounce = (func, delay) => {
     let timeoutId;
     return (...args) => {
@@ -34,7 +70,7 @@ function Preferences() {
   };
 
   const checkUsernameAvailability = async (username) => {
-    if (!username) {
+    if (!username || username === userData?.username) {
       setUsernameAvailable(null);
       return;
     }
@@ -49,8 +85,8 @@ function Preferences() {
       setLoading(false);
     }
   };
-  
-  const debouncedCheckUsername = useCallback(debounce(checkUsernameAvailability, 500), []);
+
+  const debouncedCheckUsername = useCallback(debounce(checkUsernameAvailability, 500), [userData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -70,7 +106,7 @@ function Preferences() {
       alert('Please provide a username and select a category.');
       return;
     }
-    if (!usernameAvailable) {
+    if (formData.username !== userData?.username && !usernameAvailable) {
       alert('Username is not available. Please choose another.');
       return;
     }
@@ -86,17 +122,21 @@ function Preferences() {
       const response = await axios.put(
         'http://localhost:5000/api/auth/preferences',
         { username: formData.username, preferences: formData.preferences },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `${token}` } }
       );
       if (response.data.success) {
         alert('Preferences saved successfully!');
-        navigate('/dashboard');
+        navigate('/dashboard/events');
       }
     } catch (error) {
       console.error('Error saving preferences:', error);
       alert(error.response?.data?.error || 'An error occurred while saving preferences.');
     }
   };
+
+  if (!userData) {
+    return <div>Loading...</div>; // Show loading
+  }
 
   return (
     <div className={styles.container}>
@@ -119,7 +159,7 @@ function Preferences() {
                 className={styles.input}
                 required
               />
-              {formData.username && (
+              {formData.username && formData.username !== userData?.username && (
                 <span className={styles.usernameStatus}>
                   {loading
                     ? 'Checking...'
