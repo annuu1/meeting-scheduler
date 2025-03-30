@@ -18,66 +18,7 @@ import settings from "../assets/icons/settings.svg";
 const Dashboard = () => {
   return (
     <div className={styles.dashboard}>
-      {/* Sidebar */}
-      {/* <Sidebar /> */}
-      <div className={styles.sidebar}>
-        <Header />
-        <nav className={styles.nav}>
-          <NavLink
-            to="/dashboard/events"
-            className={({ isActive }) =>
-              `${styles.navLink} ${isActive ? styles.active : ""}`
-            }
-          >
-            <img src={events} alt="Events" className={styles.navItemIcon} />
-            Events
-          </NavLink>
-
-          <NavLink
-            to="/dashboard/booking"
-            className={({ isActive }) =>
-              `${styles.navLink} ${isActive ? styles.active : ""}`
-            }
-          >
-            <img src={booking} alt="Bookings" className={styles.navItemIcon} />
-            Booking
-          </NavLink>
-
-          <NavLink
-            to="/dashboard/availability"
-            className={({ isActive }) =>
-              `${styles.navLink} ${isActive ? styles.active : ""}`
-            }
-          >
-            <img
-              src={availability}
-              alt="Availability"
-              className={styles.navItemIcon}
-            />
-            Availability
-          </NavLink>
-
-          <NavLink
-            to="/dashboard/settings"
-            className={({ isActive }) =>
-              `${styles.navLink} ${isActive ? styles.active : ""}`
-            }
-          >
-            <img src={settings} alt="Settings" className={styles.navItemIcon} />
-            Settings
-          </NavLink>
-
-          <NavLink
-            to="/dashboard/create"
-            className={({ isActive }) =>
-              `${styles.createButton} ${isActive ? styles.active : ""}`
-            }
-          >
-            <span className={styles.plus}>+</span> Create
-          </NavLink>
-        </nav>
-        <UserProfile />
-      </div>
+      <Sidebar />
 
       {/* Main Content Area */}
       <div className={styles.content}>
