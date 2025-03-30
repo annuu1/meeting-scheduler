@@ -3,8 +3,12 @@ import axios from 'axios';
 import styles from '../../styles/EventForm.module.css';
 import { showToast } from '../ui/ToastContainer';
 
+import avatar from '../../assets/icons/avatar.png';
+import editBtn from '../../assets/icons/editBtn.svg';
+
 const EventForm = ({ onClose, refetchEvents, initialData=null }) => {
   const [step, setStep] = useState(1);
+  const [isBannerEditable, setIsBannerEditable] = useState(false);
 
   const [formData, setFormData] = useState(initialData || {
     title: "Event",
@@ -19,6 +23,7 @@ const EventForm = ({ onClose, refetchEvents, initialData=null }) => {
     backgroundColor: "#000000",
     link: "https://zoom.us",
     emails: "a@gmail.com,b@gmail.com",
+    bannerText: "Test Event",
   });
 
   const handleChange = (e) => {
@@ -122,6 +127,7 @@ const EventForm = ({ onClose, refetchEvents, initialData=null }) => {
       </div>
       <div className={styles.modal}>
         <h2 className={styles.modalTitle}>Add Event</h2>
+        <hr className={styles.modalHr} />
 
         {step === 1 ? (
           <form onSubmit={handleNextStep} className={styles.form}>
@@ -181,6 +187,8 @@ const EventForm = ({ onClose, refetchEvents, initialData=null }) => {
               />
             </div>
 
+            <hr className={styles.modalHr} />
+
             {/* Date and Time */}
             <div className={styles.formGroup}>
               <label className={styles.label}>
@@ -200,7 +208,7 @@ const EventForm = ({ onClose, refetchEvents, initialData=null }) => {
                   name="time"
                   value={formData.time}
                   onChange={handleChange}
-                  className={styles.selectSmall}
+                  className={`${styles.selectMedium} ${styles.select}`}
                 >
                   <option value="02:30">02:30</option>
                   {/* Add more time options if needed */}
@@ -209,7 +217,7 @@ const EventForm = ({ onClose, refetchEvents, initialData=null }) => {
                   name="period"
                   value={formData.period}
                   onChange={handleChange}
-                  className={styles.selectSmall}
+                  className= {`${styles.selectSmall} ${styles.select}`}
                 >
                   <option value="AM">AM</option>
                   <option value="PM">PM</option>
@@ -218,7 +226,7 @@ const EventForm = ({ onClose, refetchEvents, initialData=null }) => {
                   name="timezone"
                   value={formData.timezone}
                   onChange={handleChange}
-                  className={styles.selectMedium}
+                  className= {`${styles.selectLarge} ${styles.select}`}
                 >
                   <option value="UTC+5:00 (Delhi)">UTC+5:00 (Delhi)</option>
                   {/* Add more timezone options if needed */}
@@ -235,8 +243,8 @@ const EventForm = ({ onClose, refetchEvents, initialData=null }) => {
                 onChange={handleChange}
                 className={styles.select}
               >
-                <option value="1 hour">1 hour</option>
                 <option value="30 minutes">30 minutes</option>
+                <option value="1 hour">1 hour</option>
                 <option value="2 hours">2 hours</option>
               </select>
             </div>
@@ -258,7 +266,7 @@ const EventForm = ({ onClose, refetchEvents, initialData=null }) => {
         ) : (
           <form onSubmit={handleSubmit} className={styles.form}>
             {/* Banner */}
-            <div className={styles.formGroup}>
+            <div className={`${styles.formGroup} ${styles.banner}`}>
               <label className={styles.label}>Banner</label>
               <div
                 className={styles.bannerPreview}
@@ -266,13 +274,19 @@ const EventForm = ({ onClose, refetchEvents, initialData=null }) => {
               >
                 <div className={styles.bannerContent}>
                   <img
-                    src="https://via.placeholder.com/50"
+                    src={avatar}
                     alt="Avatar"
                     className={styles.bannerAvatar}
                   />
-                  <p className={styles.bannerText}>
-                    {formData.title || "Team A Meeting"}
-                  </p>
+                  <img src={editBtn}  className={styles.editButton} onClick={() => setIsBannerEditable(!isBannerEditable)} alt="" />
+                  <input type="text" 
+                  name='bannerText'
+                  className={`${styles.bannerText} 
+                  ${isBannerEditable ? styles.editable : ''}`} 
+                  disabled={!isBannerEditable} 
+                  value={formData.bannerText || "Team A Meeting 1"} 
+                  onChange={handleChange}
+                  />
                 </div>
               </div>
             </div>
@@ -306,6 +320,8 @@ const EventForm = ({ onClose, refetchEvents, initialData=null }) => {
                 />
               </div>
             </div>
+
+            <hr className={styles.modalHr} />
 
             {/* Add Link */}
             <div className={styles.formGroup}>
