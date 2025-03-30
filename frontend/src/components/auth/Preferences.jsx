@@ -44,7 +44,7 @@ function Preferences() {
 
         // If username and preferences
         if (user.username && user.preferences) {
-          navigate('/dashboard');
+          navigate('/dashboard/events');
         } else {
           setFormData({
             username: user.username || "",
