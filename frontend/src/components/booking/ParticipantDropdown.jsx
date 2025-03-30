@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 import styles from "../../styles/ParticipantDropdown.module.css";
 
 import avatar from "../../assets/icons/avatar.png";
-import crossCircle from "../../assets/icons/crossCircle.svg";
-import checkMark from "../../assets/icons/checkMark.svg";
 import ApprovalButtons from "../ui/ApprovalButtons";
 
 const ParticipantDropdown = ({ participants, onAccept, onReject }) => {
