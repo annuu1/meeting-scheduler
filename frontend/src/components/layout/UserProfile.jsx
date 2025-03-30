@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const UserProfile = () => {
   const [logout, setLogout] = useState(false);
-  const userName = localStorage.getItem("name");
+  const userName = JSON.parse(localStorage.getItem("user")).name;
   const navigate = useNavigate();
 
   const handleLogout = () => {

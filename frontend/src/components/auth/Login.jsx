@@ -30,7 +30,7 @@ const [formData, setFormData] = useState({
     .then((response)=>{
         if(response.data.success){
           localStorage.setItem('token', response.data.token);
-          localStorage.setItem('name', response.data.name);
+          localStorage.setItem('user', JSON.stringify(response.data.user));
           navigate('/dashboard')
         }else{
         }
