@@ -70,8 +70,8 @@
 }
 
 .btn.loginBtn {
-    background-color: rgba(24, 119, 242, 1);
-    color: rgba(255, 255, 255, 1);
+    background-color: #E0E2D9;
+    color: #A8AAA2;
     font-weight: 600;
     font-size: 14px;
     margin-top: 30px;
@@ -92,6 +92,12 @@
     color: rgba(24, 119, 242, 1);
     text-decoration: underline;
 }
+.formFooter > a{
+    display: none;
+}
+.formFooter > p {
+    font-size: 14px;
+}
 
 .recaptcha {
     font-weight: 400;
@@ -100,6 +106,10 @@
     position: relative;
     margin: 0 10px;
     bottom: -50px;
+}
+.recaptcha>a{
+    color: #575757;
+    font-weight: 400;
 }
 
 .imageContainer {
@@ -133,6 +143,17 @@
     .form {
         width: 100%;
     }
+    .formFooter > a{
+        display: block;
+    }
+    .btn.loginBtn {
+        background-color: rgba(24, 119, 242, 1);
+        color: rgba(255, 255, 255, 1);
+        font-weight: 600;
+        font-size: 14px;
+        margin-top: 30px;
+    }
+    
 
     .imageContainer {
         display: none;
