@@ -7,13 +7,13 @@ import avatar from '../../assets/icons/avatar.png';
 import editBtn from '../../assets/icons/editBtn.svg';
 
 const EventForm = () => {
-  const { id } = useParams(); // Event ID for editing
+  const { id } = useParams(); 
   const location = useLocation();
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [isBannerEditable, setIsBannerEditable] = useState(false);
 
-  const isEditMode = !!id || !!location.state?.event; // Determine if we're editing
+  const isEditMode = !!id || !!location.state?.event;
 
   const [formData, setFormData] = useState({
     title: "",
