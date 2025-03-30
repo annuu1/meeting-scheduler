@@ -42,6 +42,7 @@ function Signup() {
 
   return (
     <div className={styles.container}>
+      <Headers/>
       <div className={styles.formContainer}>
           <div className={styles.formHeader}>
               <h1>Create an account</h1>

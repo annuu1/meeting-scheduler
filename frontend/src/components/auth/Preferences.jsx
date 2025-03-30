@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from '../../styles/Preferences.module.css';
 import authImg from '../../assets/auth_bg.png';
+import Header from '../layout/Header';
 
 function Preferences() {
 const [formData, setFormData] = useState({
@@ -29,6 +30,7 @@ const [formData, setFormData] = useState({
 
   return (
     <div className={styles.container}>
+      <Header />
       <div className={styles.formContainer}>
           <div className={styles.formHeaderSignin}>
               <h1>Your Preferences</h1>
