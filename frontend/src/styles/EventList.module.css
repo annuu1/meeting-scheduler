@@ -30,6 +30,7 @@
     border : 1px solid #1877F2;
     border-radius: 2rem;
     color: #1877F2;
+    background-color: transparent;
   }
   
   .addIcon {
@@ -44,3 +45,35 @@
     gap: 16px;
     justify-content: space-between;
   }
+
+  @media only screen and (max-width: 768px) {
+  .container {
+    margin-top: 20px;
+    width: 100%;
+  }
+  .header {
+    align-items: flex-start;
+    padding-top: 10px;
+  }
+  .headerTitle {
+    font-size: 18px;
+  }
+  .headerSubtitle {
+    font-size: 12px;
+  }
+  .addButton {
+    width: 130px;
+    padding: 3px 10px;
+    font-size: 12px;
+    text-wrap: nowrap;
+    background-color: transparent;
+  }
+  .addIcon {
+    margin-right: 4px;
+    font-size: 1.2rem;
+  }
+  .eventList {
+    flex-direction: column;
+    gap: 8px;
+  }
+}

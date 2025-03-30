@@ -13,8 +13,11 @@
     height: 29.59px;
 }
 .logoText{
+    /* font-family: 'plus-jakarta-sans'; */
     width: 86px;
     height: 30px;
+    font-weight: 800;
+    font-size: 19.04px;
 }
 
 @media (max-width: 768px) {
