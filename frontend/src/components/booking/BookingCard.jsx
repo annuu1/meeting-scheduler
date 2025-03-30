@@ -5,7 +5,6 @@ import styles from "../../styles/BookingCard.module.css";
 import ParticipantDropdown from "./ParticipantDropdown";
 
 function BookingCard({ event, activeTab, refetchEvents }) {
-  console.log(event);
   const [showParticipants, setShowParticipants] = useState(false);
   const [localStatus, setLocalStatus] = useState(activeTab);
 
@@ -36,11 +35,12 @@ function BookingCard({ event, activeTab, refetchEvents }) {
     }
   };
 
+  //setting status, if user is creator, get accepted
   const displayStatus =
-    event.participantList.find((p) => p.userId === userId)?.status ||
+    event.participantList.find((p) => {
+      return (p.userId === userId)
+    })?.status ||
     "accepted";
-
-  console.log(displayStatus);
 
   return (
     <div className={styles.eventCard}>
