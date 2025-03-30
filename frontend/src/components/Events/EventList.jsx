@@ -28,29 +28,36 @@ const fetchData = async () => {
       const fetchedEvents = response.data.events;
       // Add conflict detection
       const eventsWithConflicts = fetchedEvents.map((event, index) => {
+        let hasConflict = false;
+      
         const eventDateTime = new Date(event.dateTime);
         const eventEndTime = new Date(
-          eventDateTime.getTime() + parseInt(event.duration) * 60 * 60 * 1000
+          eventDateTime.getTime() + parseInt(event.duration) * 60 * 1000
         );
-        let hasConflict = false;
+      
         for (let i = 0; i < fetchedEvents.length; i++) {
           if (i === index) continue;
           const otherEvent = fetchedEvents[i];
           const otherDateTime = new Date(otherEvent.dateTime);
           const otherEndTime = new Date(
-            otherDateTime.getTime() + parseInt(otherEvent.duration) * 60 * 60 * 1000
+            otherDateTime.getTime() + parseInt(otherEvent.duration) * 60 * 1000
           );
+      
           if (
-            (eventDateTime >= otherDateTime && eventDateTime < otherEndTime) ||
-            (eventEndTime > otherDateTime && eventEndTime <= otherEndTime)
+            eventDateTime.toDateString() === otherDateTime.toDateString() && // Ensure same date
+            ((eventDateTime >= otherDateTime && eventDateTime < otherEndTime) ||
+            (eventEndTime > otherDateTime && eventEndTime <= otherEndTime))
           ) {
             hasConflict = true;
             break;
           }
         }
+        
         return { ...event, hasConflict };
       });
+      
       setEvents(eventsWithConflicts);
+      
     } catch (error) {
       console.log(error);
       navigate('/login');
