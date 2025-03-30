@@ -3,8 +3,9 @@ import axios from 'axios'
 import {Link, useNavigate} from 'react-router-dom'
 
 import styles from '../../styles/Auth.module.css'
-
 import authImg from '../../assets/auth_bg.png'
+
+import Headers from '../layout/Header'
 
 function Signup() {
 
