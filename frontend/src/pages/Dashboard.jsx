@@ -9,14 +9,6 @@ import styles from "../styles/Dashboard.module.css";
 import Sidebar from "../components/layout/Sidebar";
 import EventForm from "../components/Events/EventForm";
 
-import Header from "../components/layout/Header";
-import UserProfile from "../components/layout/UserProfile";
-
-import events from "../assets/icons/events.svg";
-import availability from "../assets/icons/availability.svg";
-import booking from "../assets/icons/booking.svg";
-import settings from "../assets/icons/settings.svg";
-
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
