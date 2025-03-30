@@ -3,6 +3,8 @@ import styles from '../../styles/Preferences.module.css';
 import authImg from '../../assets/auth_bg.png';
 import Header from '../layout/Header';
 
+import finance from '../../assets/preferencesIcons/finance.svg';
+
 function Preferences() {
 const [formData, setFormData] = useState({
     firstName:"",
@@ -13,14 +15,14 @@ const [formData, setFormData] = useState({
   })
 
   const categories = [
-    { name: 'Sales', icon: 'fas fa-briefcase' },
-    { name: 'Education', icon: 'fas fa-graduation-cap' },
-    { name: 'Finance', icon: 'fas fa-dollar-sign' },
-    { name: 'Government &amp; Politics', icon: 'fas fa-landmark' },
-    { name: 'Consulting', icon: 'fas fa-comments' },
-    { name: 'Recruiting', icon: 'fas fa-user-tie' },
-    { name: 'Tech', icon: 'fas fa-laptop-code' },
-    { name: 'Marketing', icon: 'fas fa-bullhorn' },
+    { name: 'Sales', icon: '🏢' },
+    { name: 'Education', icon: '📚' },
+    { name: 'Finance', icon: '📚' },
+    { name: 'Government & Politics', icon: '⚖️' },
+    { name: 'Consulting', icon: '📚' },
+    { name: 'Recruiting', icon: '📚' },
+    { name: 'Tech', icon: '📚' },
+    { name: 'Marketing', icon: '📚' },
   ];
 
   const handleChange = (e)=>{
@@ -31,26 +33,34 @@ const [formData, setFormData] = useState({
   return (
     <div className={styles.container}>
       <Header />
-      <div className={styles.formContainer}>
-          <div className={styles.formHeaderSignin}>
+      <div className={styles.formContainer}> 
+        <div className={styles.formWrapper}>
+          <div className={styles.formHeader}>
               <h1>Your Preferences</h1>
           </div>
           <form className={styles.form}>
-            <input type="text" placeholder='Tell us your username' name='username' value={formData.username} onChange={handleChange} className={styles.input} required/>
-            <h2>Select one category that best describes your CNNCT:</h2>
+            <input type="text" placeholder='Tell us your username' 
+            name='username' value={formData.username} 
+            onChange={handleChange} className={styles.input} 
+            required/>
+            <p>Select one category that best describes your CNNCT:</p>
             <div className={styles.grid}>
             {
                 categories.map((category, index)=>{
                     return (
-                        <button key={index}> <i>{category.icon}</i> category</button>
+                        <button key={index} className={styles.categoryButton}> 
+                        <i className={styles.categoryIcon}>{category.icon}</i> 
+                        <div className={styles.categoryName}>{category.name}</div>
+                        </button>
                     )
                 })
             }
 
             </div>
             
-            <button type="submit">Continue</button>
+            <button type="submit" className={styles.submitButton} >Continue</button>
           </form>
+          </div>
       </div>
       <div className={styles.imageContainer}>
         <img src={authImg} alt="auth image bg" />
