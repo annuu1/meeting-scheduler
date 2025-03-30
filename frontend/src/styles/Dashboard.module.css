@@ -13,6 +13,7 @@
     .container {
       flex-direction: column;
       padding-bottom: 60px;
+      background-color: #fff;
     }
   
     .main {
