@@ -36,7 +36,7 @@ const [formData, setFormData] = useState({
       <div className={styles.formContainer}> 
         <div className={styles.formWrapper}>
           <div className={styles.formHeader}>
-              <h1>Your Preferences</h1>
+              <h1 className={styles.formHeaderSignin} >Your Preferences</h1>
           </div>
           <form className={styles.form}>
             <input type="text" placeholder='Tell us your username' 
