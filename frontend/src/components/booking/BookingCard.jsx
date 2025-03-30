@@ -108,7 +108,6 @@ function BookingCard({ event, activeTab, refetchEvents }) {
           <div
             className={styles.participantCount}
             onMouseOver={() => setShowParticipants(!showParticipants)}
-            onMouseLeave={() => setShowParticipants(!showParticipants)}
           >
             <span role="img" aria-label="people">
               👥
