@@ -7,6 +7,9 @@
     top: 0;
     background-color: #fff;
     gap: 3px;
+    position: fixed;
+    left: 40px;
+    top: 25px;
 }
 .logo{
     width: 31.76px;
