@@ -9,17 +9,17 @@ router.get('/', auth, async (req, res) => {
     let availability = await Availability.findOne({ user: req.user.id });
     if(!availability){
       availability = new Availability({
-        // user : req.user.id,
-        // days: {
-        //   Sun: { checked: false, times: [] },
-        //   Mon: { checked: true, times: [{ start: '09:00', end: '17:00' }] },
-        //   Tue: { checked: true, times: [{ start: '09:00', end: '17:00' }] },
-        //   Wed: { checked: true, times: [{ start: '09:00', end: '17:00' }] },
-        //   Thu: { checked: true, times: [{ start: '09:00', end: '17:00' }] },
-        //   Fri: { checked: true, times: [{ start: '09:00', end: '17:00' }] },
-        //   Sat: { checked: true, times: [{ start: '09:00', end: '17:00' }] },
-        // },
-        // timeZone: 'India Standard Time',
+        user : req.user.id,
+        days: {
+          Sun: { checked: false, times: [] },
+          Mon: { checked: true, times: [{ start: '00:00', end: '11:59' }] },
+          Tue: { checked: true, times: [{ start: '00:00', end: '11:59' }] },
+          Wed: { checked: true, times: [{ start: '00:00', end: '11:59' }] },
+          Thu: { checked: true, times: [{ start: '00:00', end: '11:59' }] },
+          Fri: { checked: true, times: [{ start: '00:00', end: '11:59' }] },
+          Sat: { checked: true, times: [{ start: '00:00', end: '11:59' }] },
+        },
+        timeZone: 'India Standard Time',
       })
       await availability.save();
     }

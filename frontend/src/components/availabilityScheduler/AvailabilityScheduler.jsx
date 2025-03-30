@@ -9,15 +9,7 @@ import CalendarView from "./CalendarView";
 
 function AvailabilityScheduler() {
   const [activeTab, setActiveTab] = useState("Availability");
-  const [days, setDays] = useState({
-    Sun: { checked: false, times: [] },
-    Mon: { checked: true, times: [{ start: "09:00", end: "17:00" }] },
-    Tue: { checked: true, times: [{ start: "09:00", end: "17:00" }] },
-    Wed: { checked: true, times: [{ start: "09:00", end: "16:00" }] },
-    Thu: { checked: true, times: [{ start: "09:00", end: "16:00" }] },
-    Fri: { checked: true, times: [{ start: "09:00", end: "16:00" }] },
-    Sat: { checked: true, times: [{ start: "09:00", end: "17:00" }] },
-  });
+  const [days, setDays] = useState({});
 
   const [activity, setActivity] = useState("Event type");
   const [timeZone, setTimeZone] = useState("India Standard Time");
