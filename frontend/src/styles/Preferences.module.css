@@ -1,3 +1,8 @@
+.headerComponent{
+    position: fixed;
+    top: 0;
+    left: 0;
+}
 .container{
     display: flex;
     align-items: center;
@@ -122,9 +127,6 @@
     .formWrapper{
         width: 100%;
         /* background-color: azure; */
-    }
-    .formHeaderSignin{
-        /* background-color: rgb(9, 194, 80); */
     }
     .formHeader{
         width: 100%;
