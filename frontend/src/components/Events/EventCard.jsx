@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import styles from "../../styles/EventCard.module.css";
 import { showToast } from "../ui/ToastContainer";
+import { useNavigate } from "react-router-dom";
 
 import copyBtn from "../../assets/icons/copyBtn.svg";
 import deleteBtn from "../../assets/icons/deleteBtn.svg";
@@ -11,7 +12,7 @@ import conflictIcon from "../../assets/icons/conflictIcon.svg";
 import Slider from "../ui/Slider";
 
 function EventCard({ title, date, startTime, endTime, description, 
-  status, id, eventLink, hasConflict, refetchEvents , event, onEdit}) {
+  status, id, eventLink, hasConflict, refetchEvents , event}) {
   const [active, setActive] = useState(status);
   const token = localStorage.getItem('token');
 
@@ -38,6 +39,12 @@ function EventCard({ title, date, startTime, endTime, description,
     }
   };
 
+  const navigate = useNavigate();
+
+  const handleEditEvent = () => {
+    navigate(`/dashboard/event/${event._id}/edit`, { state: { event } });
+  };
+
   const handleDeleteEvent = async () => {
     try {
       await axios.delete(`http://localhost:5000/api/events/${id}`, {
@@ -61,7 +68,7 @@ function EventCard({ title, date, startTime, endTime, description,
       <div className={styles.content}>
         <div className={styles.cardHeader}>
           <p className={styles.title}>{title}</p>
-          <img src={editBtn} alt="" onClick={() => onEdit(event)} className={styles.action} />
+          <img src={editBtn} alt="" onClick={() => handleEditEvent(event)} className={styles.action} />
         </div>
         <p className={styles.cardDetails}>
         <span className={styles.date}>{date}</span>

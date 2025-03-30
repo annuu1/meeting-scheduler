@@ -129,7 +129,6 @@ if(isModalOpen) return <EventForm onClose={handleCloseModal} refetchEvents={fetc
               refetchEvents={fetchData}
               setIsModalOpen={setIsModalOpen}
               event={event}
-              onEdit={handleEditEvent}
             />
           )})
         ) : (

@@ -80,6 +80,17 @@ const Dashboard = () => {
               </DashboardLayout>
             }
           />
+          <Route
+            path="event/:id/edit"
+            element={
+              <DashboardLayout
+                title="Edit Event"
+                subtitle="New events to share for people to book on your calendar."
+              >
+                <EventForm />
+              </DashboardLayout>
+            }
+          />
         </Routes>
       </div>
     </div>

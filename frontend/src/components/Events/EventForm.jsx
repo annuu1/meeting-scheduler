@@ -1,33 +1,64 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styles from '../../styles/EventForm.module.css';
 import { showToast } from '../ui/ToastContainer';
-import { useNavigate } from 'react-router-dom';
-
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import avatar from '../../assets/icons/avatar.png';
 import editBtn from '../../assets/icons/editBtn.svg';
 
 const EventForm = () => {
+  const { id } = useParams(); // Event ID for editing
+  const location = useLocation();
+  const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [isBannerEditable, setIsBannerEditable] = useState(false);
 
+  const isEditMode = !!id || !!location.state?.event; // Determine if we're editing
+
   const [formData, setFormData] = useState({
-    title: "Event",
-    password: "123456",
-    hostName: "Sarthak Pal",
-    description: "Test Event",
-    date: "12/12/25",
-    time: "02:30",
-    period: "PM",
+    title: "",
+    password: "",
+    hostName: JSON.parse(localStorage.getItem("user"))?.name || "Unknown Host",
+    description: "",
+    date: "",
+    time: "",
+    period: "AM",
     timezone: "UTC+5:00 (Delhi)",
     duration: "1 hour",
     backgroundColor: "#000000",
-    link: "https://zoom.us",
-    emails: "a@gmail.com,b@gmail.com",
-    bannerText: "Test Event",
+    link: "",
+    emails: "",
+    bannerText: "",
   });
 
-  const navigate = useNavigate();
+  const formatDateToDDMMYY = (dateString) => {
+    if (!dateString) return "";
+    const [year, month, day] = dateString.split("-");
+    return `${day}/${month}/${year.slice(-2)}`;
+  };
+
+  useEffect(() => {
+    if (isEditMode && location.state?.event) {
+      const event = location.state.event;
+      const dateObj = new Date(event.dateTime);
+
+      setFormData({
+        title: event.title || '',
+        // password: event.password || '',
+        hostName: event.hostName || JSON.parse(localStorage.getItem("user"))?.name || "Unknown Host",
+        description: event.description || '',
+        date: formatDateToDDMMYY(dateObj.toISOString().split("T")[0]) || '',
+        time: dateObj.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: true }).split(" ")[0] || "",
+        period: dateObj.toLocaleTimeString().includes("AM") ? "AM" : "PM",
+        timezone: event.timezone || 'UTC+5:00 (Delhi)',
+        duration: event.duration ? `${Math.floor(event.duration / 60) || 1} hour${event.duration >= 120 ? 's' : ''}` : '1 hour',
+        backgroundColor: event.backgroundColor || '#000000',
+        link: event.link || '',
+        bannerText: event.bannerText || event.title || '',
+        emails: event.participants?.map((p) => p.user.email).join(",") || '',
+      });
+    }
+  }, [location.state, isEditMode]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,38 +76,36 @@ const EventForm = () => {
     const fullYear = year < 100 ? 2000 + year : year;
     const date = new Date(fullYear, month - 1, day, hours, minutes);
 
-    if (isNaN(date.getTime())) {
-      return null;
-    }
-    return date;
+    return isNaN(date.getTime()) ? null : date;
   };
 
   const handleNextStep = (event) => {
     event.preventDefault();
 
-    // Validate Step 1 fields before proceeding
-    const { date, time, period } = formData;
+    const { date, time, period, title, hostName } = formData;
     const dateTime = parseDDMMYY(date, time, period);
+
     if (!dateTime) {
-      showToast('Invalid date format. Please use DD/MM/YY (e.g., 12/12/25).', 'error');
+      showToast()('Invalid date format. Please use DD/MM/YY (e.g., 12/12/25).', 'error');
       return;
     }
 
-    if (!formData.title || !formData.hostName) {
-      showToast('Please fill all required fields.', 'error');
+    if (!title || !hostName) {
+      showToast()('Please fill all required fields.', 'error');
       return;
     }
 
-    setStep(2); // Move to the second frame
+    setStep(2);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const { date, time, period, duration, ...rest } = formData;
     const dateTime = parseDDMMYY(date, time, period);
+
     if (!dateTime) {
-      showToast('Invalid date format. Please use DD/MM/YY (e.g., 12/12/25).', 'error');
+      showToast()('Invalid date format. Please use DD/MM/YY (e.g., 12/12/25).', 'error');
       return;
     }
 
@@ -90,7 +119,7 @@ const EventForm = () => {
 
     const token = localStorage.getItem("token");
     if (!token) {
-      showToast('No token found. Please log in.', 'error');
+      showToast()('No token found. Please log in.', 'error');
       return;
     }
 
@@ -100,34 +129,38 @@ const EventForm = () => {
       },
     };
 
-    axios
-      .post("http://localhost:5000/api/events", payload, config)
-      .then((response) => {
-        if (response.data.success) {
-          showToast()("Successfully added event", "success");
-          navigate("/dashboard/events");
-        } else {
-          showToast()(response.data.error, "error");
-        }
-      })
-      .catch((err) => {
-        const errorMessage = err.response?.data?.error || 'An error occurred';
-        showToast()(errorMessage, "error");
-        console.error(err);
-      });
+    try {
+      let response;
+      if (isEditMode) {
+        // Update existing event
+        response = await axios.put(`http://localhost:5000/api/events/${id || location.state.event._id}`, payload, config);
+      } else {
+        // Create new event
+        response = await axios.post("http://localhost:5000/api/events", payload, config);
+      }
+
+      if (response.data.success) {
+        showToast()(`Successfully ${isEditMode ? 'updated' : 'added'} event`, "success");
+        navigate("/dashboard/events");
+      } else {
+        showToast()(response.data.error || `Failed to ${isEditMode ? 'update' : 'add'} event`, "error");
+      }
+    } catch (err) {
+      const errorMessage = err.response?.data?.error || `An error occurred while ${isEditMode ? 'updating' : 'adding'} the event`;
+      showToast()(errorMessage, "error");
+      console.error("Error submitting event:", err);
+    }
   };
 
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-      </div>
+      <div className={styles.header}></div>
       <div className={styles.modal}>
-        <h2 className={styles.modalTitle}>Add Event</h2>
+        <h2 className={styles.modalTitle}>{isEditMode ? 'Edit Event' : 'Add Event'}</h2>
         <hr className={styles.modalHr} />
 
         {step === 1 ? (
           <form onSubmit={handleNextStep} className={styles.form}>
-            {/* Event Topic */}
             <div className={styles.formGroup}>
               <label className={styles.label}>
                 Event Topic <span className={styles.required}>*</span>
@@ -143,7 +176,6 @@ const EventForm = () => {
               />
             </div>
 
-            {/* Password */}
             <div className={styles.formGroup}>
               <label className={styles.label}>Password</label>
               <input
@@ -156,7 +188,6 @@ const EventForm = () => {
               />
             </div>
 
-            {/* Host Name */}
             <div className={styles.formGroup}>
               <label className={styles.label}>
                 Host name <span className={styles.required}>*</span>
@@ -168,11 +199,10 @@ const EventForm = () => {
                 className={styles.select}
                 required
               >
-                <option value="Sarthak Pal">Sarthak Pal</option>
+                <option value={formData.hostName}>{formData.hostName}</option>
               </select>
             </div>
 
-            {/* Description */}
             <div className={styles.formGroup}>
               <label className={styles.label}>Description</label>
               <textarea
@@ -185,7 +215,6 @@ const EventForm = () => {
 
             <hr className={styles.modalHr} />
 
-            {/* Date and Time */}
             <div className={styles.formGroup}>
               <label className={styles.label}>
                 Date and time <span className={styles.required}>*</span>
@@ -201,30 +230,28 @@ const EventForm = () => {
                   required
                 />
                 <input
-                    type="text"
-                    list="timeOptions"
-                    name="time"
-                    value={formData.time}
-                    onChange={handleChange}
-                    className={` ${styles.select} ${styles.selectMedium}`}
-                    required
-                    placeholder="HH:MM"
-                  />
-
-                  <datalist id="timeOptions">
-                    {Array.from({ length: 12 * 4 }, (_, i) => { 
-                      const hours = Math.floor(i / 4);
-                      const minutes = (i % 4) * 15;
-                      const timeString = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
-                      return <option key={timeString} value={timeString} />;
-                    })}
-                  </datalist>
-
+                  type="text"
+                  list="timeOptions"
+                  name="time"
+                  value={formData.time}
+                  onChange={handleChange}
+                  className={`${styles.select} ${styles.selectMedium}`}
+                  required
+                  placeholder="HH:MM"
+                />
+                <datalist id="timeOptions">
+                  {Array.from({ length: 12 * 4 }, (_, i) => {
+                    const hours = Math.floor(i / 4);
+                    const minutes = (i % 4) * 15;
+                    const timeString = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+                    return <option key={timeString} value={timeString} />;
+                  })}
+                </datalist>
                 <select
                   name="period"
                   value={formData.period}
                   onChange={handleChange}
-                  className= {`${styles.selectSmall} ${styles.select}`}
+                  className={`${styles.selectSmall} ${styles.select}`}
                 >
                   <option value="AM">AM</option>
                   <option value="PM">PM</option>
@@ -233,14 +260,13 @@ const EventForm = () => {
                   name="timezone"
                   value={formData.timezone}
                   onChange={handleChange}
-                  className= {`${styles.selectLarge} ${styles.select}`}
+                  className={`${styles.selectLarge} ${styles.select}`}
                 >
                   <option value="UTC+5:00 (Delhi)">UTC+5:00 (Delhi)</option>
                 </select>
               </div>
             </div>
 
-            {/* Set Duration */}
             <div className={styles.formGroup}>
               <label className={styles.label}>Set duration</label>
               <select
@@ -255,22 +281,21 @@ const EventForm = () => {
               </select>
             </div>
 
-            {/* Buttons */}
             <div className={styles.buttonGroup}>
               <button
                 type="button"
                 className={styles.cancelButton}
+                onClick={() => navigate(-1)}
               >
                 Cancel
               </button>
               <button type="submit" className={styles.saveButton}>
-                Save
+                Next
               </button>
             </div>
           </form>
         ) : (
           <form onSubmit={handleSubmit} className={styles.form}>
-            {/* Banner */}
             <div className={`${styles.formGroup} ${styles.banner}`}>
               <label className={styles.label}>Banner</label>
               <div
@@ -278,68 +303,67 @@ const EventForm = () => {
                 style={{ backgroundColor: formData.backgroundColor }}
               >
                 <div className={styles.bannerContent}>
+                  <img src={avatar} alt="Avatar" className={styles.bannerAvatar} />
                   <img
-                    src={avatar}
-                    alt="Avatar"
-                    className={styles.bannerAvatar}
+                    src={editBtn}
+                    className={styles.editButton}
+                    onClick={() => setIsBannerEditable(!isBannerEditable)}
+                    alt="Edit"
                   />
-                  <img src={editBtn}  className={styles.editButton} onClick={() => setIsBannerEditable(!isBannerEditable)} alt="" />
-                  <input type="text" 
-                  name='bannerText'
-                  className={`${styles.bannerText} 
-                  ${isBannerEditable ? styles.editable : ''}`} 
-                  disabled={!isBannerEditable} 
-                  value={formData.bannerText || "Team A Meeting 1"} 
-                  onChange={handleChange}
+                  <input
+                    type="text"
+                    name="bannerText"
+                    className={`${styles.bannerText} ${isBannerEditable ? styles.editable : ''}`}
+                    disabled={!isBannerEditable}
+                    value={formData.bannerText}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
             </div>
 
-            {/* Custom Background Color */}
             <div className={styles.formGroup}>
-              <div className={styles.colorOptionWrapper}>              
-              <label className={styles.label}>Custom Background Color</label>
-              <div className={styles.colorPicker}>
-                <div
-                  className={styles.colorOption}
-                  style={{ backgroundColor: "#EF6500" }}
-                  onClick={() => setFormData((prev) => ({ ...prev, backgroundColor: "#FF5733" }))}
-                ></div>
-                <div
-                  className={styles.colorOption}
-                  style={{ backgroundColor: "#FFFFFF" }}
-                  onClick={() => setFormData((prev) => ({ ...prev, backgroundColor: "#FFFFFF" }))}
-                ></div>
-                <div
-                  className={styles.colorOption}
-                  style={{ backgroundColor: "#000000" }}
-                  onClick={() => setFormData((prev) => ({ ...prev, backgroundColor: "#000000" }))}
-                ></div>
+              <div className={styles.colorOptionWrapper}>
+                <label className={styles.label}>Custom Background Color</label>
+                <div className={styles.colorPicker}>
+                  <div
+                    className={styles.colorOption}
+                    style={{ backgroundColor: "#EF6500" }}
+                    onClick={() => setFormData((prev) => ({ ...prev, backgroundColor: "#EF6500" }))}
+                  ></div>
+                  <div
+                    className={styles.colorOption}
+                    style={{ backgroundColor: "#FFFFFF" }}
+                    onClick={() => setFormData((prev) => ({ ...prev, backgroundColor: "#FFFFFF" }))}
+                  ></div>
+                  <div
+                    className={styles.colorOption}
+                    style={{ backgroundColor: "#000000" }}
+                    onClick={() => setFormData((prev) => ({ ...prev, backgroundColor: "#000000" }))}
+                  ></div>
                 </div>
-                <div className={styles.colorPickerWrapper}> 
-                <input
-                  type="color"
-                  name="backgroundColor"
-                  value={formData.backgroundColor}
-                  onChange={handleChange}
-                  className={styles.colorPickerInput}
-                />
-                <input
-                  type="text"
-                  name="backgroundColor"
-                  value={formData.backgroundColor}
-                  onChange={handleChange}
-                  placeholder="#000000"
-                  className={styles.colorInput}
-                />
+                <div className={styles.colorPickerWrapper}>
+                  <input
+                    type="color"
+                    name="backgroundColor"
+                    value={formData.backgroundColor}
+                    onChange={handleChange}
+                    className={styles.colorPickerInput}
+                  />
+                  <input
+                    type="text"
+                    name="backgroundColor"
+                    value={formData.backgroundColor}
+                    onChange={handleChange}
+                    placeholder="#000000"
+                    className={styles.colorInput}
+                  />
                 </div>
               </div>
             </div>
 
             <hr className={styles.modalHr} />
 
-            {/* Add Link */}
             <div className={styles.formGroup}>
               <label className={styles.label}>
                 Add link <span className={styles.required}>*</span>
@@ -355,7 +379,6 @@ const EventForm = () => {
               />
             </div>
 
-            {/* Add Emails */}
             <div className={styles.formGroup}>
               <label className={styles.label}>
                 Add Emails <span className={styles.required}>*</span>
@@ -371,17 +394,16 @@ const EventForm = () => {
               />
             </div>
 
-            {/* Buttons */}
             <div className={styles.buttonGroup}>
               <button
                 type="button"
-                onClick={() => setStep(1)} // Go back to Step 1
+                onClick={() => setStep(1)}
                 className={styles.cancelButton}
               >
-                Cancel
+                Back
               </button>
               <button type="submit" className={styles.saveButton}>
-                Save
+                {isEditMode ? 'Update' : 'Save'}
               </button>
             </div>
           </form>
