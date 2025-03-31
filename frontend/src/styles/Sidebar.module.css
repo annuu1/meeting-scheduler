@@ -34,8 +34,11 @@
     color: rgba(24, 119, 242, 1);
     background-color: rgba(243, 243, 241, 1);
   }
-  .navItemIcon {
+  .navLink svg {
     margin: 0 1.5rem;
+  }
+  .navLink.active svg path {
+    fill: rgba(24, 119, 242, 1);
   }
   .createButton{
     display: flex;
