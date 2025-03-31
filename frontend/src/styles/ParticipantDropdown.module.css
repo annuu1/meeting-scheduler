@@ -96,3 +96,17 @@
     background-color: transparent;
     position: relative; 
   }
+
+
+  @media (max-width: 768px) {
+    .participantDropdown{
+      font-size: 12px;
+      width: 100vw;
+      padding: 0;
+      margin: 0;
+    }
+    .participantTitle p{
+      font-size: 12px;
+    }
+
+  }

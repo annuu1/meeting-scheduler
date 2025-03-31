@@ -32,3 +32,17 @@
     color: #fff;
     cursor: pointer;
   }
+
+  @media (max-width: 768px) {
+
+    .actions{
+      font-size: 12px;
+      padding: 10px;
+    }
+    .icon{
+      font-size: 12px;
+    }
+    .actionButtons{
+      gap: 5px;
+    }
+  }
