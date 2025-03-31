@@ -133,10 +133,10 @@ const EventForm = () => {
       let response;
       if (isEditMode) {
         // Update existing event
-        response = await axios.put(`http://localhost:5000/api/events/${id || location.state.event._id}`, payload, config);
+        response = await axios.put(`${import.meta.env.VITE_API_URL}api/events/${id || location.state.event._id}`, payload, config);
       } else {
         // Create new event
-        response = await axios.post("http://localhost:5000/api/events", payload, config);
+        response = await axios.post(`${import.meta.env.VITE_API_URL}api/events`, payload, config);
       }
 
       if (response.data.success) {

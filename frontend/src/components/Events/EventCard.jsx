@@ -19,7 +19,7 @@ function EventCard({ title, date, startTime, endTime, description,
   const handleSliderChange = async () => {
     try {
       const newStatus = active === "active" ? "deactivated" : "active";
-      await axios.put(`http://localhost:5000/api/events/${id}`, { status: newStatus }, {
+      await axios.put(`${import.meta.env.VITE_API_URL}api/events/${id}`, { status: newStatus }, {
         headers: { Authorization: `${token}` }
       });
       setActive(newStatus);
@@ -47,7 +47,7 @@ function EventCard({ title, date, startTime, endTime, description,
 
   const handleDeleteEvent = async () => {
     try {
-      await axios.delete(`http://localhost:5000/api/events/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}api/events/${id}`, {
         headers: { Authorization: `${token}` }
       });
       showToast()("Event deleted successfully!");

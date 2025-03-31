@@ -52,7 +52,7 @@ function Booking() {
             Authorization: `${token}`,
           },
         };
-        const response = await axios.get('http://localhost:5000/api/events/userMeetings', config);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/events/userMeetings`, config);
         const fetchedEvents = response.data.events || {};
         setEvents(fetchedEvents);
   

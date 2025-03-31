@@ -20,7 +20,7 @@ function ProfileForm() {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-          "http://localhost:5000/api/auth/profile",
+          `${import.meta.env.VITE_API_URL}api/auth/profile`,
           {
             headers: {
               Authorization: `${token}`,
@@ -57,7 +57,7 @@ function ProfileForm() {
     };
 
     axios
-      .put("http://localhost:5000/api/auth/profile", formData, config)
+      .put(`${import.meta.env.VITE_API_URL}/api/auth/profile`, formData, config)
       .then((response) => {
         if (response.data.shouldLogout) {
           localStorage.removeItem("token");

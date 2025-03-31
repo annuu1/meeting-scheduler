@@ -36,7 +36,7 @@ function Preferences() {
 
     const fetchUserData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/auth/me', {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}api/auth/me`, {
           headers: { Authorization: `${token}` },
         });
         const user = response.data.user;
@@ -76,7 +76,7 @@ function Preferences() {
     }
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:5000/api/auth/check-username/${username}`);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}api/auth/check-username${username}`);
       setUsernameAvailable(response.data.available);
     } catch (error) {
       console.error('Error checking username:', error);
@@ -120,7 +120,7 @@ function Preferences() {
 
     try {
       const response = await axios.put(
-        'http://localhost:5000/api/auth/preferences',
+        `${import.meta.env.VITE_API_URL}api/auth/preferences`,
         { username: formData.username, preferences: formData.preferences },
         { headers: { Authorization: `${token}` } }
       );

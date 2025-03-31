@@ -22,7 +22,7 @@ function BookingCard({ event, activeTab, refetchEvents }) {
         },
       };
       await axios.put(
-        `http://localhost:5000/api/events/status/${event.id}`,
+        `${import.meta.env.VITE_API_URL}/api/events/status/${event.id}`,
         { status: action === "accept" ? "accepted" : "rejected" },
         config
       );
