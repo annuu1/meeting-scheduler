@@ -26,8 +26,7 @@ function App() {
         <Route path='/preferences' element= {<Preferences/>} ></Route>
         <Route path='/dashboard/*' element= {<Dashboard/>} ></Route>
         <Route path='/events/new' element= {<EventForm/>} ></Route>
-        <Route path='/test' element= {<Test/>} ></Route>
-        <Route path='/*' element= {<Dashboard/>} ></Route>
+        <Route path='*' element= {<Dashboard/>} ></Route>
       </Routes>
      </BrowserRouter>
     </>
