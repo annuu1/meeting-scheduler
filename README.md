@@ -16,5 +16,5 @@
 - Availability settings and conflict detection
 
 ## Demo Credentials
-- Email: test@example.com
-- Password: Test1234
+- Email: admin@gmail.com
+- Password: admin123
