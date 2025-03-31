@@ -20,7 +20,7 @@ const DashboardLayout = ({ title, subtitle, headerAction, children }) => {
                 `${styles.createButton} ${isActive ? styles.active : ""}`
               }
             >
-              <span className={styles.plus}>+</span> Create
+              <span className={styles.plus}>+</span> Add New Event
             </NavLink>
 
               )}
