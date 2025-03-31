@@ -14,6 +14,7 @@
 - User signup/login
 - Event creation and management
 - Availability settings and conflict detection
+- User Profile Settings
 
 ## Demo Credentials
 - Email: admin@gmail.com
