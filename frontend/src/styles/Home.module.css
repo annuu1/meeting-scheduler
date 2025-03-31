@@ -49,12 +49,12 @@
     font-size: larger;
 }
 .list-item{
-    line-height: 5.5rem;
-    font-size: 1.2rem;
+    line-height: 2.5rem;
+    font-size: 1rem;
 }
 
 .cardsContainer{
-    width: 50%;
+    width: 100%;
     position: relative;
     display: flex;
     justify-content: center;
@@ -92,11 +92,17 @@
     transform: scale(2);
     transform: translate(10px);
 }
-/* .card2{
-    z-index: 0;
-    transform: rotate(40deg);
-} */
-
+.logo{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap:10px;
+}
+.logoImage{
+    width: 25px;
+    width: 35px;
+}
 .review{
     height: 800px;
     display: flex;
@@ -261,6 +267,26 @@
   
   /* Responsive Styles */
   @media (max-width: 768px) {
+    .container{
+      height: 450vh;
+      overflow: hidden;
+    }
+    .container h1{
+      font-size: 18px;
+    }
+    .container h2{
+      font-size: 14px;
+    }
+    .container p{
+      font-size: 12px;
+    }
+    .signupBtn{
+      font-size: 12px;
+    }
+    .signupBtn.large{
+      font-size: 16px;
+      padding: 10px 20px;
+    }
     .hero-title {
       font-size: 36px;
     }
@@ -292,7 +318,52 @@
       flex-direction: column;
       gap: 20px;
     }
+    .cardsContainer{
+      display: none;
+    }
+    .heroImage{
+      width: 100%;
+    }
+    .storyBtn{
+      font-size: 12px;
+    }
+    .userPic{
+      height: 50px;
+      width: 70px;
+    }
+    .integrationsList{
+      display: flex;
+      flex-direction: column;
+    }
+    .footer-content{
+      display: flex;
+      flex-direction: column-reverse;
+    }
+    .footer-button{
+      display: none;
+    }
+    .footer-column{
+      padding: 0px;
+    }
+    .footer-links{
+      padding: 0;
+    }
+    .footer-acknowledgment{
+      display: none;
+    }
   }
+
+
+
+
+
+
+
+
+
+
+
+
   
   @media (max-width: 480px) {
     .hero-title {

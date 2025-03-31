@@ -11,6 +11,8 @@ import instagram from "../assets/icons/instagram.svg";
 import youtube from "../assets/icons/youtube.svg";
 import tiktok from "../assets/icons/tiktok.svg";
 import discord from "../assets/icons/discord.svg";
+
+import logo from "../assets/logo.png"
 function Home() {
   const testimonials = [
     {
@@ -95,7 +97,10 @@ function Home() {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <div className="logo">CNNCT</div>
+        <div className={styles.logo}>
+          <img src={logo} className={styles.logoImage} alt="" />
+          CNNCT
+          </div>
         <Link to="/signup" className={styles.signupBtn}>
           {" "}
           Sign up free
