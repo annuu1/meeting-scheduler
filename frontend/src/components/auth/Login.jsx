@@ -11,7 +11,8 @@ function Login() {
     password: "",
   });
   const [error, setError] = useState('');
-  const [showPassword, setShowPassword] = useState(false); // State for password visibility
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -22,6 +23,8 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setError('')
     axios
       .post(`${import.meta.env.VITE_API_URL}api/auth/login`, formData)
       .then((response) => {
@@ -34,6 +37,9 @@ function Login() {
       .catch((err) => {
         console.log(err.response?.data?.error);
         setError(err.response?.data?.error || "An error occurred");
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -61,6 +67,7 @@ function Login() {
             value={formData.email}
             onChange={handleChange}
             required
+            disabled={isLoading}
           />
           <label htmlFor="password" className={styles.label}>
             Password
@@ -72,18 +79,20 @@ function Login() {
               className={styles.input}
               value={formData.password}
               onChange={handleChange}
+              disabled={isLoading}
               required
             />
             <button
               type="button"
               className={styles.eyeButton}
               onClick={togglePasswordVisibility}
+              disabled={isLoading}
             >
               {showPassword ? "👁️‍🗨️" : "👁️"}
             </button>
           </div>
           <button type="submit" className={`${styles.btn} ${styles.loginBtn}`}>
-            Sign in
+          {isLoading ? "Signing in..." : "Sign in"}
           </button>
           <div className={styles.formFooter}>
             <a href="#">Forgot your password?</a>
