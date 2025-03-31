@@ -47,20 +47,20 @@
   }
   
   .accepted {
-    background-color: #e6f0ff;
-    color: #007bff;
+    background-color: rgba(243, 243, 241, 1);
+    color: rgba(0, 0, 0, 1);
   }
   
   .rejected {
-    background-color: #f8d7da;
-    color: #dc3545;
+    background-color: rgba(97, 97, 97, 1);
+    color: rgba(255, 255, 255, 1);
   }
   .accept {
-    background-color: #4caf50; /* Green for accepted */
+    background-color: #4caf50;
     color: white;
   }
   .reject {
-    background-color: #f44336; /* Red for rejected */
+    background-color: #f44336;
     color: white;
   }
   
