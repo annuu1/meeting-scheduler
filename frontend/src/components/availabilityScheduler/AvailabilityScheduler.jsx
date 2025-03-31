@@ -23,7 +23,7 @@ function AvailabilityScheduler() {
         const token = localStorage.getItem("token");
         const config = { headers: { Authorization: `${token}` } };
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/api/availability`,
+          `${import.meta.env.VITE_API_URL}api/availability`,
           config
         );
         if (response.data.success) {
@@ -57,7 +57,7 @@ function AvailabilityScheduler() {
         }, {});
 
         const payload = { days: filteredDays, timeZone };
-        await axios.put(`${import.meta.env.VITE_API_URL}/api/availability`, payload, config);
+        await axios.put(`${import.meta.env.VITE_API_URL}api/availability`, payload, config);
       } catch (error) {
         console.error("Failed to save availability:", error);
       }
