@@ -28,11 +28,31 @@
     color: #666;
     margin: 5px 0 0 0;
   }
-  
-  .headerAction {
+  .createButton{
     display: flex;
+    justify-content: center;
     align-items: center;
+    gap: 10px;
+    border: 1px solid #1877F2;
+    color: #1877F2;
+    padding: 3px 10px;
+    border-radius: 2rem;
+    font-weight: 400;
+    margin: 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    background-color: transparent;
+    font-size: 16px;
+    text-decoration: none;
+    max-width: 150px;
   }
+  .plus{
+    font-size: 24px;
+  }
+  .createButton:hover{
+    background-color: #1877F2;
+    color: #fff;
+    }
   
   .mainContent {
     margin-top: 40px;

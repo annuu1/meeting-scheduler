@@ -28,6 +28,7 @@ const Dashboard = () => {
             path="events"
             element={
               <DashboardLayout
+                headerAction="true"
                 title="Event Types"
                 subtitle="Create events to share for people to book on your calendar."
               >
