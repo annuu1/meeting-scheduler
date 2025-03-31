@@ -14,7 +14,7 @@ app.use(cors());
 connectDB();
 
 // Routes
-app.use('/api1/auth', require('./routes/auth'));
+app.use('/api/auth', require('./routes/auth'));
 app.use('/api/events', require('./routes/events'));
 app.use('/api/availability', require('./routes/availability'));
 
