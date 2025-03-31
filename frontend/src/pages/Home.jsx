@@ -208,7 +208,7 @@ function Home() {
             <h1>All Link Apps and Integrations</h1>
             <div className={styles.integrationsList}>
               {integrations.map((integration, index) => (
-                <div className={styles.integration}>
+                <div key={index} className={styles.integration}>
                   <div className={styles.appIcon}> {integration.icon}</div>
                   <div className={styles.appDetails}>
                     <h3>{integration.name}</h3>
