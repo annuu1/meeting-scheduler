@@ -1,3 +1,7 @@
+.container{
+    background-color: rgba(251, 251, 251, 1);
+    height: 400vh;
+}
 .header{
     background-color: #F0F0F0;
     display: flex;
@@ -150,8 +154,164 @@
     gap: 1rem;
 }
 .appIcon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 40px;
+    min-width: 40px;
     height: 40px;
+    min-height: 4px;
     background-color: #b9bcc0;
     border-radius: 5px;
 }
+
+
+.footer {
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0  -4px 98px rgba(24, 119, 242, 0.3);
+    padding: 20px;
+    text-align: center;
+  }
+  .footer-content{
+    display: flex;
+    padding: 20px;
+    gap: 20px;
+  }
+  
+  .footer-buttons {
+    margin-bottom: 20px;
+    display: flex;
+  }
+  
+  .footer-button {
+    text-wrap: nowrap;
+    background-color: rgba(239, 240, 236, 1);
+    border: 1px solid #007bff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+    height: max-content;
+    border: none;
+  }
+  
+  .footer-button-primary {
+    text-wrap: nowrap;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    height: max-content;
+  }
+  
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 20px;
+  }
+  
+  .footer-column {
+    text-align: left;
+  }
+  
+  .footer-column-header {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .footer-link {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    color: rgba(30, 35, 48, 1);
+    text-decoration: none;
+    margin-bottom: 5px;
+  }
+
+  .footer-bottom{
+    display: flex;
+    gap: 10px;
+  }
+  
+  .footer-acknowledgment {
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(30, 35, 48, 1);
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  
+  .social-icons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  
+  .social-icon {
+    font-size: 20px;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .hero-title {
+      font-size: 36px;
+    }
+  
+    .dashboard-preview {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .calendar,
+    .participants {
+      max-width: 100%;
+    }
+  
+    .features-list {
+      text-align: center;
+    }
+  
+    .section-title {
+      font-size: 28px;
+    }
+  
+    .testimonial-card,
+    .integration-card {
+      max-width: 100%;
+    }
+  
+    .footer-links {
+      flex-direction: column;
+      gap: 20px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .hero-title {
+      font-size: 28px;
+    }
+  
+    .sign-up-button,
+    .read-more-button,
+    .footer-button,
+    .footer-button-primary {
+      font-size: 14px;
+      padding: 8px 16px;
+    }
+  
+    .section-title {
+      font-size: 24px;
+    }
+  
+    .stats {
+      font-size: 20px;
+    }
+  }
