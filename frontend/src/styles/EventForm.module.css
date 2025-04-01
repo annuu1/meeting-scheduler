@@ -254,3 +254,69 @@
     background-color: #1877F2;
     color: #ffffff;
   }
+
+
+  @media (max-width: 768px) {
+    .modal {
+      width: 100%;
+      height: 100%;
+      padding: 16px;
+      border-radius: 0;
+      box-shadow: none;
+    }
+    .container{
+      padding: 0;
+      margin: 0;
+      border: none;
+      box-shadow: 0 0px 0px rgba(0, 0, 0, 0.1);
+      border-radius: 0;
+    }
+    .modalTitle h2{
+      font-size: 18px;
+    }
+    .modalTitle{
+      font-size: 18px;
+      font-weight: 500;
+      width: 100%;
+      text-align: left;
+    }
+    .form{
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      border: none;
+    }
+    .formGroup{
+      width: 100%;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      flex-direction: flex-start;
+      align-items: flex-start;
+    }
+    .formGroup .label{
+      width: 100%;
+      font-size: 12px;
+    }
+    
+    .formGroup .input, .textarea, .select, .bannerPreview{
+      font-size: 12px;
+      width: 100%;
+      border-radius: 9px;
+      padding: 5px 10px;
+      height: 35px;
+    }
+    .dateTimeGroup{
+      width: 100%;
+    }
+    .buttonGroup{
+      width: 100%;
+      flex-direction: row-reverse;
+    }
+    .buttonGroup button{
+      font-size: 12px;
+      font-weight: 500;
+      padding: 8px 47px;
+      border-radius: 9xp;
+    }
+  }

@@ -65,3 +65,44 @@
     right: 0;
     bottom: 0;
 }
+.submitBtn:hover{
+    background-color: #0f5bb5;
+}
+.formGroup input:focus{
+    outline: none;
+    border: #1877F2 1px solid;
+}
+
+
+@media (max-width: 768px) {
+    .formHeader h1{
+        font-size: 18px;
+        letter-spacing: -2.04px;
+    }
+    .form{
+        /* height: max-content; */
+        padding: 0;
+        margin: 0;
+    }
+    .formHeader{
+        display: none;
+    }
+    .formGroup{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-bottom: 20px;
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+    .submitBtn{
+        font-size: 12px;
+        font-weight: 500;
+        border-radius: 9.6px;
+        padding: 9px 47px;
+        position: static;
+        width: max-content;
+    }
+}
