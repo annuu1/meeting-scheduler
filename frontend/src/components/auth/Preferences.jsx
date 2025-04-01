@@ -135,7 +135,7 @@ function Preferences() {
   };
 
   if (!userData) {
-    return <div>Loading...</div>; // Show loading
+    return <div>Loading...</div>;
   }
 
   return (
