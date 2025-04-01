@@ -69,12 +69,34 @@
       padding: 20px;
       background-color: #fff;
     }
+    .container h1{
+      font-size: 18px;
+    }
+    .container p{
+      font-size: 12px;
+    }
     .header {
       align-items: flex-start;
       gap: 10px;
     }
+    .headerText{
+      font-size: 18px;
+    }
   
     .headerAction {
+      display: flex;
       width: 100%;
+      padding: 0;
+    }
+    .createButton{
+      width: 100%;
+      justify-content: center;
+      padding: 5px 0;
+      font-size: 12px;
+      font-weight: 300;
+      line-height: 100%;
+    }
+    .plus{
+      font-size: 16px;
     }
   }
