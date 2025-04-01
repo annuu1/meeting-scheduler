@@ -57,7 +57,7 @@ function ProfileForm() {
     };
 
     axios
-      .put(`${import.meta.env.VITE_API_URL}/api/auth/profile`, formData, config)
+      .put(`${import.meta.env.VITE_API_URL}api/auth/profile`, formData, config)
       .then((response) => {
         if (response.data.shouldLogout) {
           localStorage.removeItem("token");

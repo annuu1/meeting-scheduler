@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styles from '../../styles/Auth.module.css';
 import authImg from '../../assets/auth_bg.png';
 import Headers from '../layout/Header';
+import { showToast } from "../ui/ToastContainer";
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -13,6 +14,7 @@ function Signup() {
     password: "",
     confirmPassword: "",
   });
+  const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
