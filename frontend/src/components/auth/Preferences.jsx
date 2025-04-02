@@ -53,7 +53,7 @@ function Preferences() {
         }
       } catch (error) {
         console.error('Error fetching user data:', error);
-        navigate('/login'); // Redirect to login if token is invalid
+        navigate('/login');
       }
     };
 
@@ -76,7 +76,7 @@ function Preferences() {
     }
     setLoading(true);
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}api/auth/check-username${username}`);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}api/auth/check-username/${username}`);
       setUsernameAvailable(response.data.available);
     } catch (error) {
       console.error('Error checking username:', error);
