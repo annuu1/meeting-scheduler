@@ -17,3 +17,15 @@
     color: #007bff;
     border-bottom: 2px solid #007bff;
   }
+
+  @media (max-width: 768px) {
+    .tabs {
+      align-items: center;
+      
+    }
+  
+    .tab {
+      width: 100%;
+      text-align: center;
+    }
+  }

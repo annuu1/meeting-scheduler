@@ -1,12 +1,15 @@
 .eventCard {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 250px;
+    gap: 20px;
+    padding: 20px;
+    border-radius: 10px;
     padding: 15px 0;
   }
   
   .eventDetails {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 50%;
     align-items: center;
   }
   
@@ -14,6 +17,7 @@
     margin: 0;
     font-size: 14px;
     color: #333;
+    text-wrap: nowrap;
   }
   
   .eventInfo {
@@ -77,4 +81,35 @@
     margin-left: 10px;
     font-size: 14px;
     color: #666;
+  }
+
+
+  @media (max-width: 768px) {
+    .eventCard {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      padding: 20px;
+      border-radius: 10px;
+      padding: 15px 0;
+    }
+    .eventCard p{
+      font-size: 10.01px;
+    }
+  
+    .eventDetails {
+      display: grid;
+      grid-template-columns: 1fr 50%;
+      align-items: center;
+      gap: 10px;
+    }
+  
+    .eventInfo {
+      margin-left: 0;
+      margin-top: 10px;
+    }
+  
+    .eventActions {
+      margin-top: 10px;
+    }
   }
