@@ -76,6 +76,9 @@ function Signup() {
       return; 
     }
 
+    setLoading(true);
+
+
     try {
       const response = await axios.post(`${import.meta.env.VITE_API_URL}api/auth/signup`, formData);
       if (response.data.success) {
@@ -86,6 +89,9 @@ function Signup() {
     } catch (err) {
       console.log(err.response?.data?.message);
       setErrors({ server: err.response?.data?.message || 'An error occurred' });
+    }
+    finally{
+      setLoading(false);
     }
   };
 
@@ -198,7 +204,7 @@ function Signup() {
             </label>
           </div>
           <button className={`${styles.btn} ${styles.signup}`} type="submit">
-            Create an account
+            {loading ? 'Creating account...' : 'Create an account'}
           </button>
           {errors.server && <p className={styles.error}>{errors.server}</p>}
         </form>
